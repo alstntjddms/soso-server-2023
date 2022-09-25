@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/jdbc
+        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+        http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/jee
+        https://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd"
+
+       default-init-method="init" default-destroy-method="destory">
+
+
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+
+    <bean id="letterService" class="com.soso_server.service.LetterServiceImpl">
+        <property name="rao" ref="letterRAO"></property>
+    </bean>
+
+    <bean id="letterRAO" class="com.soso_server.ra.LetterRAOImpl">
+        <property name="mapper" ref="letterMapper"/>
+    </bean>
+
+
+    <bean id="letterMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.soso_server.ra.itf.LetterRAO" />
+        <property name="sqlSessionFactory" ref="postSqlSessionFactory"/>
+    </bean>
+
+
+
+
+
+    <bean id="postSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:/META-INF/config/configuration.xml"/>
+        <property name="transactionFactory">
+            <bean class="org.apache.ibatis.transaction.managed.ManagedTransactionFactory" />
+        </property>
+    </bean>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="postSqlSessionFactory" />
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/soso"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="Alstn3599@@"></property>
+    </bean>
+
+    <context:component-scan base-package="com.soso_server">
+    </context:component-scan>
+</beans>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soso_server.ra.itf.LetterRAO">
+
+    <select id="findAll" resultType="LetterDTO">
+        SELECT * FROM soso.letter
+    </select>
+
+    <insert id="registerLetter" parameterType="LetterDTO">
+        INSERT INTO TEST.POST(NUM, TITLE, CATEGORYNUM, WRITEBY, TEXT, WRITEAT)
+        VALUES (#{num}, #{title}, #{categorynum}, #{writeBy}, #{text}, CURRENT_TIMESTAMP)
+    </insert>
+
+    <insert id="registerSticker" parameterType="StickerDTO">
+        INSERT INTO TEST.POST(NUM, TITLE, CATEGORYNUM, WRITEBY, TEXT, WRITEAT)
+        VALUES (#{num}, #{title}, #{categorynum}, #{writeBy}, #{text}, CURRENT_TIMESTAMP)
+    </insert>
+
+</mapper>
