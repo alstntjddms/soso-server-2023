@@ -15,7 +15,7 @@ public class KakaoDTO {
     private String kakaoGender;
     // 카카오 생일
     private String kakaoBirthday;
-    // 카카오 회원가입일11
+    // 카카오 회원가입일
     private Timestamp kakaoRegisterDate;
 
     public int getKakaoId() {
