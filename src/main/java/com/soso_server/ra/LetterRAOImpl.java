@@ -18,39 +18,22 @@ public class LetterRAOImpl implements LetterRAO {
 
     @Override
     public List<LetterDTO> findAllLetter() {
-        Long nowDate = System.currentTimeMillis();
-        Timestamp timeStamp = new Timestamp(nowDate);
-
-        LetterDTO letterDTO = new LetterDTO();
-        letterDTO.setLetterId(1);
-        letterDTO.setUserId(2);
-        letterDTO.setLetterContent("bb");
-        letterDTO.setLetterFont("cc");
-        letterDTO.setLetterFontColor("dd");
-        letterDTO.setLetterPaper("ee");
-        letterDTO.setLetterWriter("ff");
-        letterDTO.setLetterIcon("gg");
-        letterDTO.setLetterWriteDate(timeStamp);
-        List<LetterDTO> letterDTOS = new ArrayList<>();
-        letterDTOS.add(letterDTO);
-        return letterDTOS;
+        return mapper.findAllLetter();
     }
 
     @Override
     public int registerLetter(LetterDTO letterDTO) {
-//        return mapper.registerLetter();
-        return 1;
+        return mapper.registerLetter(letterDTO);
     }
 
     @Override
     public int registerSticker(StickerDTO stickerDTO) {
-//        return mapper.registerSticker();
-        return 0;
+//        return mapper.registerSticker(stickerDTO);
+        return 1;
     }
 
-    @Override
-    public void test1() {
-        mapper.test1();
+    public LetterDTO selectLetter(int letterId){
+        return mapper.selectLetter(letterId);
     }
 
 

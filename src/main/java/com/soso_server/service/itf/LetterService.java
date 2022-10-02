@@ -2,6 +2,7 @@ package com.soso_server.service.itf;
 
 import com.soso_server.dto.LetterDTO;
 import com.soso_server.dto.StickerDTO;
+import com.soso_server.exception.LetterException;
 
 import java.util.List;
 
@@ -11,13 +12,18 @@ public interface LetterService {
      * param void
      * return List<LetterDTO>
      */
-    public List<LetterDTO> findAllLetter();
+    public List<LetterDTO> findAllLetter() throws LetterException;
 
     /**
      * 편지를 등록한다.
      * param LetterDTO
      * return letterId
      */
-    public int registerLetter(LetterDTO letterDTO, StickerDTO stickerDTO);
+    public int registerLetter(LetterDTO letterDTO );
+
+    /**
+     * letterId로 LetterDTO를 조회한다.
+     */
+    public LetterDTO selectLetter(int letterId);
 
 }

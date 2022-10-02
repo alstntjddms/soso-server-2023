@@ -3,18 +3,27 @@
 
 <mapper namespace="com.soso_server.ra.itf.LetterRAO">
 
-    <select id="findAll" resultType="LetterDTO">
+    <select id="findAllLetter" resultType="LetterDTO">
         SELECT * FROM soso.letter
     </select>
 
     <insert id="registerLetter" parameterType="LetterDTO">
-        INSERT INTO TEST.POST(NUM, TITLE, CATEGORYNUM, WRITEBY, TEXT, WRITEAT)
-        VALUES (#{num}, #{title}, #{categorynum}, #{writeBy}, #{text}, CURRENT_TIMESTAMP)
+        INSERT INTO soso.letter(letterId, userId, letterContent, letterFont,
+                              letterFontColor, letterPaper, letterWriter,
+                              letterIcon, letterWriteDate)
+        VALUES (#{letterId}, #{userId}, #{letterContent}, #{letterFont},
+                #{letterFontColor}, #{letterPaper}, #{letterWriter},
+                #{letterIcon}, CURRENT_TIMESTAMP)
     </insert>
+
+    <select id="selectLetter" resultType="LetterDTO" parameterType="java.lang.Integer">
+        SELECT * FROM soso.letter WHERE letterId = #{num}
+    </select>
 
     <insert id="test1">
         INSERT INTO soso.test(id) VALUES (1)
     </insert>
+
 
 <!--    <insert id="registerSticker" parameterType="StickerDTO">-->
 <!--        INSERT INTO TEST.POST(NUM, TITLE, CATEGORYNUM, WRITEBY, TEXT, WRITEAT)-->

@@ -21,7 +21,6 @@ public interface LetterRAO {
      */
     public int registerLetter(LetterDTO letterDTO);
 
-
     /**
      * 스티커를 등록한다.
      * param LetterDTO
@@ -29,5 +28,10 @@ public interface LetterRAO {
      */
     public int registerSticker(StickerDTO stickerDTO);
 
-    public void test1();
+    /**
+     * letterId로 LetterDTO를 조회한다.
+     */
+    public LetterDTO selectLetter(int letterId);
+
+
 }

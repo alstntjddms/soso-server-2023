@@ -227,11 +227,6 @@
                             </goals>
                         </execution>
                     </executions>
-                    <configuration>
-                        <serverId>maven-snapshots</serverId>
-                        <nexusUrl>http://dev.radiuslab.co.kr:28081/repository/maven-snapshots/</nexusUrl>
-                        <skipStaging>true</skipStaging>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-site-plugin</artifactId>
