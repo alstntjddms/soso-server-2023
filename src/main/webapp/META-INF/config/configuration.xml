@@ -5,10 +5,10 @@
     <!-- 별칭 짓기 -->
     <!-- alias 에는 별칭할 이름을, type 에는 전체 클래스이름(패키지명 포함)을 넣어준다 -->
     <typeAliases>
-        <typeAlias alias="StickerDTO" type="com.soso_server.dto.KakaoDTO"/>
-        <typeAlias alias="StickerDTO" type="com.soso_server.dto.LetterDTO"/>
-        <typeAlias alias="StickerDTO" type="com.soso_server.dto.MemberDTO"/>
-        <typeAlias alias="LetterDTO" type="com.soso_server.dto.StickerDTO"/>
+        <typeAlias alias="KakaoDTO" type="com.soso_server.dto.KakaoDTO"/>
+        <typeAlias alias="LetterDTO" type="com.soso_server.dto.LetterDTO"/>
+        <typeAlias alias="MemberDTO" type="com.soso_server.dto.MemberDTO"/>
+        <typeAlias alias="StickerDTO" type="com.soso_server.dto.StickerDTO"/>
 
     </typeAliases>
 

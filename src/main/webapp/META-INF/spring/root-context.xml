@@ -38,14 +38,14 @@
     </mvc:annotation-driven>
 
 
-    <bean id="service" class="com.soso_server.service.KakaoServiceImpl">
+    <bean id="kakaoService" class="com.soso_server.service.KakaoServiceImpl">
+        <property name="rao" ref="kakaoRAO"></property>
+    </bean>
+    <bean id="letterService" class="com.soso_server.service.LetterServiceImpl">
         <property name="rao" ref="letterRAO"></property>
     </bean>
-    <bean id="service" class="com.soso_server.service.LetterServiceImpl">
-        <property name="rao" ref="letterRAO"></property>
-    </bean>
-    <bean id="service" class="com.soso_server.service.MemberServiceImpl">
-        <property name="rao" ref="letterRAO"></property>
+    <bean id="memberService" class="com.soso_server.service.MemberServiceImpl">
+        <property name="rao" ref="memberRAO"></property>
     </bean>
 
     <bean id="kakaoRAO" class="com.soso_server.ra.KakaoRAOImpl">
@@ -54,12 +54,12 @@
     <bean id="letterRAO" class="com.soso_server.ra.LetterRAOImpl">
         <property name="mapper" ref="letterMapper"/>
     </bean>
-    <bean id="memberRAO" class="com.soso_server.ra.memberRAOImpl">
+    <bean id="memberRAO" class="com.soso_server.ra.MemberRAOImpl">
         <property name="mapper" ref="memberMapper"/>
     </bean>
 
     <bean id="kakaoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.soso_server.ra.itf.LetterRAO" />
+        <property name="mapperInterface" value="com.soso_server.ra.itf.KakaoRAO" />
         <property name="sqlSessionFactory" ref="postSqlSessionFactory"/>
     </bean>
     <bean id="letterMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
@@ -67,7 +67,7 @@
         <property name="sqlSessionFactory" ref="postSqlSessionFactory"/>
     </bean>
     <bean id="memberMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.soso_server.ra.itf.LetterRAO" />
+        <property name="mapperInterface" value="com.soso_server.ra.itf.MemberRAO" />
         <property name="sqlSessionFactory" ref="postSqlSessionFactory"/>
     </bean>
 

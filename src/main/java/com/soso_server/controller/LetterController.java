@@ -15,7 +15,7 @@ import java.util.List;
 public class LetterController {
 
     @Autowired
-    LetterService service;
+    LetterService letterService;
 
     /**
      * 전체 Letter를 조회한다.
@@ -24,7 +24,7 @@ public class LetterController {
     @GetMapping("/letter")
     public ResponseEntity<List<LetterDTO>> findAllLetter(){
         try {
-            return new ResponseEntity<>(service.findAllLetter(), HttpStatus.OK);
+            return new ResponseEntity<>(letterService.findAllLetter(), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
         }
@@ -38,7 +38,7 @@ public class LetterController {
     @GetMapping("/letter/{letterId}")
     public ResponseEntity<LetterDTO> findLetter(@PathVariable int letterId){
         try {
-            return new ResponseEntity<>(service.selectLetter(letterId), HttpStatus.OK);
+            return new ResponseEntity<>(letterService.selectLetter(letterId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
         }
@@ -55,7 +55,7 @@ public class LetterController {
         System.out.println("letterDTO.getLetterId() = " + letterDTO.getLetterId());
         System.out.println("letterDTO.getLetterContent() = " + letterDTO.getLetterContent());
         try{
-            return new ResponseEntity<>(service.registerLetter(letterDTO), HttpStatus.OK);
+            return new ResponseEntity<>(letterService.registerLetter(letterDTO), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
         }

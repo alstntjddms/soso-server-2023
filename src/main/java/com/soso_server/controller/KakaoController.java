@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class KakaoController {
 
     @Autowired
-    KakaoService service;
+    KakaoService kakaoService;
 
     @GetMapping("/kakao")
     public KakaoService getService() {
-        return service;
+        return kakaoService;
     }
 }

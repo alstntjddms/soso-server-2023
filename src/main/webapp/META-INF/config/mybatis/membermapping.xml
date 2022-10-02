@@ -3,28 +3,5 @@
 
 <mapper namespace="com.soso_server.ra.itf.MemberRAO">
 
-    <select id="findAllLetter" resultType="LetterDTO">
-        SELECT * FROM soso.letter
-    </select>
-
-    <insert id="registerLetter" parameterType="LetterDTO">
-        INSERT INTO soso.letter( userId, letterContent, letterFont,
-                              letterFontColor, letterPaper, letterWriter,
-                              letterIcon, letterWriteDate)
-        VALUES (#{userId}, #{letterContent}, #{letterFont},
-                #{letterFontColor}, #{letterPaper}, #{letterWriter},
-                #{letterIcon}, CURRENT_TIMESTAMP)
-    </insert>
-
-    <select id="selectLetter" resultType="LetterDTO" parameterType="java.lang.Integer">
-        SELECT * FROM soso.letter WHERE letterId = #{num}
-    </select>
-
-
-
-<!--    <insert id="registerSticker" parameterType="StickerDTO">-->
-<!--        INSERT INTO TEST.POST(NUM, TITLE, CATEGORYNUM, WRITEBY, TEXT, WRITEAT)-->
-<!--        VALUES (#{num}, #{title}, #{categorynum}, #{writeBy}, #{text}, CURRENT_TIMESTAMP)-->
-<!--    </insert>-->
 
 </mapper>
