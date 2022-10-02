@@ -31,7 +31,7 @@ public class LetterController {
     }
 
     /**
-     * 한개의 Letter를 조회한다.
+     * letterId로 한개의 Letter를 조회한다.
      * @param letterId
      * @return LetterDTO
      */
