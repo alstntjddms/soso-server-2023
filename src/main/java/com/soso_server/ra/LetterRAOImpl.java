@@ -3,7 +3,6 @@ package com.soso_server.ra;
 import com.soso_server.dto.LetterDTO;
 import com.soso_server.dto.StickerDTO;
 import com.soso_server.ra.itf.LetterRAO;
-import com.soso_server.tmp.Board.IPostDAO;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -48,5 +47,11 @@ public class LetterRAOImpl implements LetterRAO {
 //        return mapper.registerSticker();
         return 0;
     }
+
+    @Override
+    public void test1() {
+        mapper.test1();
+    }
+
 
 }

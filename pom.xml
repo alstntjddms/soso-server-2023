@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>radius</groupId>
-    <artifactId>blog_api</artifactId>
+    <groupId>soso</groupId>
+    <artifactId>soso_api</artifactId>
     <version>1.0.0</version>
     <packaging>war</packaging>
-    <name>blog_server</name>
+    <name>soso_server</name>
 
     <properties>
         <spring.version>5.2.10.RELEASE</spring.version>
@@ -56,9 +56,6 @@
             <artifactId>pagehelper</artifactId>
             <version>5.1.11</version>
         </dependency>
-        <!-- ====================================== spring ====================================== -->
-        <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
-        <!-- https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2 -->
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -134,8 +131,6 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.30</version>
         </dependency>
-
-
 
         <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
         <dependency>
@@ -299,43 +294,4 @@
              -->
         </plugins>
     </build>
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <stylesheet>java</stylesheet>
-                    <show>private</show>
-                    <aggregate>true</aggregate>
-                    <doclint>none</doclint>
-                    <tags>
-                        <tag>
-                            <name>pre</name>
-                            <placement>a</placement>
-                            <head>Pre-Condition:</head>
-                        </tag>
-                        <tag>
-                            <name>post</name>
-                            <placement>a</placement>
-                            <head>Post-Condition:</head>
-                        </tag>
-                    </tags>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
-    <description>Radius Platform Top Maven Project</description>
-    <!-- nexus deploy setting -->
-    <distributionManagement>
-        <snapshotRepository>
-            <id>maven-snapshots</id>
-            <url>http://dev.radiuslab.co.kr:28081/repository/maven-snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>maven-releases</id>
-            <url>http://dev.radiuslab.co.kr:28081/repository/maven-releases/</url>
-        </repository>
-    </distributionManagement>
 </project>

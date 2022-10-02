@@ -34,10 +34,11 @@
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
             </bean>
         </mvc:message-converters>
+
     </mvc:annotation-driven>
 
 
-    <bean id="letterService" class="com.soso_server.service.LetterServiceImpl">
+    <bean id="service" class="com.soso_server.service.LetterServiceImpl">
         <property name="rao" ref="letterRAO"></property>
     </bean>
 
@@ -45,14 +46,10 @@
         <property name="mapper" ref="letterMapper"/>
     </bean>
 
-
     <bean id="letterMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="mapperInterface" value="com.soso_server.ra.itf.LetterRAO" />
         <property name="sqlSessionFactory" ref="postSqlSessionFactory"/>
     </bean>
-
-
-
 
 
     <bean id="postSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -69,10 +66,18 @@
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/soso"></property>
-        <property name="username" value="root"></property>
-        <property name="password" value="Alstn3599@@"></property>
+        <property name="url" value="jdbc:mysql://13.209.184.10:3306/soso"></property>
+        <property name="username" value="soso"></property>
+        <property name="password" value="Soso1234@@"></property>
     </bean>
+
+<!--    로컬-->
+<!--    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+<!--        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>-->
+<!--        <property name="url" value="jdbc:mysql://127.0.0.1:3306/tbl"></property>-->
+<!--        <property name="username" value="root"></property>-->
+<!--        <property name="password" value="Alstn3599@@"></property>-->
+<!--    </bean>-->
 
     <context:component-scan base-package="com.soso_server">
     </context:component-scan>

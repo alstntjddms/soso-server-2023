@@ -29,4 +29,5 @@ public interface LetterRAO {
      */
     public int registerSticker(StickerDTO stickerDTO);
 
+    public void test1();
 }

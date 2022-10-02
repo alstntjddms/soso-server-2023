@@ -12,9 +12,13 @@
         VALUES (#{num}, #{title}, #{categorynum}, #{writeBy}, #{text}, CURRENT_TIMESTAMP)
     </insert>
 
-    <insert id="registerSticker" parameterType="StickerDTO">
-        INSERT INTO TEST.POST(NUM, TITLE, CATEGORYNUM, WRITEBY, TEXT, WRITEAT)
-        VALUES (#{num}, #{title}, #{categorynum}, #{writeBy}, #{text}, CURRENT_TIMESTAMP)
+    <insert id="test1">
+        INSERT INTO soso.test(id) VALUES (1)
     </insert>
+
+<!--    <insert id="registerSticker" parameterType="StickerDTO">-->
+<!--        INSERT INTO TEST.POST(NUM, TITLE, CATEGORYNUM, WRITEBY, TEXT, WRITEAT)-->
+<!--        VALUES (#{num}, #{title}, #{categorynum}, #{writeBy}, #{text}, CURRENT_TIMESTAMP)-->
+<!--    </insert>-->
 
 </mapper>
