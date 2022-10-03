@@ -4,6 +4,7 @@ import com.soso_server.service.itf.KakaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,7 +14,7 @@ public class KakaoController {
     @Autowired
     KakaoService kakaoService;
 
-    @GetMapping("/kakao")
+    @PostMapping("/kakao")
     public KakaoService getService() {
         return kakaoService;
     }
