@@ -32,6 +32,20 @@ public class LetterController {
 
     /**
      * letterId로 한개의 Letter를 조회한다.
+     * @param userId
+     * @return LetterDTO
+     */
+    @GetMapping("/letter/userid/{userId}")
+    public ResponseEntity<List<LetterDTO>> findLetterByUserId(@PathVariable int userId){
+        try {
+            return new ResponseEntity<>(letterService.selectLetterByUserId(userId), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * userId로 한개의 Letter를 조회한다.
      * @param letterId
      * @return LetterDTO
      */
@@ -43,6 +57,7 @@ public class LetterController {
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
         }
     }
+
 
     /**
      * Letter를 등록한다.
@@ -60,6 +75,4 @@ public class LetterController {
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
         }
     }
-
-
 }

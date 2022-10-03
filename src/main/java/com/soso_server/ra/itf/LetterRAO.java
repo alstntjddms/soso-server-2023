@@ -33,5 +33,8 @@ public interface LetterRAO {
      */
     public LetterDTO selectLetter(int letterId);
 
-
+    /**
+     * uesrId로 LetterDTO를 조회한다.
+     */
+    public List<LetterDTO> selectLetterByUserId(int userId);
 }

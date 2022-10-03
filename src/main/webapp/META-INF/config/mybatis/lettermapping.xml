@@ -20,6 +20,10 @@
         SELECT * FROM soso.letter WHERE letterId = #{num}
     </select>
 
+    <select id="selectLetterByUserId" resultType="LetterDTO" parameterType="java.lang.Integer">
+        SELECT * FROM soso.letter WHERE userId = #{num}
+    </select>
+
 
 
 <!--    <insert id="registerSticker" parameterType="StickerDTO">-->

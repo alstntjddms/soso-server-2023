@@ -26,4 +26,9 @@ public interface LetterService {
      */
     public LetterDTO selectLetter(int letterId);
 
+    /**
+     * userId로 LetterDTO를 조회한다.
+     */
+    public List<LetterDTO> selectLetterByUserId(int userId);
+
 }

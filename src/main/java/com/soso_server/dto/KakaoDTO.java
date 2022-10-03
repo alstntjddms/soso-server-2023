@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class KakaoDTO {
     // 카카오 아이디
     private int kakaoId;
-    // 카카오 토큰kkkk
+    // 카카오 토큰
     private String kakaoToken;
     // 카카오 이메일
     private String kakaoEmail;

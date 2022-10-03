@@ -35,6 +35,8 @@ public class LetterServiceImpl implements LetterService {
         return null;
     }
 
+
+
     @Override
     public int registerLetter(LetterDTO letterDTO) {
         try{
@@ -61,5 +63,10 @@ public class LetterServiceImpl implements LetterService {
     @Override
     public LetterDTO selectLetter(int letterId) {
         return rao.selectLetter(letterId);
+    }
+
+    @Override
+    public List<LetterDTO> selectLetterByUserId(int userId) {
+        return rao.selectLetterByUserId(userId);
     }
 }

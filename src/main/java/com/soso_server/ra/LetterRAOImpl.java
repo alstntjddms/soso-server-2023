@@ -31,10 +31,13 @@ public class LetterRAOImpl implements LetterRAO {
 //        return mapper.registerSticker(stickerDTO);
         return 1;
     }
-
+    @Override
     public LetterDTO selectLetter(int letterId){
         return mapper.selectLetter(letterId);
     }
-
+    @Override
+    public List<LetterDTO> selectLetterByUserId(int userId){
+        return mapper.selectLetterByUserId(userId);
+    }
 
 }
