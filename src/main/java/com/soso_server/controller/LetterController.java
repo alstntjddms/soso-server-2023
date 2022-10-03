@@ -35,7 +35,7 @@ public class LetterController {
      * @param userId
      * @return LetterDTO
      */
-    @GetMapping("/letter/userid/{userId}")
+    @GetMapping("/letter/userId/{userId}")
     public ResponseEntity<List<LetterDTO>> findLetterByUserId(@PathVariable int userId){
         try {
             return new ResponseEntity<>(letterService.selectLetterByUserId(userId), HttpStatus.OK);
