@@ -31,6 +31,7 @@ public class LetterController {
     }
 
     /**
+<<<<<<< HEAD
      * letterId로 한개의 Letter를 조회한다.
      * @param userId
      * @return LetterDTO
@@ -46,6 +47,9 @@ public class LetterController {
 
     /**
      * userId로 한개의 Letter를 조회한다.
+=======
+     * letterId로 한개의 Letter를 조회한다.!!
+>>>>>>> main
      * @param letterId
      * @return LetterDTO
      */
