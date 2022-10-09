@@ -10,10 +10,10 @@
     <insert id="registerLetter" parameterType="LetterDTO">
         INSERT INTO soso.letter( userId, letterContent, letterFont,
                               letterFontColor, letterPaper, letterWriter,
-                              letterIcon, letterWriteDate)
+                              letterIcon, letterWriteDate, letterReadYn, letterDelYn)
         VALUES (#{userId}, #{letterContent}, #{letterFont},
                 #{letterFontColor}, #{letterPaper}, #{letterWriter},
-                #{letterIcon}, CURRENT_TIMESTAMP)
+                #{letterIcon}, CURRENT_TIMESTAMP, #{letterReadYn}, #{letterDelYn})
     </insert>
 
     <select id="selectLetter" resultType="LetterDTO" parameterType="java.lang.Integer">

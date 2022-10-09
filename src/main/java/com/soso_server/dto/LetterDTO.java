@@ -21,6 +21,10 @@ public class LetterDTO {
     private String letterIcon;
     // 편지 작성일
     private Timestamp letterWriteDate;
+    // 읽은 횟수
+    private String letterReadYn;
+    // 삭제여부
+    private boolean letterDelYn;
 
 
     public int getLetterId() {
@@ -93,5 +97,21 @@ public class LetterDTO {
 
     public void setLetterWriteDate(Timestamp letterWriteDate) {
         this.letterWriteDate = letterWriteDate;
+    }
+
+    public String getLetterReadYn() {
+        return letterReadYn;
+    }
+
+    public void setLetterReadYn(String letterReadYn) {
+        this.letterReadYn = letterReadYn;
+    }
+
+    public boolean isLetterDelYn() {
+        return letterDelYn;
+    }
+
+    public void setLetterDelYn(boolean letterDelYn) {
+        this.letterDelYn = letterDelYn;
     }
 }

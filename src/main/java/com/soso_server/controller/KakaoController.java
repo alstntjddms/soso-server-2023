@@ -1,11 +1,9 @@
 package com.soso_server.controller;
 
+import com.soso_server.dto.LetterDTO;
 import com.soso_server.service.itf.KakaoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -15,7 +13,8 @@ public class KakaoController {
     KakaoService kakaoService;
 
     @PostMapping("/kakao")
-    public KakaoService getService() {
-        return kakaoService;
+    public String getService(@RequestBody String accessCode) {
+        return kakaoService.getService(accessCode);
+
     }
 }

@@ -15,4 +15,9 @@ public class KakaoServiceImpl implements KakaoService {
     }
 
 
+    @Override
+    public String getService(String accessCode) {
+
+        return null;
+    }
 }
