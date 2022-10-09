@@ -1,0 +1,45 @@
+CREATE TABLE kakao_table{
+	kakaoId VARCHAR(20) not null,
+	kakaoToken VARCHAR(20) not null,
+	kakaoEmail VARCHAR(30),
+	kakaoNickName VARCHAR(10),
+	kakaoGender VARCHAR(10),
+	kakaoBirthday VARCHAR(10),
+	kakaoRegisterDate TIMESTAMP
+	PRIMARY KEY(kakaoId)
+}
+
+CREATE TABLE memeber_table{
+	userId VARCHAR(20) not null,
+	kakaoId VARCHAR(20) not null,
+	userNickName VARCHAR(10),
+	userGetAll VARCHAR(10),
+	userOpenDate TIMESTAMP,
+	userData TIMESTAMP,
+	PRIMARY KEY(userId),
+	FOREIGN KEY kakaoId REFERENCES kakao_table kakaoId
+} 
+
+CREATE TABLE letter_table{
+	letterId VARCHAR(20) not null,
+	userId VARCHAR(20) not null,
+	letterContent VARCHAR(100),
+	letterFont VARCHAR(10),
+	letterFontColor VARCHAR(10),
+	letterPaper VARCHAR(10),
+	letterWriter VARCHAR(10),
+	letterIcon VARCHAR(10),
+	letterWriteDate TIMESTAMP,
+	PRIMARY KEY(letterId),
+	FOREIGN KEY userId REFERENCES member_table userId
+}
+
+CREATE TABLE sticker_table{
+	stickerId VARCHAR(20) not null,
+	letterId VARCHAR(20) not null,
+	stickerIcon VARCHAR(10),
+	stickerX VARCHAR(10),
+	stickerY  VARCHAR(10),
+	PRIMARY KEY(stickerId),
+	FOREIGN letterId userId REFERENCES letter_table letterId
+} 
