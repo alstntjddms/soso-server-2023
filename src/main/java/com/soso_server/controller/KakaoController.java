@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://13.209.184.10:8080", allowedHeaders = "*")
 public class KakaoController {
 
     @Autowired
@@ -14,6 +14,7 @@ public class KakaoController {
 
     @PostMapping("/kakao")
     public String getService(@RequestBody String accessCode) {
+        System.out.println("accessCode = " + accessCode);
         return kakaoService.getService(accessCode);
 
     }

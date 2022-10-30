@@ -54,6 +54,7 @@ public class LetterServiceImpl implements LetterService {
             System.out.println(letterDTO);
             return rao.registerLetter(letterDTO);
 
+
         }catch (Exception e){
             new LetterException("알수없는 편지 등록오류", -999);
         }
