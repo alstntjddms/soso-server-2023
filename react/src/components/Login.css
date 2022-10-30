@@ -1,0 +1,114 @@
+.login_outContainer {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    touch-action: none;
+}
+
+.login_innerContainer {
+    width: 18rem;
+    height: 25rem;
+    background-color: transparent;
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    border: 1px solid white;
+    text-align: center;
+}
+
+.login_img {
+    margin-top: 1rem;
+    width: 10rem;
+}
+
+.login_title {
+    margin-top: 0rem;
+    color: white;
+}
+
+.login_kakao {
+    width: 14rem;
+}
+
+.login_text {
+    font-size: 0.7rem;
+    margin-top: 4rem;
+    color: white;
+}
+
+.login_name {
+    margin-top: 1rem;
+    font-size: 0.5rem;
+    color: darkgray;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.login_mailto {
+    text-decoration: none;
+    color: white;
+}
+
+/* login_individual is also applied*/
+.login_conditions {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    touch-action: none;
+}
+
+.login_conditions_fade {
+    opacity: 0;
+    transition: all 1.5s;
+    pointer-events: none;
+}
+
+.login_conditions_outContainer {
+    width: 18rem;
+    height: 25rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    border: 1px solid white;
+    text-align: center;
+    overflow: hidden;
+    touch-action: none;
+}
+
+.login_conditions_img {
+    position: relative;
+    left: 7.7rem;
+    top: 0.7rem;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.login_conditions_title {
+    color: white;
+    margin: auto;
+    font-size: 1.5rem;
+}
+
+.login_conditions_article {
+    margin: 1rem;
+    margin-top: 0.5rem;
+    height: 20rem;
+    overflow: scroll;
+    font-family: 'GangwonEdu_OTFBoldA';
+    color: white;
+    text-align: left;
+}

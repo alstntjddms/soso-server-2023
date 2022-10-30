@@ -1,0 +1,345 @@
+.menu_wrap {
+    z-index: 1;
+    width: 100%;
+    height: 100vh;
+    background-color: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    touch-action: none;
+}
+
+.menu_outContainer {
+    z-index: 3;
+    position: absolute;
+    width: 3rem;
+    height: 3rem;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+
+.menu_bar {
+    z-index: 2;
+    position: absolute;
+    right: 0;
+    background-color: rgba(255, 255, 255, 1.0);
+    width: 10rem;
+    height: 100vh;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s;
+}
+
+.menu_bar_active {
+    z-index: 2;
+    position: absolute;
+    right: 0;
+    background-color: rgba(255, 255, 255, 1.0);
+    width: 10rem;
+    height: 100vh;
+    opacity: 1;
+    transition: all 0.5s;
+}
+
+.menu_bar_active_wide {
+    z-index: 2;
+    position: absolute;
+    right: 0;
+    background-color: rgba(255, 255, 255, 1.0);
+    width: 100vw;
+    height: 100vh;
+    opacity: 1;
+    transition: all 0.5s;
+}
+
+.menu_bar_inner {
+    z-index: 2;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    font-size: 1.2rem;
+}
+
+.menu_bar_inner_true {
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.menu_bar_mypage {
+    z-index: 2;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    font-size: 1.2rem;
+}
+
+.menu_bar_mypage_true {
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.menu_bar_planetter {
+    z-index: 2;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    font-size: 1.2rem;
+}
+
+.menu_bar_planetter_true {
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.menu_bar_howto {
+    z-index: 2;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    font-size: 1.2rem;
+}
+
+.menu_bar_howto_true {
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.menu_outContainer_active {
+    z-index: 2;
+    position: absolute;
+    width: 3rem;
+    height: 3rem;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+
+.menu_img {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/2976/2976215.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 1.0rem;
+    height: 1.0rem;
+}
+
+.menu_img_active {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/2723/2723003.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 1.3rem;
+    height: 1.3rem;
+}
+
+.menu_img_active_plus {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/2723/2723003.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 1.3rem;
+    height: 1.3rem;
+    transform: rotate(180deg);
+}
+
+/*  */
+
+.menu_bar_mypage_box1 {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    width: 100vw;
+}
+
+.menu_bar_mypage_box1_p {
+    margin: 0.2rem;
+    font-size: 1.3rem;
+}
+
+.menu_bar_mypage_box1_innerBox {
+    margin: auto;
+    margin-left: 1.5rem;
+}
+
+.menu_bar_mypage_box1_logout {
+    border: 1px solid black;
+    background-color: rgba(230, 230, 230, 1.0);
+    width: 5rem;
+    height: 1.5rem;
+    text-align: center;
+    line-height: 1.7rem;
+    font-size: 1.0rem;
+}
+
+.menu_bar_mypage_line1 {
+    position: relative;
+    left: -10%;
+    width: 100vw;
+    height: 0.2rem;
+    margin-top: 6rem;
+    margin-bottom: 1rem;
+    border: none;
+    background-color: rgba(230, 230, 230, 1.0);
+}
+
+.menu_bar_mypage_box2 {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    width: 100vw;
+}
+
+.menu_bar_mypage_box2_p {
+    margin: 0.2rem;
+    font-size: 1.0rem;
+}
+
+.menu_bar_mypage_box2_innerBox {
+    margin: auto;
+    margin-left: 2rem;
+}
+
+.menu_bar_mypage_box2_notice {
+    position: relative;
+    background-color: rgba(230, 230, 230, 1.0);
+    width: 4rem;
+    height: 1.5rem;
+}
+
+.menu_bar_mypage_box2_notice_inner {
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    width: 1.0rem;
+    height: 1.0rem;
+    margin-left: 0.5rem;
+    top: 15%;
+}
+
+.menu_bar_mypage_line2 {
+    position: relative;
+    left: -10%;
+    width: 100vw;
+    height: 0.2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: none;
+    background-color: rgba(230, 230, 230, 1.0);
+}
+
+.menu_bar_mypage_box_p {
+    margin: 0.2rem;
+    font-size: 1.0rem;
+    width: 7rem;
+}
+
+.menu_bar_mypage_line {
+    position: relative;
+    left: -10%;
+    width: 100vw;
+    height: 0.2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: none;
+    background-color: rgba(230, 230, 230, 1.0);
+}
+
+/*  */
+
+.membershipWithdrawal {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 4;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    touch-action: none;
+    transition: all 1.5s;
+}
+
+.membershipWithdrawal_fade {
+    opacity: 0;
+    transition: all 1.5s;
+    pointer-events: none;
+}
+
+.membershipWithdrawal_outContainer {
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    width: 16rem;
+    height: 16rem;
+    background-color: rgba(255, 255, 255, 1.0);
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    border: 1px solid black;
+    text-align: center;
+    overflow: hidden;
+    touch-action: none;
+}
+
+.membershipWithdrawal_title {
+    position: relative;
+    margin: auto;
+    top: 20%;
+    font-size: 1.3rem;
+    padding-left: 2.0rem;
+    padding-right: 2.0rem;
+    margin-bottom: 0.2rem;
+}
+
+.membershipWithdrawal_p {
+    position: relative;
+    top: 20%;
+    padding-left: 2.0rem;
+    padding-right: 2.0rem;
+    font-size: 1.0rem;
+}
+
+.membershipWithdrawal_innerBox {
+    position: relative;
+    top: 34%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.membershipWithdrawal_HLine {
+    position: absolute;
+    width: 17rem;
+    height: 0.1rem;
+    top: 75%;
+    left: 0;
+    background-color: rgba(100, 100, 100, 1.0);
+}
+
+.membershipWithdrawal_VLine {
+    position: absolute;
+    width: 0.1rem;
+    height: 4rem;
+    top: 75%;
+    left: 50%;
+    background-color: rgba(100, 100, 100, 1.0);
+}
+
+.membershipWithdrawal_button {
+    position: relative;
+    margin: auto;
+    width: 6rem;
+    height: 2rem;
+    font-size: 1.0rem;
+    font-family: 'GangwonEdu_OTFBoldA';
+    line-height: 2.2rem;
+    color: black;
+    border: 1px solid black;
+}

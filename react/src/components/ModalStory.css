@@ -1,0 +1,157 @@
+.modalStory_fade {
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.5s;
+}
+
+.modalStory_nonFade {
+    visibility: visible;
+}
+
+.modalStory_outContainer {
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    touch-action: none;
+}
+
+.modalStory_innerContainer {
+    width: 18rem;
+    height: 23rem;
+    background-color: rgba(255, 255, 255, 1.0);
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    border: 1px solid rgba(230, 230, 230, 1.0);
+}
+
+.modalStory_outDiv {
+    width: 20rem;
+    height: 21rem;
+}
+
+.modalStory_img1 {
+    border: none;
+    background-image: url(https://cdn-icons-png.flaticon.com/512/6598/6598519.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 12rem;
+    height: 12rem;
+    left: 0%;
+    margin: auto;
+}
+
+.modalStory_img2 {
+    border: none;
+    background-image: url(https://cdn-icons-png.flaticon.com/512/6598/6598519.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 12rem;
+    height: 12rem;
+    left: 0%;
+    margin: auto;
+}
+
+.modalStory_img3 {
+    border: none;
+    background-image: url(https://cdn-icons-png.flaticon.com/512/6598/6598519.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 12rem;
+    height: 12rem;
+    left: 0%;
+    margin: auto;
+}
+
+.modalStory_img4 {
+    border: none;
+    background-image: url(https://cdn-icons-png.flaticon.com/512/6598/6598519.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 12rem;
+    height: 12rem;
+    left: 0%;
+    margin: auto;
+}
+
+.modalStory_p {
+    margin-top: 0.3rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    font-size: 1.0rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+.modalStory_startButton {
+    margin: auto;
+    text-align: center;
+    width: 12rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    background-color: rgba(230, 230, 230, 1.0);
+    border: 1px solid black;
+}
+
+.modalStory_close {
+    background-image: url(../lib/icon_close.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    position: relative;
+    left: 96%;
+    top: -3%;
+    width: 1.5rem;
+    height: 2rem;
+}
+
+.modalStory_cookie {
+    margin-top: 0.3rem;
+    font-size: 0.8rem;
+    color: white;
+    line-height: 1rem;
+}
+
+.modalStory_cookie_input {
+    vertical-align: middle;
+}
+
+.slick-prev::before {
+    color: white;
+    content: "◁";
+}
+
+.slick-next::before {
+    color: white;
+    content: "▷";
+}
+
+.slick-dots li.slick-active button:before {
+    opacity: .75;
+    color: lightgray;
+}
+
+.slick-dots li button:before {
+    font-size: 10px;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    content: '•';
+    text-align: center;
+    opacity: 1.0;
+    color: #000000;
+}
+
+.slick-dots {
+    top: 88%;
+    display: inline-table !important;
+}
