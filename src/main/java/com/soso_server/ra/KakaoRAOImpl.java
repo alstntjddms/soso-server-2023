@@ -1,5 +1,6 @@
 package com.soso_server.ra;
 
+import com.soso_server.dto.KakaoDTO;
 import com.soso_server.ra.itf.KakaoRAO;
 import com.soso_server.ra.itf.LetterRAO;
 
@@ -11,4 +12,13 @@ public class KakaoRAOImpl implements KakaoRAO {
         this.mapper = mapper;
     }
 
+    @Override
+    public void registerKakao(KakaoDTO kakaoDTO) {
+        mapper.registerKakao(kakaoDTO);
+    }
+
+    @Override
+    public KakaoDTO findOneKakao(String kakaoId, String kakaoEmail) {
+        return mapper.findOneKakao(kakaoId, kakaoEmail);
+    }
 }

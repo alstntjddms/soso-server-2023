@@ -3,7 +3,8 @@ package com.soso_server.service;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.soso_server.OAuth.kakaoAPI;
+import com.soso_server.AES.AES256;
+import com.soso_server.dto.KakaoDTO;
 import com.soso_server.ra.itf.KakaoRAO;
 import com.soso_server.service.itf.KakaoService;
 import org.springframework.http.HttpHeaders;
@@ -19,11 +20,10 @@ import java.util.HashMap;
 @Service
 public class KakaoServiceImpl implements KakaoService {
 
-    kakaoAPI kakaoApi = new kakaoAPI();
-
     KakaoRAO rao;
-    private final String HTTP_REQUEST = "https://kapi.kakao.com/v2/user/me";
+    AES256 aes256 = new AES256();
 
+    private final String HTTP_REQUEST = "https://kapi.kakao.com/v2/user/me";
 
     public void setRao(KakaoRAO rao) {
         this.rao = rao;
@@ -71,6 +71,9 @@ public class KakaoServiceImpl implements KakaoService {
             while ((line = br.readLine()) != null) {
                 result += line;
             }
+            br.close();
+            bw.close();
+
             System.out.println("response body : " + result);
 
             // Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
@@ -83,22 +86,24 @@ public class KakaoServiceImpl implements KakaoService {
             System.out.println("access_token : " + access_Token);
             System.out.println("refresh_token : " + refresh_Token);
 
-            br.close();
-            bw.close();
+            KakaoDTO kakaoDTO = getUserData(access_Token, refresh_Token);
+            System.out.println("DB에 입력된 데이터 = " + kakaoDTO);
 
-            getUserData(access_Token);
-        } catch (IOException e) {
+            System.out.println("aes256.encrypt(String.valueOf(kakaoDTO.getId())) = " + aes256.encrypt(String.valueOf(kakaoDTO.getId())));
+
+            return aes256.encrypt(String.valueOf(kakaoDTO.getId()));
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return access_Token;
-
+        return "카카오 테이블 id를 찾을 수 없음";
     }
 
     @Override
-    public HashMap<String, Object> getUserData(String access_Token) {
+    public KakaoDTO getUserData(String access_Token, String refresh_Token) {
         // 요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
-        HashMap<String, Object> userInfo = new HashMap<String, Object>();
+        KakaoDTO kakaoDTO = new KakaoDTO();
         String reqURL = "https://kapi.kakao.com/v2/user/me";
+
         try {
             URL url = new URL(reqURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -108,7 +113,6 @@ public class KakaoServiceImpl implements KakaoService {
             conn.setRequestProperty("Authorization", "Bearer " + access_Token);
 
             int responseCode = conn.getResponseCode();
-            System.out.println("responseCode : " + responseCode);
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -118,23 +122,44 @@ public class KakaoServiceImpl implements KakaoService {
             while ((line = br.readLine()) != null) {
                 result += line;
             }
-            System.out.println("response body : " + result);
-
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(result);
 
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
             JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 
-            String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-            String email = kakao_account.getAsJsonObject().get("email").getAsString();
+            // 필수 NOT NULL
+            kakaoDTO.setKakaoId(element.getAsJsonObject().get("id").getAsString());
+            kakaoDTO.setKakaoAccessToken(access_Token);
+            kakaoDTO.setKakaoRefreshToken(refresh_Token);
 
-            userInfo.put("nickname", nickname);
-            userInfo.put("email", email);
+            if(kakao_account.getAsJsonObject().get("email").getAsString() != null){
+                kakaoDTO.setKakaoEmail(kakao_account.getAsJsonObject().get("email").getAsString());
+            }
+            if(properties.getAsJsonObject().get("nickname").getAsString() != null){
+                kakaoDTO.setKakaoNickName(properties.getAsJsonObject().get("nickname").getAsString());
+            }
+            if(kakao_account.getAsJsonObject().get("gender").getAsString() != null){
+                kakaoDTO.setKakaoGender(kakao_account.getAsJsonObject().get("gender").getAsString());
+            }
+            if(kakao_account.getAsJsonObject().get("birthday").getAsString() != null){
+                kakaoDTO.setKakaoBirthday(kakao_account.getAsJsonObject().get("birthday").getAsString());
+            }
+            System.out.println("kakaoDTO = " + kakaoDTO.toString());
+
+            // 이미 등록됐는지 체크
+            KakaoDTO checkkakaoDTO = rao.findOneKakao(kakaoDTO.getKakaoId(), kakaoDTO.getKakaoEmail());
+
+            if(checkkakaoDTO != null){
+                System.out.println("already register");
+                return checkkakaoDTO;
+            }else{
+                rao.registerKakao(kakaoDTO);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return userInfo;
+        return rao.findOneKakao(kakaoDTO.getKakaoId(), kakaoDTO.getKakaoEmail());
     }
 }

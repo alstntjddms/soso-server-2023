@@ -3,7 +3,7 @@
 
 <mapper namespace="com.soso_server.ra.itf.LetterRAO">
 
-    <select id="findAllLetter" resultType="LetterDTO">
+    <select id="findLetterAll" resultType="LetterDTO">
         SELECT * FROM soso.letter
     </select>
 
@@ -16,19 +16,25 @@
                 #{letterIcon}, CURRENT_TIMESTAMP, #{letterReadYn}, #{letterDelYn})
     </insert>
 
-    <select id="selectLetter" resultType="LetterDTO" parameterType="java.lang.Integer">
+    <insert id="registerSticker" parameterType="StickerDTO">
+        INSERT INTO soso.STICKER(letterId, stickerIcon, stickerX, stickerY)
+        VALUES (#{letterId}, #{stickerIcon}, #{stickerX}, #{stickerY})
+    </insert>
+
+    <select id="selectLetter" resultType="java.lang.Integer" parameterType="java.lang.Integer">
         SELECT * FROM soso.letter WHERE letterId = #{num}
     </select>
 
-    <select id="selectLetterByUserId" resultType="LetterDTO" parameterType="java.lang.Integer">
-        SELECT * FROM soso.letter WHERE userId = #{num}
+    <select id="selectMaxLetterId" resultType="java.lang.Integer">
+        SELECT Max(letterId) FROM soso.letter
     </select>
 
+    <select id="selectLetterByUserId" resultType="LetterDTO" parameterType="java.lang.Integer">
+        SELECT * FROM soso.letter WHERE userId = #{userId}
+    </select>
 
-
-<!--    <insert id="registerSticker" parameterType="StickerDTO">-->
-<!--        INSERT INTO TEST.POST(NUM, TITLE, CATEGORYNUM, WRITEBY, TEXT, WRITEAT)-->
-<!--        VALUES (#{num}, #{title}, #{categorynum}, #{writeBy}, #{text}, CURRENT_TIMESTAMP)-->
-<!--    </insert>-->
+    <select id="selectStickerByLetterId" resultType="StickerDTO" parameterType="java.lang.Integer">
+        SELECT * FROM soso.STICKER WHERE letterId = #{letterId}
+    </select>
 
 </mapper>

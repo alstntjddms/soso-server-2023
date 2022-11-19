@@ -3,14 +3,17 @@ package com.soso_server.dto;
 import java.sql.Timestamp;
 
 public class KakaoDTO {
+    private int id;
     // 카카오 아이디
-    private int kakaoId;
-    // 카카오 토큰
-    private String kakaoToken;
+    private String kakaoId;
+    // 카카오 허용 토큰
+    private String kakaoAccessToken;
+    // 카카오 새로고침 토큰
+    private String kakaoRefreshToken;
     // 카카오 이메일
     private String kakaoEmail;
     // 카카오 닉네임
-    private String kakaNickName;
+    private String kakaoNickName;
     // 카카오 성별
     private String kakaoGender;
     // 카카오 생일
@@ -18,20 +21,36 @@ public class KakaoDTO {
     // 카카오 회원가입일
     private Timestamp kakaoRegisterDate;
 
-    public int getKakaoId() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getKakaoId() {
         return kakaoId;
     }
 
-    public void setKakaoId(int kakaoId) {
+    public void setKakaoId(String kakaoId) {
         this.kakaoId = kakaoId;
     }
 
-    public String getKakaoToken() {
-        return kakaoToken;
+    public String getKakaoAccessToken() {
+        return kakaoAccessToken;
     }
 
-    public void setKakaoToken(String kakaoToken) {
-        this.kakaoToken = kakaoToken;
+    public void setKakaoAccessToken(String kakaoAccessToken) {
+        this.kakaoAccessToken = kakaoAccessToken;
+    }
+
+    public String getKakaoRefreshToken() {
+        return kakaoRefreshToken;
+    }
+
+    public void setKakaoRefreshToken(String kakaoRefreshToken) {
+        this.kakaoRefreshToken = kakaoRefreshToken;
     }
 
     public String getKakaoEmail() {
@@ -42,12 +61,12 @@ public class KakaoDTO {
         this.kakaoEmail = kakaoEmail;
     }
 
-    public String getKakaNickName() {
-        return kakaNickName;
+    public String getKakaoNickName() {
+        return kakaoNickName;
     }
 
-    public void setKakaNickName(String kakaNickName) {
-        this.kakaNickName = kakaNickName;
+    public void setKakaoNickName(String kakaoNickName) {
+        this.kakaoNickName = kakaoNickName;
     }
 
     public String getKakaoGender() {
@@ -72,5 +91,20 @@ public class KakaoDTO {
 
     public void setKakaoRegisterDate(Timestamp kakaoRegisterDate) {
         this.kakaoRegisterDate = kakaoRegisterDate;
+    }
+
+    @Override
+    public String toString() {
+        return "KakaoDTO{" +
+                "id=" + id +
+                ", kakaoId='" + kakaoId + '\'' +
+                ", kakaoAccessToken='" + kakaoAccessToken + '\'' +
+                ", kakaoRefreshToken='" + kakaoRefreshToken + '\'' +
+                ", kakaoEmail='" + kakaoEmail + '\'' +
+                ", kakaNickName='" + kakaoNickName + '\'' +
+                ", kakaoGender='" + kakaoGender + '\'' +
+                ", kakaoBirthday='" + kakaoBirthday + '\'' +
+                ", kakaoRegisterDate=" + kakaoRegisterDate +
+                '}';
     }
 }

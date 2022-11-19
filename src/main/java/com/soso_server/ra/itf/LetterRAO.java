@@ -12,7 +12,7 @@ public interface LetterRAO {
      * param void
      * return List<LetterDTO>
      */
-    public List<LetterDTO> findAllLetter();
+    public List<LetterDTO> findLetterAll();
 
     /**
      * 편지를 등록한다.
@@ -28,13 +28,15 @@ public interface LetterRAO {
      */
     public int registerSticker(StickerDTO stickerDTO);
 
-    /**
-     * letterId로 LetterDTO를 조회한다.
-     */
-    public LetterDTO selectLetter(int letterId);
 
     /**
      * uesrId로 LetterDTO를 조회한다.
      */
     public List<LetterDTO> selectLetterByUserId(int userId);
+
+    public LetterDTO selectLetter(int letterId);
+
+    public List<StickerDTO> selectStickerByLetterId(int letterId);
+
+    public int selectMaxLetterId();
 }

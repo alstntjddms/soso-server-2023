@@ -86,7 +86,7 @@
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-        <property name="url" value="jdbc:mysql://13.209.184.10:3306/soso"></property>
+        <property name="url" value="jdbc:mysql://13.209.184.10:3306/soso?serverTimezone=Asia/Seoul"></property>
         <property name="username" value="soso"></property>
         <property name="password" value="Soso1234@@"></property>
     </bean>

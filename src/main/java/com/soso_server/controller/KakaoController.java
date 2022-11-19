@@ -5,8 +5,10 @@ import com.soso_server.service.itf.KakaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Base64;
+
 @RestController
-@CrossOrigin(origins = "http://13.209.184.10:8080", allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class KakaoController {
 
     @Autowired
@@ -14,7 +16,11 @@ public class KakaoController {
 
     @PostMapping("/kakao")
     public String getService(@RequestBody String accessCode) {
-        System.out.println("accessCode = " + accessCode);
+//        String encodedString =
+//                Base64.getEncoder().encodeToString(accessCode.getBytes());
+//        byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
+//        String decodedString = new String(decodedBytes);
+
         return kakaoService.getService(accessCode);
 
     }

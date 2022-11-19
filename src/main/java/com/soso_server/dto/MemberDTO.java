@@ -6,15 +6,15 @@ public class MemberDTO {
     // 유저 아이디
     private int userId;
     // 카카오 아이디
-    private int kakaoId;
+    private int id;
     // 유저 별명
     private String userNickName;
     // 편지받은 수
-    private int userGetAll;
+    private int userGetLetterCount;
     // 오픈 날짜
     private Timestamp userOpenDate;
     // 사용자 생성 날짜
-    private Timestamp userData;
+    private Timestamp userDate;
 
     public int getUserId() {
         return userId;
@@ -24,12 +24,12 @@ public class MemberDTO {
         this.userId = userId;
     }
 
-    public int getKakaoId() {
-        return kakaoId;
+    public int getId() {
+        return id;
     }
 
-    public void setKakaoId(int kakaoId) {
-        this.kakaoId = kakaoId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUserNickName() {
@@ -40,12 +40,12 @@ public class MemberDTO {
         this.userNickName = userNickName;
     }
 
-    public int getUserGetAll() {
-        return userGetAll;
+    public int getUserGetLetterCount() {
+        return userGetLetterCount;
     }
 
-    public void setUserGetAll(int userGetAll) {
-        this.userGetAll = userGetAll;
+    public void setUserGetLetterCount(int userGetLetterCount) {
+        this.userGetLetterCount = userGetLetterCount;
     }
 
     public Timestamp getUserOpenDate() {
@@ -56,11 +56,11 @@ public class MemberDTO {
         this.userOpenDate = userOpenDate;
     }
 
-    public Timestamp getUserData() {
-        return userData;
+    public Timestamp getUserDate() {
+        return userDate;
     }
 
-    public void setUserData(Timestamp userData) {
-        this.userData = userData;
+    public void setUserDate(Timestamp userDate) {
+        this.userDate = userDate;
     }
 }

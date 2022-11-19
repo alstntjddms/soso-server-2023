@@ -3,5 +3,27 @@
 
 <mapper namespace="com.soso_server.ra.itf.MemberRAO">
 
+    <insert id="registerMember" parameterType="MemberDTO">
+        INSERT INTO soso.MEMBER( userNickName, userGetLetterCount,
+                                 userOpenDate, userDate, id)
+        VALUES (#{userNickName}, #{userGetLetterCount},
+                CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{id})
+    </insert>
+
+    <select id="findKakaoByKakaoById" resultType="KakaoDTO">
+        SELECT * FROM soso.KAKAO WHERE id = #{id}
+    </select>
+
+    <select id="findMemberByUserId" resultType="MemberDTO" parameterType="java.lang.Integer">
+        SELECT * FROM soso.MEMBER WHERE userId = #{userId}
+    </select>
+
+    <select id="findMemberById" resultType="MemberDTO" parameterType="java.lang.Integer">
+        SELECT * FROM soso.MEMBER WHERE id = #{id}
+    </select>
+
+    <select id="findMemberAll" resultType="MemberDTO">
+        SELECT * FROM soso.MEMBER
+    </select>
 
 </mapper>

@@ -3,6 +3,17 @@
 
 <mapper namespace="com.soso_server.ra.itf.KakaoRAO">
 
+    <insert id="registerKakao" parameterType="KakaoDTO">
+        INSERT INTO soso.kakao( kakaoId, kakaoAccessToken, kakaoRefreshToken,
+                                kakaoEmail, kakaoNickName, kakaoGender,
+                                kakaoBirthday, kakaoRegisterDate)
+        VALUES (#{kakaoId}, #{kakaoAccessToken}, #{kakaoRefreshToken},
+                #{kakaoEmail}, #{kakaoNickName}, #{kakaoGender},
+                #{kakaoBirthday}, CURRENT_TIMESTAMP)
+    </insert>
 
+    <select id="findOneKakao" resultType="KakaoDTO" parameterType="java.lang.String">
+        SELECT * FROM soso.kakao WHERE kakaoId = #{kakaoId} AND kakaoEmail = #{kakaoEmail}
+    </select>
 
 </mapper>
