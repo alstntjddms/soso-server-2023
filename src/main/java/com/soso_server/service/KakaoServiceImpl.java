@@ -36,7 +36,7 @@ public class KakaoServiceImpl implements KakaoService {
         String reqURL = "https://kauth.kakao.com/oauth/token";
 
         String s1 = "a42a6c91f7b1bb0d3f8e3daef2b6f24b";
-        String s2 = "http://13.209.184.10:80/web/kakaologin/index.html";
+        String s2 = "http://www.plater.kr/web/kakaologin/index.html";
 
         try {
             URL url = new URL(reqURL);
@@ -53,7 +53,7 @@ public class KakaoServiceImpl implements KakaoService {
             sb.append("grant_type=authorization_code");
 
             sb.append("&client_id=a42a6c91f7b1bb0d3f8e3daef2b6f24b"); //본인이 발급받은 key
-            sb.append("&redirect_uri=http://13.209.184.10:80/web/kakaologin/index.html"); // 본인이 설정한 주소
+            sb.append("&redirect_uri=http://www.plater.kr/web/kakaologin/index.html"); // 본인이 설정한 주소
 
             sb.append("&" + authorize_code);
             bw.write(sb.toString());
