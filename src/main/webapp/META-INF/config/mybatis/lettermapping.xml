@@ -37,4 +37,8 @@
         SELECT * FROM soso.STICKER WHERE letterId = #{letterId}
     </select>
 
+    <update id="updateUserGetLetterCount" parameterType="java.lang.Integer">
+        UPDATE soso.MEMEBER SET userGetLetterCount = userGetLetterCount+1 WHERE userId = #{userId}
+    </update>
+
 </mapper>

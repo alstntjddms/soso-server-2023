@@ -53,7 +53,7 @@ public class LetterController {
 
     /**
      * Letter를 등록한다.
-     * @param JSONObject dto
+     * @param HashMap<String, Object> dto
      * @return 등록된 letterId
      */
     @PostMapping("/letter")

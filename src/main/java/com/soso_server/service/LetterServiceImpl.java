@@ -57,6 +57,8 @@ public class LetterServiceImpl implements LetterService {
             stickerDTO.setLetterId(maxLetterId);
             rao.registerSticker(stickerDTO);
 
+            rao.updateUserGetLetterCount(letterDTO.getUserId());
+
             return maxLetterId;
         }catch (Exception e){
             new LetterException("알수없는 편지 등록오류", -999);

@@ -39,4 +39,6 @@ public interface LetterRAO {
     public List<StickerDTO> selectStickerByLetterId(int letterId);
 
     public int selectMaxLetterId();
+
+    public void updateUserGetLetterCount(int userId);
 }

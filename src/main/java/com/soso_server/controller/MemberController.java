@@ -14,19 +14,32 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
-    //member를 Kakao테이블의 id를 찾아 등록한다.
+    /**
+     * 암호화된 kakao테이블 id로 정보를 찾아 멤버에 등록한다.
+     * @param id
+     * @return 암호화된 member의 userId
+     * @throws Exception
+     */
     @PostMapping("/member")
     public String registerMember(@RequestBody String id) throws Exception {
         return memberService.registerMember(id);
     }
 
-    //userId로 Member를 찾는다.
+    /**
+     * userId로 Member를 찾는다.
+     * @param userId
+     * @return MemberDTO
+     * @throws Exception
+     */
     @GetMapping("/memberbyuserid/{userId}")
     public MemberDTO findMemberByUserId(@PathVariable String userId) throws Exception {
         return memberService.findMemberByUserId(userId);
     }
 
-    //모든 member를 찾는다.
+    /**
+     * 모든 멤버를 조회한다.
+     * @return List<MemberDTO>
+     */
     @GetMapping("/memberall")
     public List<MemberDTO> findMemberAll(){
         return memberService.findMemberAll();

@@ -36,7 +36,7 @@ public class KakaoServiceImpl implements KakaoService {
         String reqURL = "https://kauth.kakao.com/oauth/token";
 
         String s1 = "a42a6c91f7b1bb0d3f8e3daef2b6f24b";
-        String s2 = "http://13.209.184.10:8080/web/kakaologin/index.html";
+        String s2 = "http://13.209.184.10:80/web/kakaologin/index.html";
 
         try {
             URL url = new URL(reqURL);
@@ -53,7 +53,7 @@ public class KakaoServiceImpl implements KakaoService {
             sb.append("grant_type=authorization_code");
 
             sb.append("&client_id=a42a6c91f7b1bb0d3f8e3daef2b6f24b"); //본인이 발급받은 key
-            sb.append("&redirect_uri=http://13.209.184.10:8080/web/kakaologin/index.html"); // 본인이 설정한 주소
+            sb.append("&redirect_uri=http://13.209.184.10:80/web/kakaologin/index.html"); // 본인이 설정한 주소
 
             sb.append("&" + authorize_code);
             bw.write(sb.toString());
@@ -128,21 +128,22 @@ public class KakaoServiceImpl implements KakaoService {
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
             JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 
+            System.out.println("element = " + element);
             // 필수 NOT NULL
             kakaoDTO.setKakaoId(element.getAsJsonObject().get("id").getAsString());
             kakaoDTO.setKakaoAccessToken(access_Token);
             kakaoDTO.setKakaoRefreshToken(refresh_Token);
 
-            if(kakao_account.getAsJsonObject().get("email").getAsString() != null){
+            if(kakao_account.getAsJsonObject().has("email")){
                 kakaoDTO.setKakaoEmail(kakao_account.getAsJsonObject().get("email").getAsString());
             }
-            if(properties.getAsJsonObject().get("nickname").getAsString() != null){
+            if(properties.getAsJsonObject().has("nickname")){
                 kakaoDTO.setKakaoNickName(properties.getAsJsonObject().get("nickname").getAsString());
             }
-            if(kakao_account.getAsJsonObject().get("gender").getAsString() != null){
+            if(kakao_account.getAsJsonObject().has("genter")){
                 kakaoDTO.setKakaoGender(kakao_account.getAsJsonObject().get("gender").getAsString());
             }
-            if(kakao_account.getAsJsonObject().get("birthday").getAsString() != null){
+            if(kakao_account.getAsJsonObject().has("birthday")){
                 kakaoDTO.setKakaoBirthday(kakao_account.getAsJsonObject().get("birthday").getAsString());
             }
             System.out.println("kakaoDTO = " + kakaoDTO.toString());
