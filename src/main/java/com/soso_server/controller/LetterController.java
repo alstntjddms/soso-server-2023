@@ -16,14 +16,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 
-@RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@RestController
 public class LetterController {
 
     @Autowired
     LetterService letterService;
 
     /**
+     * !!!!!관리용!!!!!
+     *
      * 전체 Letter를 조회한다.
      * @return List<LetterDTO>
      */

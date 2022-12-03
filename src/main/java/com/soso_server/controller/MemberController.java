@@ -3,12 +3,14 @@ package com.soso_server.controller;
 import com.soso_server.dto.MemberDTO;
 import com.soso_server.service.itf.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@RestController
 public class MemberController {
 
     @Autowired
@@ -21,8 +23,12 @@ public class MemberController {
      * @throws Exception
      */
     @PostMapping("/member")
-    public String registerMember(@RequestBody String id) throws Exception {
-        return memberService.registerMember(id);
+    public ResponseEntity<String> registerMember(@RequestBody String id){
+        try {
+            return new ResponseEntity<>(memberService.registerMember(id), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
@@ -32,8 +38,12 @@ public class MemberController {
      * @throws Exception
      */
     @GetMapping("/memberbyuserid/{userId}")
-    public MemberDTO findMemberByUserId(@PathVariable String userId) throws Exception {
-        return memberService.findMemberByUserId(userId);
+    public ResponseEntity<MemberDTO> findMemberByUserId(@PathVariable String userId){
+        try {
+            return new ResponseEntity<>(memberService.findMemberByUserId(userId), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
@@ -41,8 +51,12 @@ public class MemberController {
      * @return List<MemberDTO>
      */
     @GetMapping("/memberall")
-    public List<MemberDTO> findMemberAll(){
-        return memberService.findMemberAll();
+    public ResponseEntity<List<MemberDTO>> findMemberAll(){
+        try {
+            return new ResponseEntity<>(memberService.findMemberAll(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

@@ -1,18 +1,13 @@
 package com.soso_server.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.soso_server.AES.AES256;
+import com.soso_server.utils.AES256;
 import com.soso_server.dto.LetterDTO;
 import com.soso_server.dto.StickerDTO;
 import com.soso_server.exception.LetterException;
+import com.soso_server.exception.MemberException;
 import com.soso_server.ra.itf.LetterRAO;
 import com.soso_server.service.itf.LetterService;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -70,10 +65,12 @@ public class LetterServiceImpl implements LetterService {
     public List<LetterDTO> selectLetterByUserId(String userId) throws Exception {
         try{
             if(userId.length() < 20){
-                throw new LetterException();
+                throw new MemberException();
             }
             int decUserId = Integer.valueOf(aes256.decrypt(userId));
             return rao.selectLetterByUserId(decUserId);
+        }catch (MemberException me){
+            new MemberException("잘못된 userId", -999);
         }catch (Exception e) {
             new LetterException("잘못된 편지 조회 요청", -999);
         }

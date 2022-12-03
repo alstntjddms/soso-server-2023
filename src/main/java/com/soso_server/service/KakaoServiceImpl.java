@@ -3,19 +3,15 @@ package com.soso_server.service;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.soso_server.AES.AES256;
+import com.soso_server.utils.AES256;
 import com.soso_server.dto.KakaoDTO;
 import com.soso_server.ra.itf.KakaoRAO;
 import com.soso_server.service.itf.KakaoService;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.util.HashMap;
 
 @Service
 public class KakaoServiceImpl implements KakaoService {
@@ -140,7 +136,7 @@ public class KakaoServiceImpl implements KakaoService {
             if(properties.getAsJsonObject().has("nickname")){
                 kakaoDTO.setKakaoNickName(properties.getAsJsonObject().get("nickname").getAsString());
             }
-            if(kakao_account.getAsJsonObject().has("genter")){
+            if(kakao_account.getAsJsonObject().has("gender")){
                 kakaoDTO.setKakaoGender(kakao_account.getAsJsonObject().get("gender").getAsString());
             }
             if(kakao_account.getAsJsonObject().has("birthday")){
