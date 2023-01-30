@@ -25,6 +25,8 @@ public class MemberController {
     @PostMapping("/member")
     public ResponseEntity<String> registerMember(@RequestBody String id){
         try {
+            System.out.println("MemberController.registerMember");
+            System.out.println("id = " + id);
             return new ResponseEntity<>(memberService.registerMember(id), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
@@ -40,6 +42,8 @@ public class MemberController {
     @GetMapping("/memberbyuserid/{userId}")
     public ResponseEntity<MemberDTO> findMemberByUserId(@PathVariable String userId){
         try {
+            System.out.println("MemberController.findMemberByUserId");
+            System.out.println("userId = " + userId);
             return new ResponseEntity<>(memberService.findMemberByUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);

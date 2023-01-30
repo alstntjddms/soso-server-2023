@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Param;
 public interface KakaoRAO {
     public void registerKakao(KakaoDTO kakaoDTO);
 
-    public KakaoDTO findOneKakao(@Param("kakaoId") String kakaoId, @Param("kakaoEmail")String kakaoEmail);
+    public KakaoDTO findOneKakao(@Param("kakaoId") String kakaoId);
     }

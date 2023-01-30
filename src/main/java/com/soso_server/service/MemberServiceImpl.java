@@ -7,7 +7,11 @@ import com.soso_server.exception.MemberException;
 import com.soso_server.ra.itf.MemberRAO;
 import com.soso_server.service.itf.MemberService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Service
@@ -24,6 +28,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public String registerMember(String id){
         try{
+            System.out.println("MemberServiceImpl.registerMember");
             if(id.length() < 20){
                 throw new MemberException();
             }
@@ -31,14 +36,18 @@ public class MemberServiceImpl implements MemberService {
 
             KakaoDTO kakaoDTO = rao.findKakaoByKakaoById(decId);
 
-            MemberDTO memberDTO = new MemberDTO();
-            memberDTO.setUserNickName(kakaoDTO.getKakaoNickName());
-            memberDTO.setUserGetLetterCount(0);
-            memberDTO.setId(kakaoDTO.getId());
-
-            rao.registerMember(memberDTO);
-
-            return aes256.encrypt(String.valueOf(rao.findMemberById(kakaoDTO.getId()).getUserId()));
+            if(rao.findMemberById(kakaoDTO.getId()) == null){
+                System.out.println("신규 아이디 등록");
+                MemberDTO memberDTO = new MemberDTO();
+                memberDTO.setUserNickName(kakaoDTO.getKakaoNickName());
+                memberDTO.setUserGetLetterCount(0);
+                memberDTO.setId(kakaoDTO.getId());
+                rao.registerMember(memberDTO);
+            }else{
+                System.out.println("기존 아이디 있음");
+                return URLEncoder.encode(aes256.encrypt(String.valueOf(rao.findMemberById(kakaoDTO.getId()).getUserId())), "UTF-8");
+            }
+            return URLEncoder.encode(aes256.encrypt(String.valueOf(rao.findMemberById(kakaoDTO.getId()).getUserId())), "UTF-8");
         }catch (MemberException me){
             new MemberException("잘못된 id", -999);
         }catch (Exception e){
@@ -48,14 +57,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberDTO findMemberByUserId(String userId){
+    public MemberDTO findMemberByUserId(String userId) throws MemberException {
         try{
             if(userId.length() < 20){
                 throw new MemberException();
             }
-            return rao.findMemberByUserId(Integer.valueOf(aes256.decrypt(userId)));
+            return rao.findMemberByUserId(Integer.valueOf(URLDecoder.decode(aes256.decrypt(userId), "UTF-8")));
         }catch (MemberException me){
-            new MemberException("잘못된 userId", -999);
+            throw new MemberException("잘못된 userId", -999);
         }catch (Exception e){
             e.printStackTrace();
         }

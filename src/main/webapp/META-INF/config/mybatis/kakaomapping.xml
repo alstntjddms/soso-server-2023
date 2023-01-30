@@ -13,7 +13,7 @@
     </insert>
 
     <select id="findOneKakao" resultType="KakaoDTO" parameterType="java.lang.String">
-        SELECT * FROM soso.kakao WHERE kakaoId = #{kakaoId} AND kakaoEmail = #{kakaoEmail}
+        SELECT * FROM soso.kakao WHERE kakaoId = #{kakaoId}
     </select>
 
 </mapper>

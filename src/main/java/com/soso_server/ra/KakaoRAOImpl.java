@@ -18,7 +18,7 @@ public class KakaoRAOImpl implements KakaoRAO {
     }
 
     @Override
-    public KakaoDTO findOneKakao(String kakaoId, String kakaoEmail) {
-        return mapper.findOneKakao(kakaoId, kakaoEmail);
+    public KakaoDTO findOneKakao(String kakaoId) {
+        return mapper.findOneKakao(kakaoId);
     }
 }

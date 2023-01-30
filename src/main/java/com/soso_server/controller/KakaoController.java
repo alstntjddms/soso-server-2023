@@ -22,6 +22,8 @@ public class KakaoController {
     @PostMapping("/kakao")
     public ResponseEntity<String> getService(@RequestBody String authorize_code) {
         try {
+            System.out.println("authorize_code = " + authorize_code);
+            System.out.println("================================11");
             return new ResponseEntity<>(kakaoService.getService(authorize_code), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
