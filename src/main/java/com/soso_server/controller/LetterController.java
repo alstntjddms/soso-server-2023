@@ -69,6 +69,20 @@ public class LetterController {
     }
 
     /**
+     * letterId로 받은 한개 Letter를 조회한다.
+     * @param userId
+     * @return LetterDTO
+     */
+    @GetMapping("/letter/{letterId}")
+    public ResponseEntity<LetterDTO> findLetterByLetterId(@PathVariable String letterId){
+        try {
+            return new ResponseEntity<>(letterService.selectLetterByLetterId(letterId), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
      * letterId로 스티커를 조회한다.
      * @param letterId
      * @return List<StickerDTO>

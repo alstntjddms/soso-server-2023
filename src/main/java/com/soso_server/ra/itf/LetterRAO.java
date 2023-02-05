@@ -36,6 +36,8 @@ public interface LetterRAO {
 
     public LetterDTO selectLetter(int letterId);
 
+    public LetterDTO selectLetterByLetterId(int letterId);
+
     public StickerDTO selectStickerByLetterId(int letterId);
 
     public int selectMaxLetterId();

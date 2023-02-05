@@ -21,8 +21,8 @@
         VALUES (#{letterId}, #{stickerIcon}, #{stickerX}, #{stickerY})
     </insert>
 
-    <select id="selectLetter" resultType="java.lang.Integer" parameterType="java.lang.Integer">
-        SELECT * FROM soso.letter WHERE letterId = #{num}
+    <select id="selectLetterByLetterId" resultType="LetterDTO" parameterType="java.lang.Integer">
+        SELECT * FROM soso.letter WHERE letterId = #{letterId}
     </select>
 
     <select id="selectMaxLetterId" resultType="java.lang.Integer">
