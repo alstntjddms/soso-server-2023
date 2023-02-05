@@ -11,40 +11,40 @@ public interface MemberRAO {
      * @param memberDTO
      * @return
      */
-    int registerMember(MemberDTO memberDTO);
+    public int registerMember(MemberDTO memberDTO);
 
     /**
      * Kakao의 id로 KakaoDTO를 찾는다.
      * @param id
      * @return KakaoDTO
      */
-    KakaoDTO findKakaoByKakaoById(int id);
+    public KakaoDTO findKakaoByKakaoById(int id);
 
     /**
      * Member의 userId로 Member를 찾는다.
      * @param userId
      * @return MemberDTO
      */
-    MemberDTO findMemberByUserId(int userId);
+    public MemberDTO findMemberByUserId(int userId);
 
     /**
      * Member의 id로 Member를 찾는다.
      * @param id
      * @return MemberDTO
      */
-    MemberDTO findMemberById(int id);
+    public MemberDTO findMemberById(int id);
 
     /**
      * Member의 userId로 받은 편지수를 조회한다.
      * @param userId
      * return int
      */
-    int findMemberByLetterCount(int userId);
+    public int findMemberByLetterCount(int userId);
 
     /**
      * 모든 Member를 찾는다.
      * @param void
      * @return List<MemberDTO>
      */
-    List<MemberDTO> findMemberAll();
+    public List<MemberDTO> findMemberAll();
 }
