@@ -18,6 +18,10 @@
         SELECT * FROM soso.MEMBER WHERE userId = #{userId}
     </select>
 
+    <select id="findMemberByLetterCount" resultType="MemberDTO" parameterType="java.lang.Integer">
+        SELECT COUNT(*) FROM soso.LETTER WHERE userId = #{userId}
+    </select>
+
     <select id="findMemberById" resultType="MemberDTO" parameterType="java.lang.Integer">
         SELECT * FROM soso.MEMBER WHERE id = #{id}
     </select>

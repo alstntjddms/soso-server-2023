@@ -52,6 +52,8 @@ public class MemberController {
 
     /**
      * userId로 받은 편지의 개수를 조회한다.
+     * @param userId
+     * @throws Exception
      */
     @GetMapping("/member/lettercount/{userId}")
     public ResponseEntity<Integer> findMemberByLetterCount(@PathVariable String userId){
