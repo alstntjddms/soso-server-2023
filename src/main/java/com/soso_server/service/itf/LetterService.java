@@ -28,10 +28,10 @@ public interface LetterService {
     /**
      * userId로 LetterDTO를 조회한다.
      * @param userId
-     * @return List<LetterDTO>
+     * @return LetterDTO
      */
-    public List<LetterDTO> selectLetterByUserId(String userId) throws Exception;
+    public LetterDTO selectLetterByUserId(String userId) throws Exception;
 
-    public List<StickerDTO> findStickerByLetterId(int letterId);
+    public StickerDTO findStickerByLetterId(int letterId);
 
 }

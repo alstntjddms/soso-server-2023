@@ -32,11 +32,11 @@ public interface LetterRAO {
     /**
      * uesrId로 LetterDTO를 조회한다.
      */
-    public List<LetterDTO> selectLetterByUserId(int userId);
+    public LetterDTO selectLetterByUserId(int userId);
 
     public LetterDTO selectLetter(int letterId);
 
-    public List<StickerDTO> selectStickerByLetterId(int letterId);
+    public StickerDTO selectStickerByLetterId(int letterId);
 
     public int selectMaxLetterId();
 

@@ -76,7 +76,7 @@ public class MemberServiceImpl implements MemberService {
             if(userId.length() < 20){
                 throw new MemberException();
             }
-            return rao.findMemberByLetterCount(Integer.valueOf(URLDecoder.decode(aes256.decrypt(userId), "UTF-8")));
+            return rao.findMemberByLetterCount(Integer.parseInt(URLDecoder.decode(aes256.decrypt(userId), "UTF-8")));
         }catch (MemberException me){
             throw new MemberException("잘못된 userId", -999);
         }catch (Exception e){

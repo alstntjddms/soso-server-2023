@@ -61,7 +61,7 @@ public class LetterServiceImpl implements LetterService {
     }
 
     @Override
-    public List<LetterDTO> selectLetterByUserId(String userId) throws Exception {
+    public LetterDTO selectLetterByUserId(String userId) throws Exception {
         try{
             if(userId.length() < 20){
                 throw new MemberException();
@@ -77,7 +77,7 @@ public class LetterServiceImpl implements LetterService {
     }
 
     @Override
-    public List<StickerDTO> findStickerByLetterId(int letterId) {
+    public StickerDTO findStickerByLetterId(int letterId) {
         return rao.selectStickerByLetterId(letterId);
     }
 }

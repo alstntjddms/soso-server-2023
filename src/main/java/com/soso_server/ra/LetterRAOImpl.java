@@ -29,7 +29,7 @@ public class LetterRAOImpl implements LetterRAO {
         return mapper.registerSticker(stickerDTO);
     }
     @Override
-    public List<LetterDTO> selectLetterByUserId(int userId){
+    public LetterDTO selectLetterByUserId(int userId){
         return mapper.selectLetterByUserId(userId);
     }
 
@@ -40,7 +40,7 @@ public class LetterRAOImpl implements LetterRAO {
 
 
     @Override
-    public List<StickerDTO> selectStickerByLetterId(int letterId) {
+    public StickerDTO selectStickerByLetterId(int letterId) {
         return mapper.selectStickerByLetterId(letterId);
     }
 
