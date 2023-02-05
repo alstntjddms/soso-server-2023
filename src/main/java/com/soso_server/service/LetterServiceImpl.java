@@ -81,6 +81,19 @@ public class LetterServiceImpl implements LetterService {
     }
 
     @Override
+    public LetterDTO selectLetterByLetterId(String letterId) {
+        try {
+            if(letterId.length() < 20){
+                throw new LetterException();
+            }
+            return rao.selectLetterByLetterId(Integer.valueOf(aes256.decrypt(letterId)));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public StickerDTO findStickerByLetterId(int letterId) {
         return rao.selectStickerByLetterId(letterId);
     }

@@ -32,6 +32,13 @@ public interface LetterService {
      */
     public List<String> selectLetterIdByUserId(String userId) throws Exception;
 
+    /**
+     * letterId로 받은 한개 Letter를 조회한다.
+     * @param userId
+     * @return LetterDTO
+     */
+    public LetterDTO selectLetterByLetterId(String letterId);
+
     public StickerDTO findStickerByLetterId(int letterId);
 
 }
