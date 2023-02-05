@@ -39,14 +39,14 @@ public class LetterController {
     }
 
     /**
-     * userId로 받은 전체 Letter를 조회한다.
+     * userId로 받은 전체 LetterId를 조회한다.
      * @param userId
      * @return LetterDTO
      */
     @GetMapping("/letter/userid/{userId}")
-    public ResponseEntity<List<LetterDTO>> findLetterByUserId(@PathVariable String userId){
+    public ResponseEntity<List<String>> findLetterByUserId(@PathVariable String userId){
         try {
-            return new ResponseEntity<>(letterService.selectLetterByUserId(userId), HttpStatus.OK);
+            return new ResponseEntity<>(letterService.selectLetterIdByUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
         }

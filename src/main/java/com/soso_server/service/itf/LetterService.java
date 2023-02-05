@@ -30,7 +30,7 @@ public interface LetterService {
      * @param userId
      * @return LetterDTO
      */
-    public List<LetterDTO> selectLetterByUserId(String userId) throws Exception;
+    public List<String> selectLetterIdByUserId(String userId) throws Exception;
 
     public StickerDTO findStickerByLetterId(int letterId);
 
