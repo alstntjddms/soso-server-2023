@@ -10,6 +10,7 @@ import com.soso_server.ra.itf.LetterRAO;
 import com.soso_server.service.itf.LetterService;
 import org.springframework.stereotype.Service;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,7 +45,10 @@ public class LetterServiceImpl implements LetterService {
         try{
             ObjectMapper mapper = new ObjectMapper();
             LetterDTO letterDTO = mapper.convertValue(dto.get("letter"),LetterDTO.class);
+            letterDTO.setUserId(Integer.parseInt(URLDecoder.decode(aes256.decrypt(String.valueOf(letterDTO.getUserId())), "UTF-8" )));
             StickerDTO stickerDTO = mapper.convertValue(dto.get("sticker"),StickerDTO.class);
+            System.out.println("letterDTO = " + letterDTO);
+            System.out.println("stickerDTO = " + stickerDTO);
 
             rao.registerLetter(letterDTO);
 
@@ -61,7 +65,7 @@ public class LetterServiceImpl implements LetterService {
     }
 
     @Override
-    public LetterDTO selectLetterByUserId(String userId) throws Exception {
+    public List<LetterDTO> selectLetterByUserId(String userId) throws Exception {
         try{
             if(userId.length() < 20){
                 throw new MemberException();

@@ -29,7 +29,7 @@ public class LetterRAOImpl implements LetterRAO {
         return mapper.registerSticker(stickerDTO);
     }
     @Override
-    public LetterDTO selectLetterByUserId(int userId){
+    public List<LetterDTO> selectLetterByUserId(int userId){
         return mapper.selectLetterByUserId(userId);
     }
 

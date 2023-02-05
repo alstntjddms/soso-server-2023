@@ -44,7 +44,7 @@ public class LetterController {
      * @return LetterDTO
      */
     @GetMapping("/letter/userid/{userId}")
-    public ResponseEntity<LetterDTO> findLetterByUserId(@PathVariable String userId){
+    public ResponseEntity<List<LetterDTO>> findLetterByUserId(@PathVariable String userId){
         try {
             return new ResponseEntity<>(letterService.selectLetterByUserId(userId), HttpStatus.OK);
         }catch (Exception e){
@@ -61,6 +61,7 @@ public class LetterController {
     @PostMapping("/letter")
     public ResponseEntity<Integer> registerLetter(@RequestBody HashMap<String, Object> dto){
         try{
+            System.out.println("dto = " + dto);
             return new ResponseEntity<>(letterService.registerLetter(dto), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
