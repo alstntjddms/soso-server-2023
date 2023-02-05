@@ -65,13 +65,13 @@ public class LetterServiceImpl implements LetterService {
     }
 
     @Override
-    public List<LetterDTO> selectLetterByUserId(String userId) throws Exception {
+    public List<String> selectLetterIdByUserId(String userId) throws Exception {
         try{
             if(userId.length() < 20){
                 throw new MemberException();
             }
             int decUserId = Integer.valueOf(aes256.decrypt(userId));
-            return rao.selectLetterByUserId(decUserId);
+            return rao.selectLetterIdByUserId(decUserId);
         }catch (MemberException me){
             new MemberException("잘못된 userId", -999);
         }catch (Exception e) {

@@ -28,9 +28,10 @@ public class LetterRAOImpl implements LetterRAO {
     public int registerSticker(StickerDTO stickerDTO) {
         return mapper.registerSticker(stickerDTO);
     }
+
     @Override
-    public List<LetterDTO> selectLetterByUserId(int userId){
-        return mapper.selectLetterByUserId(userId);
+    public List<String> selectLetterIdByUserId(int userId) {
+        return mapper.selectLetterIdByUserId(userId);
     }
 
     @Override
