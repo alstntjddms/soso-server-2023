@@ -35,6 +35,13 @@ public interface MemberRAO {
     MemberDTO findMemberById(int id);
 
     /**
+     * Member의 userId로 받은 편지수를 조회한다.
+     * @param userId
+     * return int
+     */
+    int findMemberByLetterCount(int userId);
+
+    /**
      * 모든 Member를 찾는다.
      * @param void
      * @return List<MemberDTO>

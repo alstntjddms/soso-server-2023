@@ -51,6 +51,20 @@ public class MemberController {
     }
 
     /**
+     * userId로 받은 편지의 개수를 조회한다.
+     */
+    @GetMapping("/member/lettercount/{userId}")
+    public ResponseEntity<Integer> findMemberByLetterCount(@PathVariable String userId){
+        try{
+            System.out.println("MemberController.findMemberByLetterCount");
+            System.out.println("userId = " + userId);
+            return new ResponseEntity<>(memberService.findMemberByLetterCount(userId), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
      * 모든 멤버를 조회한다.
      * @return List<MemberDTO>
      */

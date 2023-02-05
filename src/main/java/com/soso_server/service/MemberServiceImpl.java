@@ -40,7 +40,6 @@ public class MemberServiceImpl implements MemberService {
                 System.out.println("신규 아이디 등록");
                 MemberDTO memberDTO = new MemberDTO();
                 memberDTO.setUserNickName(kakaoDTO.getKakaoNickName());
-                memberDTO.setUserGetLetterCount(0);
                 memberDTO.setId(kakaoDTO.getId());
                 rao.registerMember(memberDTO);
             }else{
@@ -69,6 +68,21 @@ public class MemberServiceImpl implements MemberService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public int findMemberByLetterCount(String userId) throws MemberException {
+        try{
+            if(userId.length() < 20){
+                throw new MemberException();
+            }
+            return rao.findMemberByLetterCount(Integer.valueOf(URLDecoder.decode(aes256.decrypt(userId), "UTF-8")));
+        }catch (MemberException me){
+            throw new MemberException("잘못된 userId", -999);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Override

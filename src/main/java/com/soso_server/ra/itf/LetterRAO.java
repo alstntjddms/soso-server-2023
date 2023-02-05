@@ -40,5 +40,4 @@ public interface LetterRAO {
 
     public int selectMaxLetterId();
 
-    public void updateUserGetLetterCount(int userId);
 }

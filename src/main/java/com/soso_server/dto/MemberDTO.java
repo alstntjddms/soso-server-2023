@@ -9,8 +9,6 @@ public class MemberDTO {
     private int id;
     // 유저 별명
     private String userNickName;
-    // 편지받은 수
-    private int userGetLetterCount;
     // 오픈 날짜
     private Timestamp userOpenDate;
     // 사용자 생성 날짜
@@ -38,14 +36,6 @@ public class MemberDTO {
 
     public void setUserNickName(String userNickName) {
         this.userNickName = userNickName;
-    }
-
-    public int getUserGetLetterCount() {
-        return userGetLetterCount;
-    }
-
-    public void setUserGetLetterCount(int userGetLetterCount) {
-        this.userGetLetterCount = userGetLetterCount;
     }
 
     public Timestamp getUserOpenDate() {

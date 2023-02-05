@@ -49,9 +49,5 @@ public class LetterRAOImpl implements LetterRAO {
         return mapper.selectMaxLetterId();
     }
 
-    @Override
-    public void updateUserGetLetterCount(int userId) {
-        mapper.updateUserGetLetterCount(userId);
-    }
 
 }

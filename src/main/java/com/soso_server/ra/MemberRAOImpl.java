@@ -36,6 +36,11 @@ public class MemberRAOImpl implements MemberRAO {
     }
 
     @Override
+    public int findMemberByLetterCount(int userId) {
+        return mapper.findMemberByLetterCount(userId);
+    }
+
+    @Override
     public List<MemberDTO> findMemberAll() {
         return mapper.findMemberAll();
     }

@@ -52,7 +52,6 @@ public class LetterServiceImpl implements LetterService {
             stickerDTO.setLetterId(maxLetterId);
             rao.registerSticker(stickerDTO);
 
-            rao.updateUserGetLetterCount(letterDTO.getUserId());
 
             return maxLetterId;
         }catch (Exception e){
