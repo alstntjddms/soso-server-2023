@@ -22,7 +22,7 @@ public interface LetterService {
      * @param dto
      * @return letterId
      */
-    public int registerLetter(HashMap<String, Object> dto);
+    public String registerLetter(HashMap<String, Object> dto);
 
 
     /**

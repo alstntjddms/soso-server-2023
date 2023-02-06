@@ -3,6 +3,7 @@ package com.soso_server.ra.itf;
 import com.soso_server.dto.KakaoDTO;
 import com.soso_server.dto.MemberDTO;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface MemberRAO {
@@ -40,6 +41,20 @@ public interface MemberRAO {
      * return int
      */
     public int findMemberByLetterCount(int userId);
+
+    /**
+     * Member의 OpenDate를 조회한다.
+     * @param userId
+     * return String 날짜
+     */
+    public Timestamp findOpenDate(int userId);
+
+    /**
+     * Member의 OpenDate를 현재날짜 기준으로 등록한다.
+     * @param userId
+     * return String 날짜
+     */
+    public Timestamp registerOpenDate(int userId);
 
     /**
      * 모든 Member를 찾는다.

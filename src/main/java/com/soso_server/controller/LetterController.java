@@ -32,6 +32,7 @@ public class LetterController {
     @GetMapping("/letterall")
     public ResponseEntity<List<LetterDTO>> findAllLetter(){
         try {
+            System.out.println("LetterController.findAllLetter");
             return new ResponseEntity<>(letterService.findLetterAll(), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
@@ -46,6 +47,8 @@ public class LetterController {
     @GetMapping("/letter/userid/{userId}")
     public ResponseEntity<List<String>> findLetterByUserId(@PathVariable String userId){
         try {
+            System.out.println("LetterController.findLetterByUserId");
+            System.out.println("userId = " + userId);
             return new ResponseEntity<>(letterService.selectLetterIdByUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
@@ -59,8 +62,9 @@ public class LetterController {
      * @return 등록된 letterId
      */
     @PostMapping("/letter")
-    public ResponseEntity<Integer> registerLetter(@RequestBody HashMap<String, Object> dto){
+    public ResponseEntity<String> registerLetter(@RequestBody HashMap<String, Object> dto){
         try{
+            System.out.println("LetterController.registerLetter");
             System.out.println("dto = " + dto);
             return new ResponseEntity<>(letterService.registerLetter(dto), HttpStatus.OK);
         }catch (Exception e){
@@ -70,12 +74,14 @@ public class LetterController {
 
     /**
      * letterId로 받은 한개 Letter를 조회한다.
-     * @param userId
+     * @param letterId
      * @return LetterDTO
      */
     @GetMapping("/letter/{letterId}")
     public ResponseEntity<LetterDTO> findLetterByLetterId(@PathVariable String letterId){
         try {
+            System.out.println("LetterController.findLetterByLetterId");
+            System.out.println("letterId = " + letterId);
             return new ResponseEntity<>(letterService.selectLetterByLetterId(letterId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
@@ -90,6 +96,8 @@ public class LetterController {
     @GetMapping("/sticker/letterid/{letterId}")
     public ResponseEntity<StickerDTO> findStickerByLetterId(@PathVariable int letterId){
         try{
+            System.out.println("LetterController.findStickerByLetterId");
+            System.out.println("letterId = " + letterId);
             return new ResponseEntity(letterService.findStickerByLetterId(letterId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);

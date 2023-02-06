@@ -3,6 +3,7 @@ package com.soso_server.service.itf;
 import com.soso_server.dto.MemberDTO;
 import com.soso_server.exception.MemberException;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface MemberService {
@@ -28,4 +29,8 @@ public interface MemberService {
     public MemberDTO findMemberByUserId(String userId) throws Exception;
 
     public int findMemberByLetterCount(String userId) throws MemberException;
+
+    public Timestamp registerOpenDate(String userId) throws Exception;
+
+    public Timestamp findOpenDate(String userId) throws Exception;
 }

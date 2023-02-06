@@ -7,11 +7,8 @@ import com.soso_server.exception.MemberException;
 import com.soso_server.ra.itf.MemberRAO;
 import com.soso_server.service.itf.MemberService;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Base64Utils;
-
-import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -61,7 +58,7 @@ public class MemberServiceImpl implements MemberService {
             if(userId.length() < 20){
                 throw new MemberException();
             }
-            return rao.findMemberByUserId(Integer.valueOf(URLDecoder.decode(aes256.decrypt(userId), "UTF-8")));
+            return rao.findMemberByUserId(Integer.parseInt(aes256.decrypt(userId)));
         }catch (MemberException me){
             throw new MemberException("잘못된 userId", -999);
         }catch (Exception e){
@@ -76,13 +73,43 @@ public class MemberServiceImpl implements MemberService {
             if(userId.length() < 20){
                 throw new MemberException();
             }
-            return rao.findMemberByLetterCount(Integer.parseInt(URLDecoder.decode(aes256.decrypt(userId), "UTF-8")));
+            return rao.findMemberByLetterCount(Integer.parseInt(aes256.decrypt(userId)));
         }catch (MemberException me){
             throw new MemberException("잘못된 userId", -999);
         }catch (Exception e){
             e.printStackTrace();
         }
         return 0;
+    }
+
+    @Override
+    public Timestamp registerOpenDate(String userId){
+        try{
+            if(userId.length() < 20){
+                throw new MemberException();
+            }
+            return rao.registerOpenDate(Integer.parseInt(aes256.decrypt(userId)));
+        }catch(MemberException e){
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Timestamp findOpenDate(String userId) {
+        try{
+            if(userId.length() < 20){
+                throw new MemberException();
+            }
+            return rao.findOpenDate(Integer.parseInt(aes256.decrypt(userId)));
+        }catch(MemberException e){
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override

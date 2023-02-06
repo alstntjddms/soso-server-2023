@@ -5,6 +5,7 @@ import com.soso_server.dto.MemberDTO;
 import com.soso_server.ra.itf.KakaoRAO;
 import com.soso_server.ra.itf.MemberRAO;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class MemberRAOImpl implements MemberRAO {
@@ -38,6 +39,16 @@ public class MemberRAOImpl implements MemberRAO {
     @Override
     public int findMemberByLetterCount(int userId) {
         return mapper.findMemberByLetterCount(userId);
+    }
+
+    @Override
+    public Timestamp findOpenDate(int userId) {
+        return mapper.findOpenDate(userId);
+    }
+
+    @Override
+    public Timestamp registerOpenDate(int userId) {
+        return mapper.registerOpenDate(userId);
     }
 
     @Override

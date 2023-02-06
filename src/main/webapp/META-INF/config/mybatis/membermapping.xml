@@ -4,10 +4,8 @@
 <mapper namespace="com.soso_server.ra.itf.MemberRAO">
 
     <insert id="registerMember" parameterType="MemberDTO">
-        INSERT INTO soso.MEMBER( userNickName, userGetLetterCount,
-                                 userOpenDate, userDate, id)
-        VALUES (#{userNickName}, #{userGetLetterCount},
-                CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{id})
+        INSERT INTO soso.MEMBER( userNickName, userOpenDate, userDate, id)
+        VALUES (#{userNickName}, null, CURRENT_TIMESTAMP, #{id})
     </insert>
 
     <select id="findKakaoByKakaoById" resultType="KakaoDTO">
@@ -18,8 +16,16 @@
         SELECT * FROM soso.MEMBER WHERE userId = #{userId}
     </select>
 
-    <select id="findMemberByLetterCount" resultType="MemberDTO" parameterType="java.lang.Integer">
+    <select id="findMemberByLetterCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
         SELECT COUNT(*) FROM soso.LETTER WHERE userId = #{userId}
+    </select>
+
+    <select id="findOpenDate" resultType="java.sql.Timestamp" parameterType="java.lang.Integer">
+        SELECT userOpenDate FROM soso.MEMBER WHERE userId = #{userId}
+    </select>
+
+    <select id="registerOpenDate" resultType="java.sql.Timestamp" parameterType="java.lang.Integer">
+        UPDATE soso.MEMBER SET userOpenDate = CURRENT_TIMESTAMP WHERE userId = #{userId}
     </select>
 
     <select id="findMemberById" resultType="MemberDTO" parameterType="java.lang.Integer">

@@ -27,49 +27,31 @@ public class KakaoServiceImpl implements KakaoService {
 
     @Override
     public String getService(String authorize_code) {
-        System.out.println("================================");
-
-        System.out.println("authorize_code = " + authorize_code);
         String access_Token="";
         String refresh_Token ="";
         String reqURL = "https://kauth.kakao.com/oauth/token";
-
-        System.out.println("================================");
 
         try {
             URL url = new URL(reqURL);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             // POST 요청을 위해 기본값이 false인 setDoOutput을 true로
-            System.out.println("================================");
-            System.out.println("KakaoServiceImpl.getService1");
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
             // POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
-            System.out.println("KakaoServiceImpl.getService2");
-            System.out.println("================================");
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             StringBuilder sb = new StringBuilder();
-            System.out.println("KakaoServiceImpl.getService3");
             sb.append("grant_type=authorization_code");
 
             sb.append("&client_id=a42a6c91f7b1bb0d3f8e3daef2b6f24b"); //본인이 발급받은 key
 //            sb.append("&redirect_uri=https://plater.kr/web/kakaologin/index.html"); // 본인이 설정한 주소
             sb.append("&redirect_uri=https://angelo-s-library-2.netlify.app/redirect"); // 본인이 설정한 주소
-            System.out.println("KakaoServiceImpl.getService4");
-            System.out.println("================================");
             sb.append("&" + authorize_code);
-            System.out.println("KakaoServiceImpl.getService5");
-            System.out.println("================================");
             bw.write(sb.toString());
-            System.out.println("KakaoServiceImpl.getService6");
-            System.out.println("================================");
             bw.flush();
-            System.out.println("KakaoServiceImpl.getService7");
-            System.out.println("sb = " + sb);
             // 결과 코드가 200이라면 성공
             int responseCode = conn.getResponseCode();
-            System.out.println("responseCode111 : " + responseCode);
+            System.out.println("responseCode : " + responseCode);
 
             // 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -136,7 +118,6 @@ public class KakaoServiceImpl implements KakaoService {
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
             JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 
-            System.out.println("element = " + element);
             // 필수 NOT NULL
             kakaoDTO.setKakaoId(element.getAsJsonObject().get("id").getAsString());
             kakaoDTO.setKakaoAccessToken(access_Token);

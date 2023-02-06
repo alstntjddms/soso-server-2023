@@ -41,7 +41,7 @@ public class LetterServiceImpl implements LetterService {
     }
 
     @Override
-    public int registerLetter(HashMap<String, Object> dto) {
+    public String registerLetter(HashMap<String, Object> dto) {
         try{
             ObjectMapper mapper = new ObjectMapper();
             LetterDTO letterDTO = mapper.convertValue(dto.get("letter"),LetterDTO.class);
@@ -56,12 +56,11 @@ public class LetterServiceImpl implements LetterService {
             stickerDTO.setLetterId(maxLetterId);
             rao.registerSticker(stickerDTO);
 
-
-            return maxLetterId;
+            return aes256.encrypt(String.valueOf(maxLetterId));
         }catch (Exception e){
             new LetterException("알수없는 편지 등록오류", -999);
         }
-        return 1;
+        return "";
     }
 
     @Override
@@ -71,7 +70,12 @@ public class LetterServiceImpl implements LetterService {
                 throw new MemberException();
             }
             int decUserId = Integer.valueOf(aes256.decrypt(userId));
-            return rao.selectLetterIdByUserId(decUserId);
+
+            List<String> result = null;
+            for(String s : rao.selectLetterIdByUserId(decUserId)){
+                result.add(aes256.encrypt(s));
+            }
+            return result;
         }catch (MemberException me){
             new MemberException("잘못된 userId", -999);
         }catch (Exception e) {

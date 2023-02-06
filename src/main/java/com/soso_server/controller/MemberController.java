@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -39,7 +40,7 @@ public class MemberController {
      * @return MemberDTO
      * @throws Exception
      */
-    @GetMapping("/memberbyuserid/{userId}")
+    @GetMapping("/member/{userId}")
     public ResponseEntity<MemberDTO> findMemberByUserId(@PathVariable String userId){
         try {
             System.out.println("MemberController.findMemberByUserId");
@@ -67,12 +68,45 @@ public class MemberController {
     }
 
     /**
+     * 멤버의 행성을 개설한다.
+     * @param userId
+     * @return null
+     */
+    @PostMapping("/member/registeropendate")
+    public ResponseEntity<Timestamp> registerOpenDate(@RequestBody String userId){
+        try{
+            System.out.println("MemberController.registerOpenDate");
+            System.out.println("userId = " + userId);
+            return new ResponseEntity<>(memberService.registerOpenDate(userId), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * 멤버의 행성 개성일을 가져온다.
+     * @param userId
+     * @return String
+     */
+    @GetMapping("/member/findopendate/{userId}")
+    public ResponseEntity<Timestamp> findOpenDate(@PathVariable String userId){
+        try{
+            System.out.println("MemberController.findOpenDate");
+            System.out.println("userId = " + userId);
+            return new ResponseEntity<>(memberService.findOpenDate(userId), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
      * 모든 멤버를 조회한다.
      * @return List<MemberDTO>
      */
     @GetMapping("/memberall")
     public ResponseEntity<List<MemberDTO>> findMemberAll(){
         try {
+            System.out.println("MemberController.findMemberAll");
             return new ResponseEntity<>(memberService.findMemberAll(), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
