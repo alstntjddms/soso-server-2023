@@ -6,6 +6,7 @@ import com.soso_server.dto.MemberDTO;
 import com.soso_server.exception.MemberException;
 import com.soso_server.ra.itf.MemberRAO;
 import com.soso_server.service.itf.MemberService;
+import com.soso_server.utils.ExternalAES256;
 import org.springframework.stereotype.Service;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
@@ -16,7 +17,7 @@ public class MemberServiceImpl implements MemberService {
 
     MemberRAO rao;
     AES256 aes256 = new AES256();
-
+    ExternalAES256 externalAES256 = new ExternalAES256();
 
     public void setRao(MemberRAO rao) {
         this.rao = rao;
@@ -110,6 +111,21 @@ public class MemberServiceImpl implements MemberService {
         }catch(MemberException e){
             return null;
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public String changeExternalUserId(String userId) throws Exception {
+        try {
+            if(userId.length() < 20){
+                throw new MemberException();
+            }
+            return externalAES256.encrypt(aes256.decrypt(userId));
+        }catch (MemberException me){
+            throw new MemberException("잘못된 userId", -999);
+        }catch (Exception e){
             e.printStackTrace();
         }
         return null;

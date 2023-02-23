@@ -33,4 +33,13 @@ public interface MemberService {
     public Timestamp registerOpenDate(String userId) throws Exception;
 
     public Timestamp findOpenDate(String userId) throws Exception;
+
+    /**
+     * 암호화된 userId를 외부공개용 userId로 다시 암호화한다.
+     * @param userId
+     * @return String
+     * @Throws Exception
+     */
+    public String changeExternalUserId(String userId) throws Exception;
+
 }

@@ -100,6 +100,23 @@ public class MemberController {
     }
 
     /**
+     * 암호화된 userId를 외부공개용 userId로 다시 암호화한다.
+     * @param userId
+     * @return String
+     * @Throws Exception
+     */
+    @GetMapping("/member/userid/{userId}")
+    public ResponseEntity<String> changeExternalUserId(@PathVariable String userId){
+        try{
+            System.out.println("MemberController.changeExternalUserId");
+            System.out.println("userId = " + userId);
+            return new ResponseEntity<>(memberService.changeExternalUserId(userId), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
      * 모든 멤버를 조회한다.
      * @return List<MemberDTO>
      */
