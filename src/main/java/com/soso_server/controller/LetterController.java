@@ -1,13 +1,8 @@
 package com.soso_server.controller;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.soso_server.dto.LetterDTO;
 import com.soso_server.dto.StickerDTO;
 import com.soso_server.service.itf.LetterService;
-import netscape.javascript.JSObject;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +40,7 @@ public class LetterController {
      * @return LetterDTO
      */
     @GetMapping("/letter/userid/{userId}")
-    public ResponseEntity<List<String>> findLetterByUserId(@PathVariable String userId){
+    public ResponseEntity<List<LetterDTO>> findLetterByUserId(@PathVariable String userId){
         try {
             System.out.println("LetterController.findLetterByUserId");
             System.out.println("userId = " + userId);

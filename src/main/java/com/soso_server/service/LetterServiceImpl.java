@@ -11,6 +11,7 @@ import com.soso_server.service.itf.LetterService;
 import org.springframework.stereotype.Service;
 
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 
@@ -43,10 +44,17 @@ public class LetterServiceImpl implements LetterService {
     @Override
     public String registerLetter(HashMap<String, Object> dto) {
         try{
+            System.out.println("LetterServiceImpl.registerLetter");
             ObjectMapper mapper = new ObjectMapper();
-            LetterDTO letterDTO = mapper.convertValue(dto.get("letter"),LetterDTO.class);
+            HashMap tmpLetterDTO = mapper.convertValue(dto.get("letter"), HashMap.class);
+            tmpLetterDTO.replace("userId", aes256.decrypt((String)tmpLetterDTO.get("userId")));
+
+            LetterDTO letterDTO = mapper.convertValue(dto.get("letter"), LetterDTO.class);
+            System.out.println("letterDTO = " + letterDTO);
+
             letterDTO.setUserId(Integer.parseInt(URLDecoder.decode(aes256.decrypt(String.valueOf(letterDTO.getUserId())), "UTF-8" )));
-            StickerDTO stickerDTO = mapper.convertValue(dto.get("sticker"),StickerDTO.class);
+            StickerDTO stickerDTO = mapper.convertValue(dto.get("sticker"), StickerDTO.class);
+
             System.out.println("letterDTO = " + letterDTO);
             System.out.println("stickerDTO = " + stickerDTO);
 
@@ -64,17 +72,23 @@ public class LetterServiceImpl implements LetterService {
     }
 
     @Override
-    public List<String> selectLetterIdByUserId(String userId) throws Exception {
+    public List<LetterDTO> selectLetterIdByUserId(String userId){
         try{
+            System.out.println("LetterServiceImpl.selectLetterIdByUserId");
             if(userId.length() < 20){
                 throw new MemberException();
             }
-            int decUserId = Integer.valueOf(aes256.decrypt(userId));
+            int decryptUserId = Integer.valueOf(aes256.decrypt(userId));
 
-            List<String> result = null;
-            for(String s : rao.selectLetterIdByUserId(decUserId)){
-                result.add(aes256.encrypt(s));
+            System.out.println("LetterServiceImpl.selectLetterIdByUserId");
+
+            List<LetterDTO> result = null;
+            for(LetterDTO letterDTO : rao.selectLetterIdByUserId(decryptUserId)){
+                letterDTO.setLetterId(Integer.parseInt(URLEncoder.encode(aes256.encrypt(String.valueOf(letterDTO.getLetterId())), "UTF-8")));
+                letterDTO.setUserId(Integer.parseInt(aes256.encrypt(String.valueOf(letterDTO.getUserId()))));
+                result.add(letterDTO);
             }
+            System.out.println("LetterServiceImpl.selectLetterIdByUserId");
             return result;
         }catch (MemberException me){
             new MemberException("잘못된 userId", -999);

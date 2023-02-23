@@ -30,7 +30,7 @@ public interface LetterService {
      * @param userId
      * @return LetterDTO
      */
-    public List<String> selectLetterIdByUserId(String userId) throws Exception;
+    public List<LetterDTO> selectLetterIdByUserId(String userId) throws Exception;
 
     /**
      * letterId로 받은 한개 Letter를 조회한다.

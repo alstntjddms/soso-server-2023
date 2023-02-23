@@ -30,7 +30,7 @@ public class LetterRAOImpl implements LetterRAO {
     }
 
     @Override
-    public List<String> selectLetterIdByUserId(int userId) {
+    public List<LetterDTO> selectLetterIdByUserId(int userId) {
         return mapper.selectLetterIdByUserId(userId);
     }
 

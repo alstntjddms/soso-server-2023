@@ -58,7 +58,10 @@ public class MemberServiceImpl implements MemberService {
             if(userId.length() < 20){
                 throw new MemberException();
             }
-            return rao.findMemberByUserId(Integer.parseInt(aes256.decrypt(userId)));
+            MemberDTO memberDTO = rao.findMemberByUserId(Integer.parseInt(aes256.decrypt(userId)));
+            memberDTO.setId(0);
+            memberDTO.setUserId(memberDTO.getUserId());
+            return memberDTO;
         }catch (MemberException me){
             throw new MemberException("잘못된 userId", -999);
         }catch (Exception e){

@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class MemberDTO {
     // 유저 아이디
-    private int userId;
+    private String userId;
     // 카카오 아이디
     private int id;
     // 유저 별명
@@ -14,11 +14,11 @@ public class MemberDTO {
     // 사용자 생성 날짜
     private Timestamp userDate;
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

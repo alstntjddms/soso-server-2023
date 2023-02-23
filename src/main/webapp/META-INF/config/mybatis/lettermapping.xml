@@ -29,8 +29,8 @@
         SELECT Max(letterId) FROM soso.letter
     </select>
 
-    <select id="selectLetterIdByUserId" resultType="java.lang.String" parameterType="java.lang.Integer">
-        SELECT letterId FROM soso.letter WHERE userId = #{userId}
+    <select id="selectLetterIdByUserId" resultType="LetterDTO" parameterType="java.lang.Integer">
+        SELECT * FROM soso.letter WHERE userId = #{userId}
     </select>
 
     <select id="selectStickerByLetterId" resultType="StickerDTO" parameterType="java.lang.Integer">

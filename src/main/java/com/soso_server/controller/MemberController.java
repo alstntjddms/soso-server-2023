@@ -72,7 +72,7 @@ public class MemberController {
      * @param userId
      * @return null
      */
-    @PostMapping("/member/registeropendate")
+    @PostMapping("/member/opendate")
     public ResponseEntity<Timestamp> registerOpenDate(@RequestBody String userId){
         try{
             System.out.println("MemberController.registerOpenDate");
@@ -88,7 +88,7 @@ public class MemberController {
      * @param userId
      * @return String
      */
-    @GetMapping("/member/findopendate/{userId}")
+    @GetMapping("/member/opendate/{userId}")
     public ResponseEntity<Timestamp> findOpenDate(@PathVariable String userId){
         try{
             System.out.println("MemberController.findOpenDate");
