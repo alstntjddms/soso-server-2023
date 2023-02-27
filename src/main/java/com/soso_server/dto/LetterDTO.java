@@ -4,9 +4,9 @@ import java.sql.Timestamp;
 
 public class LetterDTO {
     // 편지 아이디
-    private int letterId;
+    private String letterId;
     // 유저 아이디
-    private int userId;
+    private String userId;
     // 편지 내용
     private String letterContent;
     // 편지 글꼴
@@ -27,19 +27,19 @@ public class LetterDTO {
     private boolean letterDelYn;
 
 
-    public int getLetterId() {
+    public String getLetterId() {
         return letterId;
     }
 
-    public void setLetterId(int letterId) {
+    public void setLetterId(String letterId) {
         this.letterId = letterId;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

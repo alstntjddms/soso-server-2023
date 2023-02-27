@@ -8,10 +8,12 @@ import com.soso_server.exception.LetterException;
 import com.soso_server.exception.MemberException;
 import com.soso_server.ra.itf.LetterRAO;
 import com.soso_server.service.itf.LetterService;
+import com.soso_server.utils.ExternalAES256;
 import org.springframework.stereotype.Service;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class LetterServiceImpl implements LetterService {
 
     LetterRAO rao;
     AES256 aes256 = new AES256();
-
+    ExternalAES256 externalAES256 = new ExternalAES256();
 
     public void setRao(LetterRAO rao) {
         this.rao = rao;
@@ -44,19 +46,14 @@ public class LetterServiceImpl implements LetterService {
     @Override
     public String registerLetter(HashMap<String, Object> dto) {
         try{
-            System.out.println("LetterServiceImpl.registerLetter");
             ObjectMapper mapper = new ObjectMapper();
-            HashMap tmpLetterDTO = mapper.convertValue(dto.get("letter"), HashMap.class);
-            tmpLetterDTO.replace("userId", aes256.decrypt((String)tmpLetterDTO.get("userId")));
+            HashMap Letter = mapper.convertValue(dto.get("letter"), HashMap.class);
+            Letter.replace("userId", externalAES256.decrypt(URLDecoder.decode(Letter.get("userId").toString(), "UTF-8")));
+            LetterDTO letterDTO = mapper.convertValue(Letter, LetterDTO.class);
+            letterDTO.setLetterReadYn(false);
+            letterDTO.setLetterDelYn(false);
 
-            LetterDTO letterDTO = mapper.convertValue(dto.get("letter"), LetterDTO.class);
-            System.out.println("letterDTO = " + letterDTO);
-
-            letterDTO.setUserId(Integer.parseInt(URLDecoder.decode(aes256.decrypt(String.valueOf(letterDTO.getUserId())), "UTF-8" )));
             StickerDTO stickerDTO = mapper.convertValue(dto.get("sticker"), StickerDTO.class);
-
-            System.out.println("letterDTO = " + letterDTO);
-            System.out.println("stickerDTO = " + stickerDTO);
 
             rao.registerLetter(letterDTO);
 
@@ -74,21 +71,22 @@ public class LetterServiceImpl implements LetterService {
     @Override
     public List<LetterDTO> selectLetterIdByUserId(String userId){
         try{
-            System.out.println("LetterServiceImpl.selectLetterIdByUserId");
             if(userId.length() < 20){
                 throw new MemberException();
             }
-            int decryptUserId = Integer.valueOf(aes256.decrypt(userId));
 
-            System.out.println("LetterServiceImpl.selectLetterIdByUserId");
-
-            List<LetterDTO> result = null;
-            for(LetterDTO letterDTO : rao.selectLetterIdByUserId(decryptUserId)){
-                letterDTO.setLetterId(Integer.parseInt(URLEncoder.encode(aes256.encrypt(String.valueOf(letterDTO.getLetterId())), "UTF-8")));
-                letterDTO.setUserId(Integer.parseInt(aes256.encrypt(String.valueOf(letterDTO.getUserId()))));
+            List<LetterDTO> result = new ArrayList<>();
+            System.out.println("aes256.decrypt(userId) = " + aes256.decrypt(userId));
+            for(LetterDTO letterDTO : rao.selectLetterIdByUserId(Integer.valueOf(aes256.decrypt(userId)))){
+                letterDTO.setLetterId(URLEncoder.encode(aes256.encrypt(letterDTO.getLetterId()), "UTF-8").replaceAll("%2F", "MSJ"));
+                letterDTO.setUserId("");
+                letterDTO.setLetterContent("");
+                letterDTO.setLetterFont("");
+                letterDTO.setLetterFontColor("");
+                letterDTO.setLetterPaper("");
+                letterDTO.setLetterWriter("");
                 result.add(letterDTO);
             }
-            System.out.println("LetterServiceImpl.selectLetterIdByUserId");
             return result;
         }catch (MemberException me){
             new MemberException("잘못된 userId", -999);
@@ -104,7 +102,8 @@ public class LetterServiceImpl implements LetterService {
             if(letterId.length() < 20){
                 throw new LetterException();
             }
-            return rao.selectLetterByLetterId(Integer.valueOf(aes256.decrypt(letterId)));
+            System.out.println("letterId = " + letterId);
+            return rao.selectLetterByLetterId(Integer.valueOf(aes256.decrypt(letterId.replaceAll("MSJ", "/"))));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -112,7 +111,15 @@ public class LetterServiceImpl implements LetterService {
     }
 
     @Override
-    public StickerDTO findStickerByLetterId(int letterId) {
-        return rao.selectStickerByLetterId(letterId);
+    public StickerDTO findStickerByLetterId(String letterId) throws LetterException {
+        if(letterId.length() < 20){
+            throw new LetterException();
+        }
+        try{
+            return rao.selectStickerByLetterId(Integer.valueOf(aes256.decrypt(letterId.replaceAll("MSJ", "/"))));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

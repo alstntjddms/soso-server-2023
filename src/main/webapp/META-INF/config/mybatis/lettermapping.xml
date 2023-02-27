@@ -25,20 +25,33 @@
         SELECT * FROM soso.letter WHERE letterId = #{letterId}
     </select>
 
+    <select id="findOpenDate" resultType="java.sql.Timestamp" parameterType="java.lang.Integer">
+        SELECT userOpenDate FROM soso.member WHERE userid = #{userid}
+    </select>
+
     <select id="selectMaxLetterId" resultType="java.lang.Integer">
         SELECT Max(letterId) FROM soso.letter
     </select>
 
     <select id="selectLetterIdByUserId" resultType="LetterDTO" parameterType="java.lang.Integer">
-        SELECT * FROM soso.letter WHERE userId = #{userId}
+<!--        SELECT * FROM soso.letter WHERE userId = #{userId}-->
+        SELECT l.letterId, l.userId, l.letterContent, l.letterFont, l.letterFontColor, l.letterPaper,
+            l.letterWriter, l.letterIcon, l.letterWriteDate, l.letterReadYn, l.letterDelYn
+        from soso.letter l
+        LEFT JOIN soso.member m
+        ON l.userId = m.userId
+        WHERE m.userId = #{userId}
+        AND
+<!--        오픈데이트 이후에 받은 편지만 조회-->
+        l.letterWriteDate >  m.userOpenDate
+        AND
+<!--        오픈데이트의 n일동안 받을 기간 설정-->
+        (m.userOpenDate + 864000) > l.letterWriteDate
     </select>
 
     <select id="selectStickerByLetterId" resultType="StickerDTO" parameterType="java.lang.Integer">
         SELECT * FROM soso.STICKER WHERE letterId = #{letterId}
     </select>
 
-    <update id="updateUserGetLetterCount" parameterType="java.lang.Integer">
-        UPDATE soso.MEMEBER SET userGetLetterCount = userGetLetterCount+1 WHERE userId = #{userId}
-    </update>
 
 </mapper>
