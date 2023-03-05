@@ -75,7 +75,7 @@ public class MemberController {
      * @param userId
      * @throws Exception
      */
-    @GetMapping("/member/lettercount/{userId}")
+    @GetMapping("/member/external/lettercount/{userId}")
     public ResponseEntity<Integer> findLetterCountByExternalUserId(@PathVariable String userId){
         try{
             System.out.println("MemberController.findLetterCountByExternalUserId");
@@ -141,7 +141,7 @@ public class MemberController {
      * @return MemberDTO
      * @Throws Exception
      */
-    @GetMapping("/member/userid/{userId}")
+    @GetMapping("/member/external/userid/{userId}")
     public ResponseEntity<MemberDTO> infoByExternalUserId(@PathVariable String userId){
         try{
             System.out.println("MemberController.decryptExternalUserId");
