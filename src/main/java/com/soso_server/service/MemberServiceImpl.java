@@ -143,7 +143,7 @@ public class MemberServiceImpl implements MemberService {
             }
 
             String decUserId = externalAES256.decrypt(URLDecoder.decode(userId.replaceAll("MSJ", "/")));
-            MemberDTO memberDTO = rao.findMemberById(Integer.parseInt(decUserId));
+            MemberDTO memberDTO = rao.findMemberByUserId(Integer.parseInt(decUserId));
             memberDTO.setId(0);
             memberDTO.setUserId("");
             memberDTO.setUserDate(null);
