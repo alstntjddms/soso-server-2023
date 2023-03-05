@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -52,16 +53,34 @@ public class MemberController {
     }
 
     /**
+     * 내부용
      * userId로 받은 편지의 개수를 조회한다.
      * @param userId
      * @throws Exception
      */
     @GetMapping("/member/lettercount/{userId}")
-    public ResponseEntity<Integer> findMemberByLetterCount(@PathVariable String userId){
+    public ResponseEntity<Integer> findLetterCountByUserId(@PathVariable String userId){
         try{
             System.out.println("MemberController.findMemberByLetterCount");
             System.out.println("userId = " + userId);
             return new ResponseEntity<>(memberService.findMemberByLetterCount(userId), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * 외부용
+     * userId로 받은 편지의 개수를 조회한다.
+     * @param userId
+     * @throws Exception
+     */
+    @GetMapping("/member/lettercount/{userId}")
+    public ResponseEntity<Integer> findLetterCountByExternalUserId(@PathVariable String userId){
+        try{
+            System.out.println("MemberController.findLetterCountByExternalUserId");
+            System.out.println("userId = " + userId);
+            return new ResponseEntity<>(memberService.findLetterCountByExternalUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
         }
@@ -111,6 +130,23 @@ public class MemberController {
             System.out.println("MemberController.changeExternalUserId");
             System.out.println("userId = " + userId);
             return new ResponseEntity<>(memberService.changeExternalUserId(userId), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * 외부공개용 userId를 다시 복호화해서 닉네임, 오픈데이트 받아온다.
+     * @param userId
+     * @return MemberDTO
+     * @Throws Exception
+     */
+    @GetMapping("/member/userid/{userId}")
+    public ResponseEntity<MemberDTO> infoByExternalUserId(@PathVariable String userId){
+        try{
+            System.out.println("MemberController.decryptExternalUserId");
+            System.out.println("userId = " + userId);
+            return new ResponseEntity<>(memberService.infoByExternalUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
         }

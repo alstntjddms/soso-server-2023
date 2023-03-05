@@ -4,6 +4,7 @@ import com.soso_server.dto.MemberDTO;
 import com.soso_server.exception.MemberException;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 
 public interface MemberService {
@@ -42,4 +43,19 @@ public interface MemberService {
      */
     public String changeExternalUserId(String userId) throws Exception;
 
+    /**
+     * 외부공개용 userId를 다시 복호화해서 닉네임, 오픈데이트 받아온다.
+     * @param userId
+     * @return MemberDTO
+     * @Throws Exception
+     */
+    public MemberDTO infoByExternalUserId(String userId);
+
+    /**
+     * 외부공개용 userId를 다시 복호화해서 받은 편지 개수 받아온다.
+     * @param userId
+     * @return MemberDTO
+     * @Throws Exception
+     */
+    public Integer findLetterCountByExternalUserId(String userId);
 }
