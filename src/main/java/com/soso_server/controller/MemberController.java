@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -111,6 +112,23 @@ public class MemberController {
             System.out.println("MemberController.changeExternalUserId");
             System.out.println("userId = " + userId);
             return new ResponseEntity<>(memberService.changeExternalUserId(userId), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * 외부공개용 userId를 다시 복호화해서 닉네임, 오픈데이트 받아온다.
+     * @param userId
+     * @return MemberDTO
+     * @Throws Exception
+     */
+    @GetMapping("/member/userid/{userId}")
+    public ResponseEntity<MemberDTO> infoByExternalUserId(@PathVariable String userId){
+        try{
+            System.out.println("MemberController.decryptExternalUserId");
+            System.out.println("userId = " + userId);
+            return new ResponseEntity<>(memberService.infoByExternalUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
         }

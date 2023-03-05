@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -128,6 +129,28 @@ public class MemberServiceImpl implements MemberService {
             return URLEncoder.encode(externalAES256.encrypt(aes256.decrypt(userId.replaceAll("MSJ", "/"))), "UTF-8").replaceAll("%2F", "MSJ");
         }catch (MemberException me){
             throw new MemberException("잘못된 userId", -999);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public MemberDTO infoByExternalUserId(String userId) {
+        try {
+            if(userId.length() < 20){
+                throw new MemberException();
+            }
+
+            String decUserId = externalAES256.decrypt(URLDecoder.decode(userId.replaceAll("MSJ", "/")));
+            MemberDTO memberDTO = rao.findMemberById(Integer.parseInt(decUserId));
+            memberDTO.setId(0);
+            memberDTO.setUserId("");
+            memberDTO.setUserDate(null);
+
+            return memberDTO;
+        }catch (MemberException me){
+//            throw new MemberException("잘못된 userId", -999);
         }catch (Exception e){
             e.printStackTrace();
         }
