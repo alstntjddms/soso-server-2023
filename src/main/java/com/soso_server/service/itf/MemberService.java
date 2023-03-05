@@ -50,4 +50,12 @@ public interface MemberService {
      * @Throws Exception
      */
     public MemberDTO infoByExternalUserId(String userId);
+
+    /**
+     * 외부공개용 userId를 다시 복호화해서 받은 편지 개수 받아온다.
+     * @param userId
+     * @return MemberDTO
+     * @Throws Exception
+     */
+    public Integer findLetterCountByExternalUserId(String userId);
 }

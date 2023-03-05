@@ -158,6 +158,21 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Integer findLetterCountByExternalUserId(String userId) {
+        try{
+            if(userId.length() < 20){
+                throw new MemberException();
+            }
+            return rao.findMemberByLetterCount(Integer.parseInt(externalAES256.decrypt(URLDecoder.decode(userId.replaceAll("MSJ", "/")))));
+        }catch (MemberException me){
+//            throw new MemberException("잘못된 userId", -999);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
     public List<MemberDTO> findMemberAll() {
         return rao.findMemberAll();
     }

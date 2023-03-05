@@ -53,16 +53,34 @@ public class MemberController {
     }
 
     /**
+     * 내부용
      * userId로 받은 편지의 개수를 조회한다.
      * @param userId
      * @throws Exception
      */
     @GetMapping("/member/lettercount/{userId}")
-    public ResponseEntity<Integer> findMemberByLetterCount(@PathVariable String userId){
+    public ResponseEntity<Integer> findLetterCountByUserId(@PathVariable String userId){
         try{
             System.out.println("MemberController.findMemberByLetterCount");
             System.out.println("userId = " + userId);
             return new ResponseEntity<>(memberService.findMemberByLetterCount(userId), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * 외부용
+     * userId로 받은 편지의 개수를 조회한다.
+     * @param userId
+     * @throws Exception
+     */
+    @GetMapping("/member/lettercount/{userId}")
+    public ResponseEntity<Integer> findLetterCountByExternalUserId(@PathVariable String userId){
+        try{
+            System.out.println("MemberController.findLetterCountByExternalUserId");
+            System.out.println("userId = " + userId);
+            return new ResponseEntity<>(memberService.findLetterCountByExternalUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
         }
