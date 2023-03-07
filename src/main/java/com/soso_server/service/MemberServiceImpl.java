@@ -45,9 +45,8 @@ public class MemberServiceImpl implements MemberService {
                 rao.registerMember(memberDTO);
             }else{
                 System.out.println("기존 아이디 있음");
-                return URLEncoder.encode(aes256.encrypt(String.valueOf(rao.findMemberById(kakaoDTO.getId()).getUserId())), "UTF-8").replaceAll("%2F", "MSJ");
+                return URLEncoder.encode(aes256.encrypt(String.valueOf(rao.findMemberById(kakaoDTO.getId()).getUserId())), "UTF-8").replaceAll("%", "MSJSM");
             }
-            return URLEncoder.encode(aes256.encrypt(String.valueOf(rao.findMemberById(kakaoDTO.getId()).getUserId())), "UTF-8").replaceAll("%2F", "MSJ");
         }catch (MemberException me){
             new MemberException("잘못된 id", -999);
         }catch (Exception e){
@@ -62,8 +61,7 @@ public class MemberServiceImpl implements MemberService {
             if(userId.length() < 20){
                 throw new MemberException();
             }
-            System.out.println("aes256.decrypt(userId.replaceAll(\"MSJ\", \"/\") = " + aes256.decrypt(userId.replaceAll("MSJ", "/")));
-            MemberDTO memberDTO = rao.findMemberByUserId(Integer.parseInt(aes256.decrypt(userId.replaceAll("MSJ", "/"))));
+            MemberDTO memberDTO = rao.findMemberByUserId(Integer.parseInt(aes256.decrypt(URLDecoder.decode(userId.replaceAll("MSJSM", "%"), "UTF-8"))));
             memberDTO.setId(0);
             memberDTO.setUserId(memberDTO.getUserId());
             return memberDTO;
@@ -81,7 +79,7 @@ public class MemberServiceImpl implements MemberService {
             if(userId.length() < 20){
                 throw new MemberException();
             }
-            return rao.findMemberByLetterCount(Integer.parseInt(aes256.decrypt(userId.replaceAll("MSJ", "/"))));
+            return rao.findMemberByLetterCount(Integer.parseInt(aes256.decrypt(URLDecoder.decode(userId.replaceAll("MSJSM", "%"), "UTF-8"))));
         }catch (MemberException me){
             throw new MemberException("잘못된 userId", -999);
         }catch (Exception e){
@@ -96,7 +94,7 @@ public class MemberServiceImpl implements MemberService {
             if(userId.length() < 20){
                 throw new MemberException();
             }
-            return rao.registerOpenDate(Integer.parseInt(aes256.decrypt(URLDecoder.decode(userId.replaceAll("MSJ", "/"), "UTF-8"))));
+            return rao.registerOpenDate(Integer.parseInt(aes256.decrypt(URLDecoder.decode(userId.replaceAll("MSJSM", "%"), "UTF-8"))));
         }catch(MemberException e){
             return null;
         } catch (Exception e) {
@@ -111,7 +109,7 @@ public class MemberServiceImpl implements MemberService {
             if(userId.length() < 20){
                 throw new MemberException();
             }
-            return rao.findOpenDate(Integer.parseInt(aes256.decrypt(userId.replaceAll("MSJ", "/"))));
+            return rao.findOpenDate(Integer.parseInt(aes256.decrypt(URLDecoder.decode(userId.replaceAll("MSJSM", "%"), "UTF-8"))));
         }catch(MemberException e){
             return null;
         } catch (Exception e) {
@@ -126,7 +124,8 @@ public class MemberServiceImpl implements MemberService {
             if(userId.length() < 20){
                 throw new MemberException();
             }
-            return URLEncoder.encode(externalAES256.encrypt(aes256.decrypt(userId.replaceAll("MSJ", "/"))), "UTF-8").replaceAll("%2F", "MSJ");
+            return URLEncoder.encode(externalAES256.encrypt(aes256.decrypt(URLDecoder.decode(userId.replaceAll("MSJSM", "%"), "UTF-8"))), "UTF-8")
+                    .replaceAll("%", "MSJSM");
         }catch (MemberException me){
             throw new MemberException("잘못된 userId", -999);
         }catch (Exception e){
@@ -141,13 +140,11 @@ public class MemberServiceImpl implements MemberService {
             if(userId.length() < 20){
                 throw new MemberException();
             }
-
-            String decUserId = externalAES256.decrypt(URLDecoder.decode(userId.replaceAll("MSJ", "/")));
-            MemberDTO memberDTO = rao.findMemberByUserId(Integer.parseInt(decUserId));
+            Integer decUserId = Integer.parseInt(externalAES256.decrypt(URLDecoder.decode(userId.replaceAll("MSJSM", "%"), "UTF-8")));
+            MemberDTO memberDTO = rao.findMemberByUserId(decUserId);
             memberDTO.setId(0);
             memberDTO.setUserId("");
             memberDTO.setUserDate(null);
-
             return memberDTO;
         }catch (MemberException me){
 //            throw new MemberException("잘못된 userId", -999);
@@ -163,13 +160,13 @@ public class MemberServiceImpl implements MemberService {
             if(userId.length() < 20){
                 throw new MemberException();
             }
-            return rao.findMemberByLetterCount(Integer.parseInt(externalAES256.decrypt(URLDecoder.decode(userId.replaceAll("MSJ", "/")))));
+            return rao.findMemberByLetterCount(Integer.parseInt(externalAES256.decrypt(URLDecoder.decode(userId.replaceAll("MSJSM", "%")))));
         }catch (MemberException me){
 //            throw new MemberException("잘못된 userId", -999);
         }catch (Exception e){
             e.printStackTrace();
         }
-        return 0;
+        return null;
     }
 
     @Override

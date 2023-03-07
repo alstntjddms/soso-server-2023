@@ -48,18 +48,31 @@ public class LetterServiceImpl implements LetterService {
         try{
             ObjectMapper mapper = new ObjectMapper();
             HashMap Letter = mapper.convertValue(dto.get("letter"), HashMap.class);
-            Letter.replace("userId", externalAES256.decrypt(URLDecoder.decode(Letter.get("userId").toString(), "UTF-8")));
+            Letter.replace("userId", externalAES256.decrypt(URLDecoder.decode(Letter.get("userId").toString().replaceAll("MSJSM", "%"), "UTF-8")));
             LetterDTO letterDTO = mapper.convertValue(Letter, LetterDTO.class);
             letterDTO.setLetterReadYn(false);
             letterDTO.setLetterDelYn(false);
 
-            StickerDTO stickerDTO = mapper.convertValue(dto.get("sticker"), StickerDTO.class);
-
             rao.registerLetter(letterDTO);
 
+            ArrayList<StickerDTO> stickerDTOs = mapper.convertValue(dto.get("sticker"), ArrayList.class);
+
+            System.out.println("stickerDTO = " + stickerDTOs);
+            System.out.println("stickerDTO = " + stickerDTOs.get(0));
             int maxLetterId = rao.selectMaxLetterId();
-            stickerDTO.setLetterId(maxLetterId);
-            rao.registerSticker(stickerDTO);
+            System.out.println("maxLetterId = " + maxLetterId);
+            System.out.println("stickerDTOs.size() = " + stickerDTOs.size());
+            for(int i=0; i<stickerDTOs.size(); i++){
+                System.out.println("stickerDTOs.get(i) = " + stickerDTOs.get(i));
+                System.out.println("maxLetterId = " + maxLetterId);
+                StickerDTO ss = stickerDTOs.get(i);
+                System.out.println("ss = " + ss);
+                ss.setLetterId(maxLetterId);
+                System.out.println("LetterServiceImpl.registerLetter1");
+                rao.registerSticker(ss);
+                System.out.println("LetterServiceImpl.registerLetter2");
+            }
+
 
             return aes256.encrypt(String.valueOf(maxLetterId));
         }catch (Exception e){
@@ -78,7 +91,7 @@ public class LetterServiceImpl implements LetterService {
             List<LetterDTO> result = new ArrayList<>();
             System.out.println("aes256.decrypt(userId) = " + aes256.decrypt(userId));
             for(LetterDTO letterDTO : rao.selectLetterIdByUserId(Integer.valueOf(aes256.decrypt(userId)))){
-                letterDTO.setLetterId(URLEncoder.encode(aes256.encrypt(letterDTO.getLetterId()), "UTF-8").replaceAll("%2F", "MSJ"));
+                letterDTO.setLetterId(URLEncoder.encode(aes256.encrypt(letterDTO.getLetterId()), "UTF-8").replaceAll("%", "MSJSM"));
                 letterDTO.setUserId("");
                 letterDTO.setLetterContent("");
                 letterDTO.setLetterFont("");
@@ -103,7 +116,7 @@ public class LetterServiceImpl implements LetterService {
                 throw new LetterException();
             }
             System.out.println("letterId = " + letterId);
-            return rao.selectLetterByLetterId(Integer.valueOf(aes256.decrypt(letterId.replaceAll("MSJ", "/"))));
+            return rao.selectLetterByLetterId(Integer.valueOf(aes256.decrypt(letterId.replaceAll("MSJSM", "%"))));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -116,7 +129,7 @@ public class LetterServiceImpl implements LetterService {
             throw new LetterException();
         }
         try{
-            return rao.selectStickerByLetterId(Integer.valueOf(aes256.decrypt(letterId.replaceAll("MSJ", "/"))));
+            return rao.selectStickerByLetterId(Integer.valueOf(aes256.decrypt(letterId.replaceAll("MSJSM", "%"))));
         }catch (Exception e){
             e.printStackTrace();
         }
