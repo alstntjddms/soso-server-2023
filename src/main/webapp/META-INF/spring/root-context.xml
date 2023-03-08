@@ -84,11 +84,9 @@
         <constructor-arg index="0" ref="postSqlSessionFactory" />
     </bean>
 
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-        <property name="url" value="jdbc:mysql://localhost:3306/soso?serverTimezone=Asia/Seoul"></property>
-        <property name="username" value="soso"></property>
-        <property name="password" value="Soso1234@@"></property>
+<!--    jndi dataSource 연결-->
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:jboss/sosoDS"></property>
     </bean>
 
     <context:component-scan base-package="com.soso_server">
