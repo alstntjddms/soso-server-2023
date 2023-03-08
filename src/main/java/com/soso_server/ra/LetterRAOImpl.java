@@ -46,7 +46,7 @@ public class LetterRAOImpl implements LetterRAO {
 
 
     @Override
-    public StickerDTO selectStickerByLetterId(int letterId) {
+    public List<StickerDTO> selectStickerByLetterId(int letterId) {
         return mapper.selectStickerByLetterId(letterId);
     }
 

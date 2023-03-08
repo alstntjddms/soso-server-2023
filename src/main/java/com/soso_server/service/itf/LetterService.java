@@ -39,6 +39,6 @@ public interface LetterService {
      */
     public LetterDTO selectLetterByLetterId(String letterId);
 
-    public StickerDTO findStickerByLetterId(String letterId) throws LetterException;
+    public List<StickerDTO> findStickerByLetterId(String letterId) throws LetterException;
 
 }

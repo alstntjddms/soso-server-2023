@@ -10,6 +10,7 @@ import com.soso_server.ra.itf.LetterRAO;
 import com.soso_server.service.itf.LetterService;
 import com.soso_server.utils.ExternalAES256;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -22,7 +23,6 @@ public class LetterServiceImpl implements LetterService {
 
     LetterRAO rao;
     AES256 aes256 = new AES256();
-    ExternalAES256 externalAES256 = new ExternalAES256();
 
     public void setRao(LetterRAO rao) {
         this.rao = rao;
@@ -44,35 +44,24 @@ public class LetterServiceImpl implements LetterService {
     }
 
     @Override
+    @Transactional
     public String registerLetter(HashMap<String, Object> dto) {
         try{
             ObjectMapper mapper = new ObjectMapper();
             HashMap Letter = mapper.convertValue(dto.get("letter"), HashMap.class);
-            Letter.replace("userId", externalAES256.decrypt(URLDecoder.decode(Letter.get("userId").toString().replaceAll("MSJSM", "%"), "UTF-8")));
+            Letter.replace("userId", aes256.decrypt(URLDecoder.decode(Letter.get("userId").toString().replaceAll("MSJSM", "%"), "UTF-8")));
             LetterDTO letterDTO = mapper.convertValue(Letter, LetterDTO.class);
             letterDTO.setLetterReadYn(false);
             letterDTO.setLetterDelYn(false);
-
             rao.registerLetter(letterDTO);
 
             ArrayList<StickerDTO> stickerDTOs = mapper.convertValue(dto.get("sticker"), ArrayList.class);
-
-            System.out.println("stickerDTO = " + stickerDTOs);
-            System.out.println("stickerDTO = " + stickerDTOs.get(0));
             int maxLetterId = rao.selectMaxLetterId();
-            System.out.println("maxLetterId = " + maxLetterId);
-            System.out.println("stickerDTOs.size() = " + stickerDTOs.size());
             for(int i=0; i<stickerDTOs.size(); i++){
-                System.out.println("stickerDTOs.get(i) = " + stickerDTOs.get(i));
-                System.out.println("maxLetterId = " + maxLetterId);
-                StickerDTO ss = stickerDTOs.get(i);
-                System.out.println("ss = " + ss);
+                StickerDTO ss = mapper.convertValue(stickerDTOs.get(i), StickerDTO.class);;
                 ss.setLetterId(maxLetterId);
-                System.out.println("LetterServiceImpl.registerLetter1");
                 rao.registerSticker(ss);
-                System.out.println("LetterServiceImpl.registerLetter2");
             }
-
 
             return aes256.encrypt(String.valueOf(maxLetterId));
         }catch (Exception e){
@@ -89,8 +78,9 @@ public class LetterServiceImpl implements LetterService {
             }
 
             List<LetterDTO> result = new ArrayList<>();
-            System.out.println("aes256.decrypt(userId) = " + aes256.decrypt(userId));
-            for(LetterDTO letterDTO : rao.selectLetterIdByUserId(Integer.valueOf(aes256.decrypt(userId)))){
+            int decUserId = Integer.parseInt(aes256.decrypt(URLDecoder.decode(userId.replaceAll("MSJSM", "%"), "UTF-8")));
+            System.out.println("decUserId = " + decUserId);
+            for(LetterDTO letterDTO : rao.selectLetterIdByUserId(decUserId)){
                 letterDTO.setLetterId(URLEncoder.encode(aes256.encrypt(letterDTO.getLetterId()), "UTF-8").replaceAll("%", "MSJSM"));
                 letterDTO.setUserId("");
                 letterDTO.setLetterContent("");
@@ -116,7 +106,7 @@ public class LetterServiceImpl implements LetterService {
                 throw new LetterException();
             }
             System.out.println("letterId = " + letterId);
-            return rao.selectLetterByLetterId(Integer.valueOf(aes256.decrypt(letterId.replaceAll("MSJSM", "%"))));
+            return rao.selectLetterByLetterId(Integer.valueOf(aes256.decrypt(URLDecoder.decode(letterId.replaceAll("MSJSM", "%"), "UTF-8"))));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -124,12 +114,12 @@ public class LetterServiceImpl implements LetterService {
     }
 
     @Override
-    public StickerDTO findStickerByLetterId(String letterId) throws LetterException {
+    public List<StickerDTO> findStickerByLetterId(String letterId) throws LetterException {
         if(letterId.length() < 20){
             throw new LetterException();
         }
         try{
-            return rao.selectStickerByLetterId(Integer.valueOf(aes256.decrypt(letterId.replaceAll("MSJSM", "%"))));
+            return rao.selectStickerByLetterId(Integer.valueOf(aes256.decrypt(URLDecoder.decode(letterId.replaceAll("MSJSM", "%"), "UTF-8"))));
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -89,7 +89,7 @@ public class LetterController {
      * @return List<StickerDTO>
      */
     @GetMapping("/sticker/letterid/{letterId}")
-    public ResponseEntity<StickerDTO> findStickerByLetterId(@PathVariable String letterId){
+    public ResponseEntity<List<StickerDTO>> findStickerByLetterId(@PathVariable String letterId){
         try{
             System.out.println("LetterController.findStickerByLetterId");
             System.out.println("letterId = " + letterId);
