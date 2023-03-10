@@ -1,14 +1,15 @@
 package com.soso_server.utils;
 
+import java.io.*;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 
 public class ExternalAES256 {
-
+    BufferedReader reader = new BufferedReader(new FileReader("C://key/ExternalAES256.txt"));
     public static String alg = "AES/CBC/PKCS5Padding";
-    private final String key = "70890874578974573986234987792344";
+    private final String key = reader.readLine();
     private final String iv = key.substring(0, 16); // 16byte
 
     public String encrypt(String text) throws Exception {
