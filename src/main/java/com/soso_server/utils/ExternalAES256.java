@@ -42,5 +42,4 @@ public class ExternalAES256 {
     public String urlDecode(String text) throws UnsupportedEncodingException {
         return URLDecoder.decode(text.replaceAll("MSJSM", "%"), "UTF-8");
     }
-
 }

@@ -42,6 +42,7 @@ public class MemberServiceImpl implements MemberService {
                 rao.registerMember(memberDTO);
             }else{
                 System.out.println("기존 아이디 있음");
+
                 return aes256.urlEncode(aes256.encrypt(String.valueOf(rao.findMemberById(kakaoDTO.getId()).getUserId())));
             }
         }catch (MemberException me){
@@ -58,7 +59,9 @@ public class MemberServiceImpl implements MemberService {
             if(userId.length() < 20){
                 throw new MemberException();
             }
+
             MemberDTO memberDTO = rao.findMemberByUserId(Integer.parseInt(aes256.decrypt(aes256.urlDecode(userId))));
+
             memberDTO.setId(0);
             memberDTO.setUserId(memberDTO.getUserId());
             return memberDTO;
@@ -136,7 +139,9 @@ public class MemberServiceImpl implements MemberService {
             if(userId.length() < 20){
                 throw new MemberException();
             }
+
             Integer decUserId = Integer.parseInt(externalAES256.decrypt(externalAES256.urlDecode(userId)));
+
             MemberDTO memberDTO = rao.findMemberByUserId(decUserId);
             memberDTO.setId(0);
             memberDTO.setUserId("");

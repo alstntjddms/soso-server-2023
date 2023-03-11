@@ -8,6 +8,10 @@ import com.soso_server.exception.LetterException;
 import com.soso_server.exception.MemberException;
 import com.soso_server.ra.itf.LetterRAO;
 import com.soso_server.service.itf.LetterService;
+<<<<<<< HEAD
+=======
+import com.soso_server.utils.ExternalAES256;
+>>>>>>> beffde070423ba3c7899aadc72fe475faf9c9246
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +52,7 @@ public class LetterServiceImpl implements LetterService {
         try{
             ObjectMapper mapper = new ObjectMapper();
             HashMap Letter = mapper.convertValue(dto.get("letter"), HashMap.class);
+
             Letter.replace("userId", aes256.decrypt(aes256.urlDecode(Letter.get("userId").toString())));
             LetterDTO letterDTO = mapper.convertValue(Letter, LetterDTO.class);
             letterDTO.setLetterReadYn(false);
@@ -77,10 +82,12 @@ public class LetterServiceImpl implements LetterService {
             }
 
             List<LetterDTO> result = new ArrayList<>();
+
             int decUserId = Integer.parseInt(aes256.decrypt(aes256.urlDecode(userId)));
             System.out.println("decUserId = " + decUserId);
             for(LetterDTO letterDTO : rao.selectLetterIdByUserId(decUserId)){
                 letterDTO.setLetterId(aes256.urlEncode(aes256.encrypt(letterDTO.getLetterId())));
+
                 letterDTO.setUserId("");
                 letterDTO.setLetterContent("");
                 letterDTO.setLetterFont("");
@@ -105,6 +112,7 @@ public class LetterServiceImpl implements LetterService {
                 throw new LetterException();
             }
             System.out.println("letterId = " + letterId);
+
             return rao.selectLetterByLetterId(Integer.valueOf(aes256.decrypt(aes256.urlDecode(letterId))));
         }catch (Exception e){
             e.printStackTrace();
