@@ -32,4 +32,12 @@ public class AES256 {
         return new String(decrypted, "UTF-8");
     }
 
+    public String urlEncrypt(String text){
+        return text.replaceAll("%", "MSJSM");
+    }
+
+    public String urlDecrypt(String text){
+        return text.replaceAll("MSJSM", "%");
+    }
+
 }
