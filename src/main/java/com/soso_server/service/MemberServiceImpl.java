@@ -45,7 +45,7 @@ public class MemberServiceImpl implements MemberService {
                 rao.registerMember(memberDTO);
             }else{
                 System.out.println("기존 아이디 있음");
-                return URLEncoder.encode(aes256.encrypt(String.valueOf(rao.findMemberById(aes256.urlEncrypt(kakaoDTO.getId()).getUserId())))), "UTF-8");
+                return URLEncoder.encode(aes256.encrypt(String.valueOf(aes256.urlEncrypt(rao.findMemberById(kakaoDTO.getId()).getUserId()))), "UTF-8");
             }
         }catch (MemberException me){
             new MemberException("잘못된 id", -999);
