@@ -21,7 +21,6 @@ import java.util.List;
 @Service
 public class LetterServiceImpl implements LetterService {
 
-    @Autowired
     LetterRAO rao;
     AES256 aes256 = new AES256();
 
