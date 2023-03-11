@@ -3,6 +3,9 @@ package com.soso_server.utils;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Base64;
 
 public class ExternalAES256 {
@@ -32,4 +35,11 @@ public class ExternalAES256 {
         return new String(decrypted, "UTF-8");
     }
 
+    public String urlEncode(String text) throws UnsupportedEncodingException {
+        return URLEncoder.encode(text.replaceAll("%", "MSJSM"), "UTF-8");
+    }
+
+    public String urlDecode(String text) throws UnsupportedEncodingException {
+        return URLDecoder.decode(text.replaceAll("MSJSM", "%"), "UTF-8");
+    }
 }
