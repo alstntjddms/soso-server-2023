@@ -85,9 +85,19 @@
     </bean>
 
 <!--    jndi dataSource 연결-->
-    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:jboss/sosoDS"></property>
-    </bean>
+<!--    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">-->
+<!--        <property name="jndiName" value="java:jboss/sosoDS"></property>-->
+<!--    </bean>-->
+
+
+<!--    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">&ndash;&gt;-->
+<!--        <constructor-arg ref="dataSource" />-->
+<!--    </bean>-->
+
+
+<!--    jee jndi lookup-->
+    <jee:jndi-lookup id="dataSource" jndi-name="java:jboss/sosoDS" expected-type="javax.sql.DataSource"/>
+
 
     <context:component-scan base-package="com.soso_server">
     </context:component-scan>

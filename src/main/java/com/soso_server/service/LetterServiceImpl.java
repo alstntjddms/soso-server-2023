@@ -8,11 +8,6 @@ import com.soso_server.exception.LetterException;
 import com.soso_server.exception.MemberException;
 import com.soso_server.ra.itf.LetterRAO;
 import com.soso_server.service.itf.LetterService;
-<<<<<<< HEAD
-=======
-import com.soso_server.utils.ExternalAES256;
->>>>>>> beffde070423ba3c7899aadc72fe475faf9c9246
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,13 +41,12 @@ public class LetterServiceImpl implements LetterService {
     }
 
     @Override
-    @Transactional
     public String registerLetter(HashMap<String, Object> dto) {
         try{
             ObjectMapper mapper = new ObjectMapper();
             HashMap Letter = mapper.convertValue(dto.get("letter"), HashMap.class);
-
-            Letter.replace("userId", aes256.decrypt(aes256.urlDecode(Letter.get("userId").toString())));
+//            Letter.replace("userId", aes256.decrypt(URLDecoder.decode(Letter.get("userId").toString().replaceAll("MSJSM", "%"), "UTF-8")));
+            Letter.replace("userId", aes256.replaceDecodeDecryt(Letter.get("userId").toString()));
             LetterDTO letterDTO = mapper.convertValue(Letter, LetterDTO.class);
             letterDTO.setLetterReadYn(false);
             letterDTO.setLetterDelYn(false);
@@ -65,7 +59,6 @@ public class LetterServiceImpl implements LetterService {
                 ss.setLetterId(maxLetterId);
                 rao.registerSticker(ss);
             }
-
             return aes256.encrypt(String.valueOf(maxLetterId));
         }catch (Exception e){
             new LetterException("알수없는 편지 등록오류", -999);
@@ -82,10 +75,14 @@ public class LetterServiceImpl implements LetterService {
 
             List<LetterDTO> result = new ArrayList<>();
 
-            int decUserId = Integer.parseInt(aes256.decrypt(aes256.urlDecode(userId)));
+//            int decUserId = Integer.parseInt(aes256.decrypt(URLDecoder.decode(userId.replaceAll("MSJSM", "%"), "UTF-8")));
+            int decUserId = Integer.parseInt(aes256.replaceDecodeDecryt(userId));
+
             System.out.println("decUserId = " + decUserId);
             for(LetterDTO letterDTO : rao.selectLetterIdByUserId(decUserId)){
-                letterDTO.setLetterId(aes256.urlEncode(aes256.encrypt(letterDTO.getLetterId())));
+
+//                letterDTO.setLetterId(URLEncoder.encode(aes256.encrypt(letterDTO.getLetterId()), "UTF-8").replaceAll("%", "MSJSM"));
+                letterDTO.setLetterId(aes256.encryptEncodeReplace(letterDTO.getLetterId()));
 
                 letterDTO.setUserId("");
                 letterDTO.setLetterContent("");
@@ -111,8 +108,8 @@ public class LetterServiceImpl implements LetterService {
                 throw new LetterException();
             }
             System.out.println("letterId = " + letterId);
-
-            return rao.selectLetterByLetterId(Integer.valueOf(aes256.decrypt(aes256.urlDecode(letterId))));
+//            return rao.selectLetterByLetterId(Integer.valueOf(aes256.decrypt(URLDecoder.decode(letterId.replaceAll("MSJSM", "%"), "UTF-8"))));
+            return rao.selectLetterByLetterId(Integer.valueOf(aes256.replaceDecodeDecryt(letterId)));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -125,7 +122,8 @@ public class LetterServiceImpl implements LetterService {
             throw new LetterException();
         }
         try{
-            return rao.selectStickerByLetterId(Integer.valueOf(aes256.decrypt(aes256.urlDecode(letterId))));
+//            return rao.selectStickerByLetterId(Integer.valueOf(aes256.decrypt(URLDecoder.decode(letterId.replaceAll("MSJSM", "%"), "UTF-8"))));
+            return rao.selectStickerByLetterId(Integer.valueOf(aes256.replaceDecodeDecryt(letterId)));
         }catch (Exception e){
             e.printStackTrace();
         }

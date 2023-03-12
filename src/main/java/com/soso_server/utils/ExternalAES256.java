@@ -35,11 +35,12 @@ public class ExternalAES256 {
         return new String(decrypted, "UTF-8");
     }
 
-    public String urlEncode(String text) throws UnsupportedEncodingException {
-        return URLEncoder.encode(text.replaceAll("%", "MSJSM"), "UTF-8");
+    public String replaceDecodeDecryt(String text) throws Exception {
+        return decrypt(URLDecoder.decode(text.replaceAll("MSJSM", "%"), "UTF-8"));
     }
 
-    public String urlDecode(String text) throws UnsupportedEncodingException {
-        return URLDecoder.decode(text.replaceAll("MSJSM", "%"), "UTF-8");
+    public String encryptEncodeReplace(String text) throws Exception {
+        return URLEncoder.encode(encrypt(text), "UTF-8").replaceAll("%", "MSJSM");
     }
+
 }
