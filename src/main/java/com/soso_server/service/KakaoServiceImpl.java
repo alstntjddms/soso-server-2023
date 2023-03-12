@@ -47,6 +47,7 @@ public class KakaoServiceImpl implements KakaoService {
 
             sb.append("&client_id=a42a6c91f7b1bb0d3f8e3daef2b6f24b"); //본인이 발급받은 key
 //            sb.append("&redirect_uri=https://plater.kr/web/kakaologin/index.html"); // 본인이 설정한 주소
+//            sb.append("&redirect_uri=https://plater.kr/web/redirect"); // 본인이 설정한 주소
             sb.append("&redirect_uri=https://angelo-s-library-2.netlify.app/redirect"); // 본인이 설정한 주소
             sb.append("&" + authorize_code);
             bw.write(sb.toString());
