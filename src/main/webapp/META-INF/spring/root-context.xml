@@ -37,6 +37,8 @@
 
     </mvc:annotation-driven>
 
+    <bean id="AES256" class="com.soso_server.utils.AES256"></bean>
+    <bean id="ExternalAES256" class="com.soso_server.utils.ExternalAES256"></bean>
 
     <bean id="kakaoService" class="com.soso_server.service.KakaoServiceImpl">
         <property name="rao" ref="kakaoRAO"></property>

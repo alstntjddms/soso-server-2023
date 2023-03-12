@@ -3,7 +3,7 @@ package com.soso_server.utils;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Base64;
@@ -11,9 +11,17 @@ import java.util.Base64;
 public class ExternalAES256 {
 
     public static String alg = "AES/CBC/PKCS5Padding";
-    private final String key = "70890874578974573986234987792344";
-    private final String iv = key.substring(0, 16); // 16byte
+    private String key = "";
+    private String iv = ""; // 16byte
 
+    public ExternalAES256() throws IOException {
+        System.out.println("ExternalAES256 KEY Load...");
+        BufferedReader bufferReader = new BufferedReader(new FileReader("C:\\key\\ExternalAES256.txt"));
+        key = bufferReader.readLine();
+        iv = key.substring(0, 16);
+        System.out.println("ExternalAES256 KEY Load Success");
+
+    }
     public String encrypt(String text) throws Exception {
         Cipher cipher = Cipher.getInstance(alg);
         SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(), "AES");
@@ -35,12 +43,12 @@ public class ExternalAES256 {
         return new String(decrypted, "UTF-8");
     }
 
-    public String replaceDecodeDecryt(String text) throws Exception {
-        return decrypt(URLDecoder.decode(text.replaceAll("MSJSM", "%"), "UTF-8"));
-    }
-
     public String encryptEncodeReplace(String text) throws Exception {
         return URLEncoder.encode(encrypt(text), "UTF-8").replaceAll("%", "MSJSM");
+    }
+
+    public String replaceDecodeDecryt(String text) throws Exception {
+        return decrypt(URLDecoder.decode(text.replaceAll("MSJSM", "%"), "UTF-8"));
     }
 
 }

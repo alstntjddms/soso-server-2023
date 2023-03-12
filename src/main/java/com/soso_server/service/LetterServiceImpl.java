@@ -8,6 +8,7 @@ import com.soso_server.exception.LetterException;
 import com.soso_server.exception.MemberException;
 import com.soso_server.ra.itf.LetterRAO;
 import com.soso_server.service.itf.LetterService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,8 @@ import java.util.List;
 public class LetterServiceImpl implements LetterService {
 
     LetterRAO rao;
-    AES256 aes256 = new AES256();
+    @Autowired
+    AES256 aes256;
 
     public void setRao(LetterRAO rao) {
         this.rao = rao;

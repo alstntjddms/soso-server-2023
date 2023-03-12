@@ -7,6 +7,7 @@ import com.soso_server.utils.AES256;
 import com.soso_server.dto.KakaoDTO;
 import com.soso_server.ra.itf.KakaoRAO;
 import com.soso_server.service.itf.KakaoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -17,7 +18,8 @@ import java.net.URL;
 public class KakaoServiceImpl implements KakaoService {
 
     KakaoRAO rao;
-    AES256 aes256 = new AES256();
+    @Autowired
+    AES256 aes256;
 
     private final String HTTP_REQUEST = "https://kapi.kakao.com/v2/user/me";
 

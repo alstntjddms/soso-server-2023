@@ -7,6 +7,7 @@ import com.soso_server.exception.MemberException;
 import com.soso_server.ra.itf.MemberRAO;
 import com.soso_server.service.itf.MemberService;
 import com.soso_server.utils.ExternalAES256;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -16,8 +17,10 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService {
 
     MemberRAO rao;
-    AES256 aes256 = new AES256();
-    ExternalAES256 externalAES256 = new ExternalAES256();
+    @Autowired
+    AES256 aes256;
+    @Autowired
+    ExternalAES256 externalAES256;
 
     public void setRao(MemberRAO rao) {
         this.rao = rao;
