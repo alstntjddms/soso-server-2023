@@ -1,9 +1,5 @@
 package com.soso_server.utils;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Base64;
@@ -13,18 +9,9 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class AES256 {
 
-    BufferedReader reader = null;
     public static String alg = "AES/CBC/PKCS5Padding";
-    private String key = null;
-    private String iv = null; // 16byte
-
-    public AES256() throws IOException {
-        reader = new BufferedReader(new FileReader("C://key/AES256.txt"));
-
-        key = reader.readLine();
-        iv = key.substring(0, 16);
-    }
-
+    private final String key = "35123254568713456789012545687997";
+    private final String iv = key.substring(0, 16); // 16byte
 
     public String encrypt(String text) throws Exception {
         Cipher cipher = Cipher.getInstance(alg);
