@@ -9,6 +9,7 @@
         <typeAlias alias="LetterDTO" type="com.soso_server.dto.LetterDTO"/>
         <typeAlias alias="MemberDTO" type="com.soso_server.dto.MemberDTO"/>
         <typeAlias alias="StickerDTO" type="com.soso_server.dto.StickerDTO"/>
+        <typeAlias alias="PageLogDTO" type="com.soso_server.dto.log.PageLogDTO"/>
 
     </typeAliases>
 
@@ -17,5 +18,6 @@
         <mapper resource="/META-INF/config/mybatis/kakaomapping.xml"/>
         <mapper resource="/META-INF/config/mybatis/lettermapping.xml"/>
         <mapper resource="/META-INF/config/mybatis/membermapping.xml"/>
+        <mapper resource="/META-INF/config/mybatis/logmapping.xml"/>
     </mappers>
 </configuration>

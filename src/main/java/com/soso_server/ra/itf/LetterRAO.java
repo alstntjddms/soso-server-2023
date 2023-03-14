@@ -40,6 +40,4 @@ public interface LetterRAO {
 
     public List<StickerDTO> selectStickerByLetterId(int letterId);
 
-    public int selectMaxLetterId();
-
 }

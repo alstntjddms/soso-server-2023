@@ -47,21 +47,21 @@ public class LetterServiceImpl implements LetterService {
         try{
             ObjectMapper mapper = new ObjectMapper();
             HashMap Letter = mapper.convertValue(dto.get("letter"), HashMap.class);
+
 //            Letter.replace("userId", aes256.decrypt(URLDecoder.decode(Letter.get("userId").toString().replaceAll("MSJSM", "%"), "UTF-8")));
             Letter.replace("userId", aes256.replaceDecodeDecryt(Letter.get("userId").toString()));
             LetterDTO letterDTO = mapper.convertValue(Letter, LetterDTO.class);
             letterDTO.setLetterReadYn(false);
             letterDTO.setLetterDelYn(false);
-            rao.registerLetter(letterDTO);
+            int registerLetterId = rao.registerLetter(letterDTO);
 
             ArrayList<StickerDTO> stickerDTOs = mapper.convertValue(dto.get("sticker"), ArrayList.class);
-            int maxLetterId = rao.selectMaxLetterId();
             for(int i=0; i<stickerDTOs.size(); i++){
                 StickerDTO ss = mapper.convertValue(stickerDTOs.get(i), StickerDTO.class);;
-                ss.setLetterId(maxLetterId);
+                ss.setLetterId(registerLetterId);
                 rao.registerSticker(ss);
             }
-            return aes256.encrypt(String.valueOf(maxLetterId));
+            return aes256.encrypt(String.valueOf(registerLetterId));
         }catch (Exception e){
             new LetterException("알수없는 편지 등록오류", -999);
         }

@@ -21,7 +21,8 @@ public class LetterRAOImpl implements LetterRAO {
 
     @Override
     public int registerLetter(LetterDTO letterDTO) {
-        return mapper.registerLetter(letterDTO);
+        mapper.registerLetter(letterDTO);
+        return Integer.valueOf(letterDTO.getLetterId());
     }
 
     @Override
@@ -49,11 +50,5 @@ public class LetterRAOImpl implements LetterRAO {
     public List<StickerDTO> selectStickerByLetterId(int letterId) {
         return mapper.selectStickerByLetterId(letterId);
     }
-
-    @Override
-    public int selectMaxLetterId() {
-        return mapper.selectMaxLetterId();
-    }
-
 
 }

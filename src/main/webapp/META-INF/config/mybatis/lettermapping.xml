@@ -14,6 +14,9 @@
         VALUES (#{userId}, #{letterContent}, #{letterFont},
                 #{letterFontColor}, #{letterPaper}, #{letterWriter},
                 #{letterIcon}, CURRENT_TIMESTAMP, #{letterReadYn}, #{letterDelYn})
+        <selectKey resultType="string" keyProperty="letterId" order="BEFORE">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
     <insert id="registerSticker" parameterType="StickerDTO">
@@ -27,10 +30,6 @@
 
     <select id="findOpenDate" resultType="java.sql.Timestamp" parameterType="java.lang.Integer">
         SELECT userOpenDate FROM soso.member WHERE userid = #{userid}
-    </select>
-
-    <select id="selectMaxLetterId" resultType="java.lang.Integer">
-        SELECT Max(letterId) FROM soso.letter
     </select>
 
     <select id="selectLetterIdByUserId" resultType="LetterDTO" parameterType="java.lang.Integer">
