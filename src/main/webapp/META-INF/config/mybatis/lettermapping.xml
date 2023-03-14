@@ -52,5 +52,11 @@
         SELECT * FROM soso.STICKER WHERE letterId = #{letterId}
     </select>
 
+    <update id="updateToReadLetter" parameterType="java.lang.Integer">
+        UPDATE soso.letter
+        SET letterReadYn = 1
+        WHERE letterId = #{letterId}
+    </update>
+
 
 </mapper>

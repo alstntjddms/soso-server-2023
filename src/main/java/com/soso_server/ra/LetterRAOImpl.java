@@ -51,4 +51,9 @@ public class LetterRAOImpl implements LetterRAO {
         return mapper.selectStickerByLetterId(letterId);
     }
 
+    @Override
+    public void updateToReadLetter(Integer letterId) {
+        mapper.updateToReadLetter(letterId);
+    }
+
 }

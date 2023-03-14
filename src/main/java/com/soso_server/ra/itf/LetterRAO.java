@@ -40,4 +40,9 @@ public interface LetterRAO {
 
     public List<StickerDTO> selectStickerByLetterId(int letterId);
 
+    /**
+     * 편지를 읽을 경우, letter를 읽음표시
+     */
+    public void updateToReadLetter(Integer letterId);
+
 }

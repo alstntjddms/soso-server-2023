@@ -111,7 +111,9 @@ public class LetterServiceImpl implements LetterService {
             }
             System.out.println("letterId = " + letterId);
 //            return rao.selectLetterByLetterId(Integer.valueOf(aes256.decrypt(URLDecoder.decode(letterId.replaceAll("MSJSM", "%"), "UTF-8"))));
-            return rao.selectLetterByLetterId(Integer.valueOf(aes256.replaceDecodeDecryt(letterId)));
+            Integer decLetterId = Integer.valueOf(aes256.replaceDecodeDecryt(letterId));
+            rao.updateToReadLetter(decLetterId);
+            return rao.selectLetterByLetterId(decLetterId);
         }catch (Exception e){
             e.printStackTrace();
         }
