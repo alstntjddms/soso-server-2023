@@ -55,4 +55,5 @@ public class MemberRAOImpl implements MemberRAO {
     public List<MemberDTO> findMemberAll() {
         return mapper.findMemberAll();
     }
+
 }

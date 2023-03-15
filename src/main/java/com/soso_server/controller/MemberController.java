@@ -53,6 +53,23 @@ public class MemberController {
     }
 
     /**
+     * userId로 userNickName 변경한다.
+     * @param userId
+     * @return MemberDTO
+     * @throws Exception
+     */
+    @PutMapping("/member/{userId}")
+    public ResponseEntity<MemberDTO> modifyUserNickNameByUserId(@PathVariable String userId, String userNickName){
+        try {
+            System.out.println("MemberController.modifyUserNickNameByUserId");
+            System.out.println("userId = " + userId);
+            return new ResponseEntity<>(memberService.modifyUserNickNameByUserId(userId, userNickName), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
      * 내부용
      * userId로 받은 편지의 개수를 조회한다.
      * @param userId
