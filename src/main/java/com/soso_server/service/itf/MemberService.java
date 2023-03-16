@@ -29,7 +29,7 @@ public interface MemberService {
      */
     public MemberDTO findMemberByUserId(String userId) throws Exception;
 
-    public String modifyUserNickNameByUserId(String userId, String userNickName);
+    public String modifyUserNickNameByUserId(String userId, String userNickName) throws MemberException;
 
     public int findMemberByLetterCount(String userId) throws MemberException;
 

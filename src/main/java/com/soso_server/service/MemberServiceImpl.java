@@ -78,17 +78,19 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public String modifyUserNickNameByUserId(String userId, String userNickName) {
+    public String modifyUserNickNameByUserId(String userId, String userNickName) throws MemberException {
         try{
+            if(userNickName.length() > 30){
+                throw new MemberException();
+            }
             MemberDTO memberDTO = new MemberDTO();
             memberDTO.setUserId(aes256.replaceDecodeDecryt(userId));
             memberDTO.setUserNickName(userNickName);
             rao.modifyUserNickNameByUserId(memberDTO);
             return userNickName;
         }catch (Exception e){
-            e.printStackTrace();
+            throw new MemberException("너무 긴 userId", -999);
         }
-        return null;
     }
 
     @Override
