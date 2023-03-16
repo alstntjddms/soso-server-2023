@@ -19,6 +19,10 @@ public class LetterDTO {
     private String letterWriter;
     // 편지 아이콘
     private String letterIcon;
+    // 편지 폰트사이즈
+    private String letterFontSize;
+    // 편지 편지 정렬
+    private String letterTextAlign;
     // 편지 작성일
     private Timestamp letterWriteDate;
     // 읽음 여부
@@ -89,6 +93,22 @@ public class LetterDTO {
 
     public void setLetterIcon(String letterIcon) {
         this.letterIcon = letterIcon;
+    }
+
+    public String getLetterFontSize() {
+        return letterFontSize;
+    }
+
+    public void setLetterFontSize(String letterFontSize) {
+        this.letterFontSize = letterFontSize;
+    }
+
+    public String getLetterTextAlign() {
+        return letterTextAlign;
+    }
+
+    public void setLetterTextAlign(String letterTextAlign) {
+        this.letterTextAlign = letterTextAlign;
     }
 
     public Timestamp getLetterWriteDate() {

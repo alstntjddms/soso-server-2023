@@ -49,8 +49,9 @@ public class LetterServiceImpl implements LetterService {
             HashMap Letter = mapper.convertValue(dto.get("letter"), HashMap.class);
 
 //            Letter.replace("userId", aes256.decrypt(URLDecoder.decode(Letter.get("userId").toString().replaceAll("MSJSM", "%"), "UTF-8")));
-            Letter.replace("userId", aes256.replaceDecodeDecryt(Letter.get("userId").toString()));
+//            Letter.replace("userId", aes256.replaceDecodeDecryt(Letter.get("userId").toString()));
             LetterDTO letterDTO = mapper.convertValue(Letter, LetterDTO.class);
+            letterDTO.setUserId(aes256.replaceDecodeDecryt(letterDTO.getUserId()));
             letterDTO.setLetterReadYn(false);
             letterDTO.setLetterDelYn(false);
             int registerLetterId = rao.registerLetter(letterDTO);
@@ -91,6 +92,8 @@ public class LetterServiceImpl implements LetterService {
                 letterDTO.setLetterFont("");
                 letterDTO.setLetterFontColor("");
                 letterDTO.setLetterPaper("");
+                letterDTO.setLetterFontSize("");
+                letterDTO.setLetterTextAlign("");
                 letterDTO.setLetterWriter("");
                 result.add(letterDTO);
             }
