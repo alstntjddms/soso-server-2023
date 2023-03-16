@@ -78,12 +78,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberDTO modifyUserNickNameByUserId(String userId, String userNickName) {
+    public String modifyUserNickNameByUserId(String userId, String userNickName) {
         try{
-            MemberDTO memberDTO = rao.findMemberById(Integer.parseInt(aes256.replaceDecodeDecryt(userId)));
-
+            MemberDTO memberDTO = new MemberDTO();
+            memberDTO.setUserId(aes256.replaceDecodeDecryt(userId));
             memberDTO.setUserNickName(userNickName);
-            return memberDTO;
+            rao.modifyUserNickNameByUserId(memberDTO);
+            return userNickName;
         }catch (Exception e){
             e.printStackTrace();
         }

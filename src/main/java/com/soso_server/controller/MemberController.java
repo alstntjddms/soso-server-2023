@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -59,7 +58,7 @@ public class MemberController {
      * @throws Exception
      */
     @PatchMapping("/member/{userId}/{userNickName}")
-    public ResponseEntity<MemberDTO> modifyUserNickNameByUserId(@PathVariable String userId, @PathVariable String userNickName){
+    public ResponseEntity<String> modifyUserNickNameByUserId(@PathVariable String userId, @PathVariable String userNickName){
         try {
             System.out.println("MemberController.modifyUserNickNameByUserId");
             System.out.println("userId = " + userId);

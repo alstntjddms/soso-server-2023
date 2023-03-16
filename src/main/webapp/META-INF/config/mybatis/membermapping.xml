@@ -46,7 +46,7 @@
         SELECT * FROM soso.MEMBER
     </select>
 
-    <update id="modifyUserNickNameByUserId">
+    <update id="modifyUserNickNameByUserId" parameterType="MemberDTO">
         UPDATE soso.MEMBER SET userNickName = #{userNickName} WHERE userId = #{userId}
     </update>
 

@@ -63,4 +63,7 @@ public interface MemberRAO {
      */
     public List<MemberDTO> findMemberAll();
 
+    public void modifyUserNickNameByUserId(MemberDTO memberDTO);
+
+
 }
