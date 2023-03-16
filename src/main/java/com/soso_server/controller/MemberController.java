@@ -58,11 +58,12 @@ public class MemberController {
      * @return MemberDTO
      * @throws Exception
      */
-    @PutMapping("/member/{userId}")
-    public ResponseEntity<MemberDTO> modifyUserNickNameByUserId(@PathVariable String userId, String userNickName){
+    @PatchMapping("/member/{userId}/{userNickName}")
+    public ResponseEntity<MemberDTO> modifyUserNickNameByUserId(@PathVariable String userId, @PathVariable String userNickName){
         try {
             System.out.println("MemberController.modifyUserNickNameByUserId");
             System.out.println("userId = " + userId);
+            System.out.println("userNickName = " + userNickName);
             return new ResponseEntity<>(memberService.modifyUserNickNameByUserId(userId, userNickName), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
