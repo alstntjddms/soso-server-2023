@@ -46,4 +46,8 @@
         SELECT * FROM soso.MEMBER
     </select>
 
+    <update id="modifyUserNickNameByUserId">
+        UPDATE soso.MEMBER SET userNickName = #{userNickName} WHERE userId = #{userId}
+    </update>
+
 </mapper>

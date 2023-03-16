@@ -62,4 +62,5 @@ public interface MemberRAO {
      * @return List<MemberDTO>
      */
     public List<MemberDTO> findMemberAll();
+
 }

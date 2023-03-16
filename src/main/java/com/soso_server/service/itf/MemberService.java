@@ -29,6 +29,8 @@ public interface MemberService {
      */
     public MemberDTO findMemberByUserId(String userId) throws Exception;
 
+    public MemberDTO modifyUserNickNameByUserId(String userId, String userNickName);
+
     public int findMemberByLetterCount(String userId) throws MemberException;
 
     public Timestamp registerOpenDate(String userId) throws Exception;

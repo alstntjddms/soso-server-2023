@@ -78,6 +78,19 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public MemberDTO modifyUserNickNameByUserId(String userId, String userNickName) {
+        try{
+            MemberDTO memberDTO = rao.findMemberById(Integer.parseInt(aes256.replaceDecodeDecryt(userId)));
+
+            memberDTO.setUserNickName(userNickName);
+            return memberDTO;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public int findMemberByLetterCount(String userId) throws MemberException {
         try{
             if(userId.length() < 20){
