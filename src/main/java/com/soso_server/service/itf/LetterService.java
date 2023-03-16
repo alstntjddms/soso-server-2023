@@ -41,4 +41,11 @@ public interface LetterService {
 
     public List<StickerDTO> findStickerByLetterId(String letterId) throws LetterException;
 
+    /**
+     * letterId로 letter를 차단한다.
+     * @param letterId
+     * @return letterId
+     */
+    public String blockByLetterId(String letterId) throws LetterException;
+
 }

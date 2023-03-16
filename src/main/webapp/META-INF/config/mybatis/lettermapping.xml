@@ -61,5 +61,11 @@
         WHERE letterId = #{letterId}
     </update>
 
+    <update id="blockByLetterId" parameterType="java.lang.Integer">
+        UPDATE soso.letter
+        SET letterIcon = 'block'
+        WHERE letterId = #{letterId}
+    </update>
+
 
 </mapper>

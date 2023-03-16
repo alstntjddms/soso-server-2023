@@ -136,4 +136,18 @@ public class LetterServiceImpl implements LetterService {
         }
         return null;
     }
+
+    @Override
+    public String blockByLetterId(String letterId) throws LetterException {
+        if(letterId.length() < 20){
+            throw new LetterException();
+        }
+        try{
+            rao.blockByLetterId(Integer.valueOf(aes256.replaceDecodeDecryt(letterId)));
+            return letterId;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

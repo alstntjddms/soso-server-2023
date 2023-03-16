@@ -98,4 +98,20 @@ public class LetterController {
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * letterId로 letter를 차단한다.
+     * @param letterId
+     * @return letterId
+     */
+    @GetMapping("/letter/block/{letterId}")
+    public ResponseEntity<List<StickerDTO>> blockByLetterId(@PathVariable String letterId){
+        try{
+            System.out.println("LetterController.blockByLetterId");
+            System.out.println("letterId = " + letterId);
+            return new ResponseEntity(letterService.blockByLetterId(letterId), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

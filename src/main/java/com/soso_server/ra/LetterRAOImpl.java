@@ -56,4 +56,8 @@ public class LetterRAOImpl implements LetterRAO {
         mapper.updateToReadLetter(letterId);
     }
 
+    public void blockByLetterId(Integer letterId) {
+        mapper.blockByLetterId(letterId);
+    };
+
 }
