@@ -6,6 +6,8 @@ import com.soso_server.ra.itf.LetterRAO;
 import com.soso_server.service.LogService.itf.PageLogService;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Service
 public class PageLogServiceImpl implements PageLogService {
 
@@ -16,7 +18,19 @@ public class PageLogServiceImpl implements PageLogService {
     }
 
     @Override
-    public void registerPageLog(PageLogDTO pageLogDTO) {
-        rao.registerPageLog(pageLogDTO);
+    public void registerPageLog(HttpServletRequest request) {
+        try {
+            String ipAddress = request.getHeader("X-Forwarded-For");
+            if (ipAddress == null) {
+                ipAddress = request.getRemoteAddr();
+            }
+            rao.registerPageLog(new PageLogDTO(
+                    ipAddress,
+                    request.getQueryString()
+            ));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

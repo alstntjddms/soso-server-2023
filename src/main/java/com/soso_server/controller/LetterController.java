@@ -105,7 +105,7 @@ public class LetterController {
      * @return letterId
      */
     @GetMapping("/letter/block/{letterId}")
-    public ResponseEntity<List<StickerDTO>> blockByLetterId(@PathVariable String letterId){
+    public ResponseEntity<String> blockByLetterId(@PathVariable String letterId){
         try{
             System.out.println("LetterController.blockByLetterId");
             System.out.println("letterId = " + letterId);

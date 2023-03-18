@@ -8,6 +8,7 @@ import com.soso_server.exception.LetterException;
 import com.soso_server.exception.MemberException;
 import com.soso_server.ra.itf.LetterRAO;
 import com.soso_server.service.itf.LetterService;
+import com.soso_server.utils.ExternalAES256;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,8 @@ public class LetterServiceImpl implements LetterService {
     LetterRAO rao;
     @Autowired
     AES256 aes256;
+    @Autowired
+    ExternalAES256 externalAES256;
 
     public void setRao(LetterRAO rao) {
         this.rao = rao;
@@ -51,7 +54,7 @@ public class LetterServiceImpl implements LetterService {
 //            Letter.replace("userId", aes256.decrypt(URLDecoder.decode(Letter.get("userId").toString().replaceAll("MSJSM", "%"), "UTF-8")));
 //            Letter.replace("userId", aes256.replaceDecodeDecryt(Letter.get("userId").toString()));
             LetterDTO letterDTO = mapper.convertValue(Letter, LetterDTO.class);
-            letterDTO.setUserId(aes256.replaceDecodeDecryt(letterDTO.getUserId()));
+            letterDTO.setUserId(externalAES256.replaceDecodeDecryt(letterDTO.getUserId()));
             letterDTO.setLetterReadYn(false);
             letterDTO.setLetterDelYn(false);
             int registerLetterId = rao.registerLetter(letterDTO);
@@ -62,7 +65,7 @@ public class LetterServiceImpl implements LetterService {
                 ss.setLetterId(registerLetterId);
                 rao.registerSticker(ss);
             }
-            return aes256.encrypt(String.valueOf(registerLetterId));
+            return externalAES256.encrypt(String.valueOf(registerLetterId));
         }catch (Exception e){
             new LetterException("알수없는 편지 등록오류", -999);
         }

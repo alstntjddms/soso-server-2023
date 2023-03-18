@@ -2,6 +2,8 @@ package com.soso_server.service.LogService.itf;
 
 import com.soso_server.dto.log.PageLogDTO;
 
+import javax.servlet.http.HttpServletRequest;
+
 public interface PageLogService {
 
     /**
@@ -9,5 +11,5 @@ public interface PageLogService {
      * @param HttpServletRequest
      * @return void
      */
-    public void registerPageLog(PageLogDTO pageLogDTO);
+    public void registerPageLog(HttpServletRequest request);
 }

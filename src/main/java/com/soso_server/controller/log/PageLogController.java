@@ -24,14 +24,7 @@ public class PageLogController {
     @GetMapping("/request/log")
     public void registerPageLog(HttpServletRequest request) {
         try {
-            String ipAddress = request.getHeader("X-Forwarded-For");
-            if (ipAddress == null) {
-                ipAddress = request.getRemoteAddr();
-            }
-            pageLogService.registerPageLog(new PageLogDTO(
-                    ipAddress,
-                    request.getQueryString()
-            ));
+            pageLogService.registerPageLog(request);
         }catch (Exception e){
             e.printStackTrace();
         }
