@@ -110,14 +110,17 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Timestamp registerOpenDate(String userId){
+    public Timestamp registerOpenDate(String userId) throws MemberException {
         try{
             if(userId.length() < 20){
                 throw new MemberException();
             }
+            if((new Timestamp(System.currentTimeMillis()-864000)).before(findOpenDate(userId))){
+                throw new MemberException("이미 오픈데이트가 설정됨.", -999);
+            }
             return rao.registerOpenDate(Integer.parseInt(aes256.replaceDecodeDecryt(userId)));
         }catch(MemberException e){
-            return null;
+            throw new MemberException("잘못된 userId", -999);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -125,14 +128,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Timestamp findOpenDate(String userId) {
+    public Timestamp findOpenDate(String userId) throws MemberException {
         try{
             if(userId.length() < 20){
                 throw new MemberException();
             }
             return rao.findOpenDate(Integer.parseInt(aes256.replaceDecodeDecryt(userId)));
         }catch(MemberException e){
-            return null;
+            throw new MemberException("잘못된 userId", -999);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -157,7 +160,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberDTO infoByExternalUserId(String userId) {
+    public MemberDTO infoByExternalUserId(String userId) throws MemberException {
         try {
             if(userId.length() < 20){
                 throw new MemberException();
@@ -172,7 +175,7 @@ public class MemberServiceImpl implements MemberService {
             memberDTO.setUserDate(null);
             return memberDTO;
         }catch (MemberException me){
-//            throw new MemberException("잘못된 userId", -999);
+            throw new MemberException("잘못된 userId", -999);
         }catch (Exception e){
             e.printStackTrace();
         }

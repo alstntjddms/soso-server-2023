@@ -51,7 +51,7 @@ public interface MemberService {
      * @return MemberDTO
      * @Throws Exception
      */
-    public MemberDTO infoByExternalUserId(String userId);
+    public MemberDTO infoByExternalUserId(String userId) throws MemberException;
 
     /**
      * 외부공개용 userId를 다시 복호화해서 받은 편지 개수 받아온다.
