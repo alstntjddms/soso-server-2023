@@ -16,7 +16,7 @@
                 #{letterFontColor}, #{letterPaper}, #{letterWriter},
                 #{letterIcon}, #{letterFontSize}, #{letterTextAlign},
                 CURRENT_TIMESTAMP, #{letterReadYn}, #{letterDelYn})
-        <selectKey resultType="string" keyProperty="letterId" order="BEFORE">
+        <selectKey resultType="string" keyProperty="letterId" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>

@@ -61,7 +61,7 @@ public class LetterServiceImpl implements LetterService {
 
             ArrayList<StickerDTO> stickerDTOs = mapper.convertValue(dto.get("sticker"), ArrayList.class);
             for(int i=0; i<stickerDTOs.size(); i++){
-                StickerDTO ss = mapper.convertValue(stickerDTOs.get(i), StickerDTO.class);;
+                StickerDTO ss = mapper.convertValue(stickerDTOs.get(i), StickerDTO.class);
                 ss.setLetterId(registerLetterId);
                 rao.registerSticker(ss);
             }
