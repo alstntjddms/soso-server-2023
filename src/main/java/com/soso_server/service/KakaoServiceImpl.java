@@ -126,16 +126,16 @@ public class KakaoServiceImpl implements KakaoService {
             kakaoDTO.setKakaoAccessToken(access_Token);
             kakaoDTO.setKakaoRefreshToken(refresh_Token);
 
-            if(kakao_account.getAsJsonObject().has("email")){
+            if (kakao_account.getAsJsonObject().has("email")) {
                 kakaoDTO.setKakaoEmail(kakao_account.getAsJsonObject().get("email").getAsString());
             }
-            if(properties.getAsJsonObject().has("nickname")){
+            if (properties.getAsJsonObject().has("nickname")) {
                 kakaoDTO.setKakaoNickName(properties.getAsJsonObject().get("nickname").getAsString());
             }
-            if(kakao_account.getAsJsonObject().has("gender")){
+            if (kakao_account.getAsJsonObject().has("gender")) {
                 kakaoDTO.setKakaoGender(kakao_account.getAsJsonObject().get("gender").getAsString());
             }
-            if(kakao_account.getAsJsonObject().has("birthday")){
+            if (kakao_account.getAsJsonObject().has("birthday")) {
                 kakaoDTO.setKakaoBirthday(kakao_account.getAsJsonObject().get("birthday").getAsString());
             }
             System.out.println("kakaoDTO = " + kakaoDTO.toString());
@@ -143,10 +143,11 @@ public class KakaoServiceImpl implements KakaoService {
             // 이미 등록됐는지 체크
             KakaoDTO checkkakaoDTO = rao.findOneKakao(kakaoDTO.getKakaoId());
 
-            if(checkkakaoDTO != null){
+            if (checkkakaoDTO != null) {
                 System.out.println("already register");
+                rao.refreshKakao(kakaoDTO);
                 return checkkakaoDTO;
-            }else{
+            } else {
                 rao.registerKakao(kakaoDTO);
             }
 

@@ -7,4 +7,6 @@ public interface KakaoRAO {
     public void registerKakao(KakaoDTO kakaoDTO);
 
     public KakaoDTO findOneKakao(@Param("kakaoId") String kakaoId);
-    }
+
+    public void refreshKakao(KakaoDTO kakaoDTO);
+}

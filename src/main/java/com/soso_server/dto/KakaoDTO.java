@@ -20,6 +20,8 @@ public class KakaoDTO {
     private String kakaoBirthday;
     // 카카오 회원가입일
     private Timestamp kakaoRegisterDate;
+    // 카카오 최종로그인날짜
+    private Timestamp kakaoLoginDate;
 
     public int getId() {
         return id;
@@ -93,6 +95,14 @@ public class KakaoDTO {
         this.kakaoRegisterDate = kakaoRegisterDate;
     }
 
+    public Timestamp getKakaoLoginDate() {
+        return kakaoLoginDate;
+    }
+
+    public void setKakaoLoginDate(Timestamp kakaoLoginDate) {
+        this.kakaoLoginDate = kakaoLoginDate;
+    }
+
     @Override
     public String toString() {
         return "KakaoDTO{" +
@@ -101,10 +111,11 @@ public class KakaoDTO {
                 ", kakaoAccessToken='" + kakaoAccessToken + '\'' +
                 ", kakaoRefreshToken='" + kakaoRefreshToken + '\'' +
                 ", kakaoEmail='" + kakaoEmail + '\'' +
-                ", kakaNickName='" + kakaoNickName + '\'' +
+                ", kakaoNickName='" + kakaoNickName + '\'' +
                 ", kakaoGender='" + kakaoGender + '\'' +
                 ", kakaoBirthday='" + kakaoBirthday + '\'' +
                 ", kakaoRegisterDate=" + kakaoRegisterDate +
+                ", kakaoLoginDate=" + kakaoLoginDate +
                 '}';
     }
 }

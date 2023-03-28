@@ -21,4 +21,11 @@ public class KakaoRAOImpl implements KakaoRAO {
     public KakaoDTO findOneKakao(String kakaoId) {
         return mapper.findOneKakao(kakaoId);
     }
+
+    @Override
+    public void refreshKakao(KakaoDTO kakaoDTO) {
+        mapper.refreshKakao(kakaoDTO);
+    }
+
+
 }

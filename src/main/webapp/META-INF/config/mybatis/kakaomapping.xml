@@ -6,11 +6,18 @@
     <insert id="registerKakao" parameterType="KakaoDTO">
         INSERT INTO soso.kakao( kakaoId, kakaoAccessToken, kakaoRefreshToken,
                                 kakaoEmail, kakaoNickName, kakaoGender,
-                                kakaoBirthday, kakaoRegisterDate)
+                                kakaoBirthday, kakaoRegisterDate, kakaoLoginDate)
         VALUES (#{kakaoId}, #{kakaoAccessToken}, #{kakaoRefreshToken},
                 #{kakaoEmail}, #{kakaoNickName}, #{kakaoGender},
-                #{kakaoBirthday}, CURRENT_TIMESTAMP)
+                #{kakaoBirthday}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     </insert>
+
+    <update id="refreshKakao" parameterType="KakaoDTO">
+        UPDATE soso.kakao SET kakaoAccessToken = #{kakaoAccessToken}
+            , kakaoRefreshToken = #{kakaoRefreshToken}
+            , kakaoLoginDate = CURRENT_TIMESTAMP
+        WHERE kakaoId = #{kakaoId}
+    </update>
 
     <select id="findOneKakao" resultType="KakaoDTO" parameterType="java.lang.String">
         SELECT * FROM soso.kakao WHERE kakaoId = #{kakaoId}
