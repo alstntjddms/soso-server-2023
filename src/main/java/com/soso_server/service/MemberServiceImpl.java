@@ -43,12 +43,8 @@ public class MemberServiceImpl implements MemberService {
                 memberDTO.setUserNickName(kakaoDTO.getKakaoNickName());
                 memberDTO.setId(kakaoDTO.getId());
                 rao.registerMember(memberDTO);
-            }else{
-                System.out.println("기존 아이디 있음");
-
-//                return URLEncoder.encode(aes256.encrypt(String.valueOf(rao.findMemberById(kakaoDTO.getId()).getUserId())), "UTF-8").replaceAll("%", "MSJSM");
-                return aes256.encryptEncodeReplace(String.valueOf(rao.findMemberById(kakaoDTO.getId()).getUserId()));
             }
+            return aes256.encryptEncodeReplace(String.valueOf(rao.findMemberById(kakaoDTO.getId()).getUserId()));
         }catch (MemberException me){
             new MemberException("잘못된 id", -999);
         }catch (Exception e){
