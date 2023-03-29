@@ -141,14 +141,13 @@ public class KakaoServiceImpl implements KakaoService {
             // 이미 등록됐는지 체크
             KakaoDTO checkkakaoDTO = rao.findOneKakao(kakaoDTO.getKakaoId());
 
-            // 카카오 동의항목 메세지 체크 확인
-            kakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
-
             if (checkkakaoDTO != null) {
                 System.out.println("already register");
                 rao.refreshKakao(kakaoDTO);
                 return checkkakaoDTO;
             } else {
+                // 카카오 동의항목 메세지 체크 확인
+                kakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
                 rao.registerKakao(kakaoDTO);
             }
 
