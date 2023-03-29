@@ -20,5 +20,7 @@ public interface KakaoService {
      * @return
      */
     public KakaoDTO getUserData(String access_Token, String refresh_Token);
+
+    public boolean checkScopes(String accessToken);
 }
 

@@ -1,8 +1,6 @@
 package com.soso_server.service;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import com.soso_server.utils.AES256;
 import com.soso_server.dto.KakaoDTO;
 import com.soso_server.ra.itf.KakaoRAO;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 @Service
 public class KakaoServiceImpl implements KakaoService {
@@ -138,10 +137,12 @@ public class KakaoServiceImpl implements KakaoService {
             if (kakao_account.getAsJsonObject().has("birthday")) {
                 kakaoDTO.setKakaoBirthday(kakao_account.getAsJsonObject().get("birthday").getAsString());
             }
-            System.out.println("kakaoDTO = " + kakaoDTO.toString());
 
             // 이미 등록됐는지 체크
             KakaoDTO checkkakaoDTO = rao.findOneKakao(kakaoDTO.getKakaoId());
+
+            // 카카오 동의항목 메세지 체크 확인
+            kakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
 
             if (checkkakaoDTO != null) {
                 System.out.println("already register");
@@ -155,5 +156,48 @@ public class KakaoServiceImpl implements KakaoService {
             e.printStackTrace();
         }
         return rao.findOneKakao(kakaoDTO.getKakaoId());
+    }
+
+    @Override
+    public boolean checkScopes(String accessToken) {
+        try {
+            URL url = new URL("https://kapi.kakao.com/v2/user/scopes");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Authorization", "Bearer " + accessToken);
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
+
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+
+                String responseBody = response.toString();
+                JsonObject json = new Gson().fromJson(responseBody, JsonObject.class);
+                JsonArray scopes = json.getAsJsonArray("scopes");
+
+                for (JsonElement scope : scopes) {
+                    JsonObject scopeObj = scope.getAsJsonObject();
+                    String id = scopeObj.get("id").getAsString();
+                    boolean agreed = scopeObj.get("agreed").getAsBoolean();
+                    if ("talk_message".equals(id)) {
+                        return agreed;
+                    }
+                }
+                return false;
+            } else {
+                System.out.println("HTTP request failed: " + responseCode);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

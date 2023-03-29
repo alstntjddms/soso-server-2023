@@ -22,6 +22,8 @@ public class KakaoDTO {
     private Timestamp kakaoRegisterDate;
     // 카카오 최종로그인날짜
     private Timestamp kakaoLoginDate;
+    // 카카오 메세지 동의
+    private boolean kakaoMsgYn;
 
     public int getId() {
         return id;
@@ -101,6 +103,14 @@ public class KakaoDTO {
 
     public void setKakaoLoginDate(Timestamp kakaoLoginDate) {
         this.kakaoLoginDate = kakaoLoginDate;
+    }
+
+    public boolean isKakaoMsgYn() {
+        return kakaoMsgYn;
+    }
+
+    public void setKakaoMsgYn(boolean kakaoMsgYn) {
+        this.kakaoMsgYn = kakaoMsgYn;
     }
 
     @Override
