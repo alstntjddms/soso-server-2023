@@ -57,8 +57,8 @@ public class MemberController {
      * @return MemberDTO
      * @throws Exception
      */
-    @PatchMapping("/member/{userId}/{userNickName}")
-    public ResponseEntity<String> modifyUserNickNameByUserId(@PathVariable String userId, @PathVariable String userNickName){
+    @PatchMapping(value = "/member/{userId}")
+    public ResponseEntity<String> modifyUserNickNameByUserId(@PathVariable String userId, @RequestBody String userNickName){
         try {
             System.out.println("MemberController.modifyUserNickNameByUserId");
             System.out.println("userId = " + userId);

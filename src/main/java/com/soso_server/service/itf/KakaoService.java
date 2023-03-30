@@ -2,6 +2,8 @@ package com.soso_server.service.itf;
 
 import com.soso_server.dto.KakaoDTO;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 
 public interface KakaoService {
@@ -22,5 +24,9 @@ public interface KakaoService {
     public KakaoDTO getUserData(String access_Token, String refresh_Token);
 
     public boolean checkScopes(String accessToken);
+
+    public String refreshAccessToken(String refreshToken) throws IOException;
+
+    public void withdraw(String accessToken) throws Exception ;
 }
 

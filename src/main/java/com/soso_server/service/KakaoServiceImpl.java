@@ -5,11 +5,14 @@ import com.soso_server.utils.AES256;
 import com.soso_server.dto.KakaoDTO;
 import com.soso_server.ra.itf.KakaoRAO;
 import com.soso_server.service.itf.KakaoService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
@@ -45,7 +48,6 @@ public class KakaoServiceImpl implements KakaoService {
             sb.append("grant_type=authorization_code");
 
             sb.append("&client_id=a42a6c91f7b1bb0d3f8e3daef2b6f24b"); //본인이 발급받은 key
-//            sb.append("&redirect_uri=https://plater.kr/web/kakaologin/index.html"); // 본인이 설정한 주소
 //            sb.append("&redirect_uri=https://plater.kr/web/redirect"); // 본인이 설정한 주소
             sb.append("&redirect_uri=https://angelo-s-library-2.netlify.app/redirect"); // 본인이 설정한 주소
             sb.append("&" + authorize_code);
@@ -177,9 +179,7 @@ public class KakaoServiceImpl implements KakaoService {
                 }
                 in.close();
 
-
-                String responseBody = response.toString();
-                JsonObject json = new Gson().fromJson(responseBody, JsonObject.class);
+                JsonObject json = new Gson().fromJson(response.toString(), JsonObject.class);
                 JsonArray scopes = json.getAsJsonArray("scopes");
 
                 for (JsonElement scope : scopes) {
@@ -198,5 +198,74 @@ public class KakaoServiceImpl implements KakaoService {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public String refreshAccessToken(String refreshToken) throws IOException {
+        String clientId = "a42a6c91f7b1bb0d3f8e3daef2b6f24b"; // 카카오 디벨로퍼스에서 발급받은 REST API 키
+        String grantType = "refresh_token";
+        String apiUrl = "https://kauth.kakao.com/oauth/token";
+
+        System.out.println("KakaoServiceImpl.refreshAccessToken");
+        URL url = new URL(apiUrl);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("POST");
+        con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        // Request Body에 필요한 파라미터를 입력합니다.
+        String params = "grant_type=" + grantType + "&client_id=" + clientId + "&refresh_token=" + refreshToken;
+
+        // Request Body를 서버에 전송합니다.
+        con.setDoOutput(true);
+        OutputStream os = con.getOutputStream();
+        os.write(params.getBytes("UTF-8"));
+        os.flush();
+        os.close();
+
+        // Response Code를 확인합니다.
+        int responseCode = con.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            // JSON 응답 본문에서 Access Token을 파싱합니다.
+            JSONObject jsonObject = new JSONObject(response.toString());
+            String accessToken = jsonObject.getString("access_token");
+
+            // refreshtoken을 return한 경우
+            String newRefreshToken = "";
+            if (jsonObject.has("refresh_token")) {
+                newRefreshToken = jsonObject.getString("refresh_token");
+                getUserData(accessToken, newRefreshToken);
+            }else {
+                getUserData(accessToken, refreshToken);
+            }
+            return accessToken;
+        } else {
+            System.out.println("HTTP error code : " + responseCode);
+            return null;
+        }
+    }
+
+    @Override
+    public void withdraw(String accessToken) throws Exception {
+        String apiUrl = "https://kapi.kakao.com/v1/user/unlink";
+
+        URL url = new URL(apiUrl);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("POST");
+        con.setRequestProperty("Authorization", "Bearer " + accessToken);
+
+        // Response Code를 확인합니다.
+        if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+            System.out.println("withdraw success");
+        } else {
+            System.out.println("withdraw failed");
+        }
     }
 }

@@ -34,4 +34,33 @@ public class KakaoController {
 //    public ResponseEntity<String> withdrawKakao(@)
 
 
+    /**
+     * 리프레시토큰 테스트
+     * 추후 삭제 예정
+     */
+    @PostMapping("/kakao/refresh")
+    public ResponseEntity<String> refreshTokenTest(@RequestBody String refresh_token) {
+        try {
+            System.out.println("KakaoController.testService");
+            System.out.println("refresh_token = " + refresh_token);
+            return new ResponseEntity<>(kakaoService.refreshAccessToken(refresh_token), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * 회원탈퇴 테스트
+     */
+    @PostMapping("/kakao/withdraw")
+    public void withdrawTest(@RequestBody String access_token) {
+        try {
+            System.out.println("KakaoController.testService");
+            System.out.println("access_token = " + access_token);
+            kakaoService.withdraw(access_token);
+        }catch (Exception e){
+
+        }
+    }
+
 }
