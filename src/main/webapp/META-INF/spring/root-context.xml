@@ -96,10 +96,6 @@
         <constructor-arg index="0" ref="postSqlSessionFactory" />
     </bean>
 
-<!--    jndi dataSource 연결-->
-<!--    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">-->
-<!--        <property name="jndiName" value="java:jboss/sosoDS"></property>-->
-<!--    </bean>-->
 
 
 <!--    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">&ndash;&gt;-->
