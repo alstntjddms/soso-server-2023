@@ -63,4 +63,12 @@ public class KakaoController {
         }
     }
 
+    /**
+     * 이지연 테스트
+     */
+    @GetMapping("/jiyeon")
+    public String jiyeonTest() {
+        return "나는 이지연";
+    }
+
 }
