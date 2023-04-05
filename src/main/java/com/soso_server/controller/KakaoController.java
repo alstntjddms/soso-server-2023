@@ -17,7 +17,7 @@ public class KakaoController {
     /**
      * accesCode로 kakao정보를 등록한다.
      * @param authorize_code
-     * @return 암호화된 등록된 idd
+     * @return 암호화된 등록된 id
      */
     @PostMapping("/kakao")
     public ResponseEntity<String> getService(@RequestBody String authorize_code) {
