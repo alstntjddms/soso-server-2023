@@ -8,7 +8,7 @@
     <name>soso_server</name>
 
     <properties>
-        <spring.version>5.2.10.RELEASE</spring.version>
+        <spring.version>5.2.20.RELEASE</spring.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.test.skip>true</maven.test.skip>
         <maven.testCompile.skip>true</maven.testCompile.skip>
