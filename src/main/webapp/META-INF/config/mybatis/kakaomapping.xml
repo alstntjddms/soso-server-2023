@@ -24,4 +24,7 @@
         SELECT * FROM soso.kakao WHERE kakaoId = #{kakaoId}
     </select>
 
+    <select id="findKakaoAll" resultType="KakaoDTO" parameterType="java.lang.String">
+        SELECT * FROM soso.kakao order by id desc
+    </select>
 </mapper>

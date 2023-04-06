@@ -1,10 +1,14 @@
 package com.soso_server.controller;
 
+import com.soso_server.dto.KakaoDTO;
+import com.soso_server.dto.MemberDTO;
 import com.soso_server.service.itf.KakaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -62,5 +66,19 @@ public class KakaoController {
 
         }
     }
+
+    /**
+     * 카카오 모든멤버 조회
+     */
+    @GetMapping("/kakaoall")
+    public ResponseEntity<List<KakaoDTO>> findKakaoAll(){
+        try {
+            System.out.println("KakaoController.findKakaoAll");
+            return new ResponseEntity<>(kakaoService.findKakaoAll(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }

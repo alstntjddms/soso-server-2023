@@ -4,7 +4,7 @@
 <mapper namespace="com.soso_server.ra.itf.LetterRAO">
 
     <select id="findLetterAll" resultType="LetterDTO">
-        SELECT * FROM soso.letter
+        SELECT * FROM soso.letter order by letterId desc
     </select>
 
     <insert id="registerLetter" parameterType="LetterDTO">
@@ -48,7 +48,7 @@
         l.letterWriteDate >  m.userOpenDate
         AND
 <!--        오픈데이트의 n일동안 받을 기간 설정-->
-        (m.userOpenDate + 864000) > l.letterWriteDate
+        (m.userOpenDate + 8640000) > l.letterWriteDate
     </select>
 
     <select id="selectStickerByLetterId" resultType="StickerDTO" parameterType="java.lang.Integer">

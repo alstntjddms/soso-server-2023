@@ -5,6 +5,7 @@ import com.soso_server.dto.KakaoDTO;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
+import java.util.List;
 
 public interface KakaoService {
 
@@ -28,5 +29,8 @@ public interface KakaoService {
     public String refreshAccessToken(String refreshToken) throws IOException;
 
     public void withdraw(String accessToken) throws Exception ;
+
+    public List<KakaoDTO> findKakaoAll();
+
 }
 

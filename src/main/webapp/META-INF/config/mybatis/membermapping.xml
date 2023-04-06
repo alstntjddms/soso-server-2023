@@ -27,7 +27,7 @@
         l.letterWriteDate >  m.userOpenDate
         AND
         <!--        오픈데이트의 n일동안 받을 기간 설정-->
-        (m.userOpenDate + 864000) > l.letterWriteDate
+        (m.userOpenDate + 8640000) > l.letterWriteDate
     </select>
 
     <select id="findOpenDate" resultType="java.sql.Timestamp" parameterType="java.lang.Integer">
@@ -43,7 +43,7 @@
     </select>
 
     <select id="findMemberAll" resultType="MemberDTO">
-        SELECT * FROM soso.MEMBER
+        SELECT * FROM soso.MEMBER order by userId desc
     </select>
 
     <update id="modifyUserNickNameByUserId" parameterType="MemberDTO">

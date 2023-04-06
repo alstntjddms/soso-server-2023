@@ -4,6 +4,8 @@ import com.soso_server.dto.KakaoDTO;
 import com.soso_server.ra.itf.KakaoRAO;
 import com.soso_server.ra.itf.LetterRAO;
 
+import java.util.List;
+
 public class KakaoRAOImpl implements KakaoRAO {
 
     private KakaoRAO mapper;
@@ -25,6 +27,11 @@ public class KakaoRAOImpl implements KakaoRAO {
     @Override
     public void refreshKakao(KakaoDTO kakaoDTO) {
         mapper.refreshKakao(kakaoDTO);
+    }
+
+    @Override
+    public List<KakaoDTO> findKakaoAll() {
+        return mapper.findKakaoAll();
     }
 
 

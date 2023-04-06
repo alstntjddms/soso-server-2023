@@ -15,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Service
 public class KakaoServiceImpl implements KakaoService {
@@ -267,5 +268,10 @@ public class KakaoServiceImpl implements KakaoService {
         } else {
             System.out.println("withdraw failed");
         }
+    }
+
+    @Override
+    public List<KakaoDTO> findKakaoAll() {
+        return rao.findKakaoAll();
     }
 }
