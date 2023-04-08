@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,8 +26,11 @@ public class LetterController {
      * @return List<LetterDTO>
      */
     @GetMapping("/letterall")
-    public ResponseEntity<List<LetterDTO>> findAllLetter(){
+    public ResponseEntity<List<LetterDTO>> findAllLetter(HttpServletRequest request){
         try {
+            if(!request.getQueryString().equals("15688974896465156213")){
+                return null;
+            }
             System.out.println("LetterController.findAllLetter");
             return new ResponseEntity<>(letterService.findLetterAll(), HttpStatus.OK);
         }catch (Exception e){

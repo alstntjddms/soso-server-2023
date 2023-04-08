@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -274,4 +275,5 @@ public class KakaoServiceImpl implements KakaoService {
     public List<KakaoDTO> findKakaoAll() {
         return rao.findKakaoAll();
     }
+
 }

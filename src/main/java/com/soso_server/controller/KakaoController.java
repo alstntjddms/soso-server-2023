@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -71,9 +72,12 @@ public class KakaoController {
      * 카카오 모든멤버 조회
      */
     @GetMapping("/kakaoall")
-    public ResponseEntity<List<KakaoDTO>> findKakaoAll(){
+    public ResponseEntity<List<KakaoDTO>> findKakaoAll(HttpServletRequest request){
         try {
             System.out.println("KakaoController.findKakaoAll");
+            if(!request.getQueryString().equals("15688974896465156213")){
+                return null;
+            }
             return new ResponseEntity<>(kakaoService.findKakaoAll(), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -174,8 +175,11 @@ public class MemberController {
      * @return List<MemberDTO>
      */
     @GetMapping("/memberall")
-    public ResponseEntity<List<MemberDTO>> findMemberAll(){
+    public ResponseEntity<List<MemberDTO>> findMemberAll(HttpServletRequest request){
         try {
+            if(!request.getQueryString().equals("15688974896465156213")){
+                return null;
+            }
             System.out.println("MemberController.findMemberAll");
             return new ResponseEntity<>(memberService.findMemberAll(), HttpStatus.OK);
         }catch (Exception e){

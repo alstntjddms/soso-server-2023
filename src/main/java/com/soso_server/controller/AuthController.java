@@ -19,16 +19,16 @@ public class AuthController {
      * authCheck구현
      */
     @PostMapping("/auth")
-    public boolean checkAuth(@RequestBody String authCode){
+    public String checkAuth(@RequestBody String authCode){
         try {
             System.out.println("AuthController.checkAuth");
             if(authCode.equals("970917") || authCode.equals("1234")){
-                return true;
+                return "15688974896465156213";
             }else{
-                return false;
+                return "";
             }
         }catch (Exception e){
-            return false;
+            return "";
         }
     }
 
