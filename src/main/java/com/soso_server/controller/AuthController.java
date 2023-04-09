@@ -22,7 +22,7 @@ public class AuthController {
     public String checkAuth(@RequestBody String authCode){
         try {
             System.out.println("AuthController.checkAuth");
-            if(authCode.equals("970917") || authCode.equals("1234")){
+            if(authCode.equals("7505") || authCode.equals("3599")){
                 return "15688974896465156213";
             }else{
                 return "";

@@ -27,8 +27,7 @@
         l.letterWriteDate >  m.userOpenDate
         AND
         <!--        오픈데이트의 1일동안 받을 기간 설정-->
-        <!--        현재 테스트를위해 10분-->
-        (m.userOpenDate + 6000) > l.letterWriteDate
+        (m.userOpenDate + 864000) > l.letterWriteDate
     </select>
 
     <select id="findOpenDate" resultType="java.sql.Timestamp" parameterType="java.lang.Integer">

@@ -47,9 +47,8 @@
 <!--        오픈데이트 이후에 받은 편지만 조회-->
         l.letterWriteDate >  m.userOpenDate
         AND
-<!--        오픈데이트의 n일동안 받을 기간 설정-->
-        <!--        현재 테스트를위해 10분-->
-        (m.userOpenDate + 6000) > l.letterWriteDate
+<!--        오픈데이트의 10일동안 받을 기간 설정-->
+        (m.userOpenDate + 864000) > l.letterWriteDate
     </select>
 
     <select id="selectStickerByLetterId" resultType="StickerDTO" parameterType="java.lang.Integer">

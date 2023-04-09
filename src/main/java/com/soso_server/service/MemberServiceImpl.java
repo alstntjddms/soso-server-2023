@@ -64,6 +64,9 @@ public class MemberServiceImpl implements MemberService {
 
             memberDTO.setId(0);
             memberDTO.setUserId(memberDTO.getUserId());
+            long newTimestampInMillis = memberDTO.getUserOpenDate().getTime() + 864000000L;
+            Timestamp newTimestamp = new Timestamp(newTimestampInMillis);
+            memberDTO.setUserOpenDate(newTimestamp);
             return memberDTO;
         }catch (MemberException me){
             throw new MemberException("잘못된 userId", -999);
@@ -111,9 +114,8 @@ public class MemberServiceImpl implements MemberService {
             if(userId.length() < 20){
                 throw new MemberException();
             }
-            Timestamp t = findOpenDate(userId);
-            // 현재 테스트를위해 10분            
-            if(t != null && (new Timestamp(System.currentTimeMillis()-6000)).before(t)){
+            Timestamp openDate = findOpenDate(userId);
+            if(openDate != null && (new Timestamp(System.currentTimeMillis()-864000)).before(openDate)){
                 throw new MemberException("이미 오픈데이트가 설정됨.", -999);
             }
             return rao.registerOpenDate(Integer.parseInt(aes256.replaceDecodeDecryt(userId)));
@@ -171,6 +173,9 @@ public class MemberServiceImpl implements MemberService {
             memberDTO.setId(0);
             memberDTO.setUserId("");
             memberDTO.setUserDate(null);
+            long newTimestampInMillis = memberDTO.getUserOpenDate().getTime() + 864000000L;
+            Timestamp newTimestamp = new Timestamp(newTimestampInMillis);
+            memberDTO.setUserOpenDate(newTimestamp);
             return memberDTO;
         }catch (MemberException me){
             throw new MemberException("잘못된 userId", -999);
