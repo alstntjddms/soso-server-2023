@@ -115,10 +115,12 @@ public class MemberServiceImpl implements MemberService {
                 throw new MemberException();
             }
             Timestamp openDate = findOpenDate(userId);
+            // 864000 = 1일
             if(openDate != null && (new Timestamp(System.currentTimeMillis()-864000)).before(openDate)){
+                System.out.println("이미 오픈데이트가 설정됨");
                 throw new MemberException("이미 오픈데이트가 설정됨.", -999);
             }
-            return rao.registerOpenDate(Integer.parseInt(aes256.replaceDecodeDecryt(userId)));
+            return rao.registerOpenDate(Integer.parseInt(aes256.replaceDecodeDecryt(userId))); 
         }catch(MemberException e){
             throw new MemberException("잘못된 userId", -999);
         } catch (Exception e) {

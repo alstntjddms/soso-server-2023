@@ -48,6 +48,7 @@
         l.letterWriteDate >  m.userOpenDate
         AND
 <!--        오픈데이트의 10일동안 받을 기간 설정-->
+        <!--   864000 = 1일-->
         (m.userOpenDate + 864000) > l.letterWriteDate
     </select>
 
