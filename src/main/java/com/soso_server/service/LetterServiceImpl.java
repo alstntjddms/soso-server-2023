@@ -48,6 +48,7 @@ public class LetterServiceImpl implements LetterService {
     @Override
     public String registerLetter(HashMap<String, Object> dto) {
         try{
+            System.out.println("LetterServiceImpl.registerLetter start");
             ObjectMapper mapper = new ObjectMapper();
             HashMap Letter = mapper.convertValue(dto.get("letter"), HashMap.class);
 
@@ -65,11 +66,12 @@ public class LetterServiceImpl implements LetterService {
                 ss.setLetterId(registerLetterId);
                 rao.registerSticker(ss);
             }
+            System.out.println("LetterServiceImpl.registerLetter end");
             return externalAES256.encrypt(String.valueOf(registerLetterId));
         }catch (Exception e){
             new LetterException("알수없는 편지 등록오류", -999);
         }
-        return "";
+        return "편지등록 실패";
     }
 
     @Override
