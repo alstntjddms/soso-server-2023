@@ -34,5 +34,10 @@ public class KakaoRAOImpl implements KakaoRAO {
         return mapper.findKakaoAll();
     }
 
+    @Override
+    public KakaoDTO findOneKakaoById(int Id) {
+        return mapper.findOneKakaoById(Id);
+    }
+
 
 }

@@ -64,9 +64,13 @@ public class MemberServiceImpl implements MemberService {
 
             memberDTO.setId(0);
             memberDTO.setUserId(memberDTO.getUserId());
-            long newTimestampInMillis = memberDTO.getUserOpenDate().getTime() + 864000000L;
-            Timestamp newTimestamp = new Timestamp(newTimestampInMillis);
-            memberDTO.setUserOpenDate(newTimestamp);
+
+            // 10일뒤로 변경해서 리턴
+            if(memberDTO.getUserOpenDate() != null){
+                long newTimestampInMillis = memberDTO.getUserOpenDate().getTime() + 864000000L;
+                Timestamp newTimestamp = new Timestamp(newTimestampInMillis);
+                memberDTO.setUserOpenDate(newTimestamp);
+            }
             return memberDTO;
         }catch (MemberException me){
             throw new MemberException("잘못된 userId", -999);

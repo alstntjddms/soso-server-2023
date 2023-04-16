@@ -3,5 +3,4 @@
 
 <mapper namespace="com.soso_server.ra.itf.MessageRAO">
 
-
 </mapper>

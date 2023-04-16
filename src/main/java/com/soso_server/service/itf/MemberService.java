@@ -1,5 +1,6 @@
 package com.soso_server.service.itf;
 
+import com.soso_server.dto.KakaoDTO;
 import com.soso_server.dto.MemberDTO;
 import com.soso_server.exception.MemberException;
 

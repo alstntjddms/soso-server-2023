@@ -1,6 +1,7 @@
 package com.soso_server.ra;
 
 
+import com.soso_server.dto.KakaoDTO;
 import com.soso_server.ra.itf.MessageRAO;
 public class MessageRAOImpl implements MessageRAO {
 
@@ -9,4 +10,5 @@ public class MessageRAOImpl implements MessageRAO {
     public void setMapper(MessageRAO mapper) {
         this.mapper = mapper;
     }
+
 }

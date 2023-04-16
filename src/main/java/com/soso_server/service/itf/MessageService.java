@@ -4,6 +4,9 @@ public interface MessageService {
 
     public int sendAllMessage(String message, String buttonTitle);
 
-    public boolean sendMessage(String accessToken, String refreshToken, String message, String buttonTitle, int id);
+    public boolean sendMessage(String accessToken, String refreshToken, String message, String buttonTitle);
+
+    public String sendMessageByLetterCount(int userId);
+
 }
 

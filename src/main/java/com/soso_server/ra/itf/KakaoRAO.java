@@ -13,4 +13,7 @@ public interface KakaoRAO {
     public void refreshKakao(KakaoDTO kakaoDTO);
 
     public List<KakaoDTO> findKakaoAll();
+
+    public KakaoDTO findOneKakaoById(int Id);
+
 }

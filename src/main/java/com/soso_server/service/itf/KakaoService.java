@@ -31,6 +31,10 @@ public interface KakaoService {
 
     public void withdraw(String accessToken) throws Exception ;
 
+    public void updateScopeCheck(String userId) throws Exception;
+
+    public Boolean selectKakaoMsgYnByUserId(String userId) throws Exception;
+
     public List<KakaoDTO> findKakaoAll();
 
 }

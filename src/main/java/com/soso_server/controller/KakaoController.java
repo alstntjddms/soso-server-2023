@@ -35,9 +35,39 @@ public class KakaoController {
         }
     }
 
-//    @PostMapping("withdrawkakao")
-//    public ResponseEntity<String> withdrawKakao(@)
+    /**
+     * userId로 kakaoMsgYn을 확인한다.
+     * @param userId
+     * @return boolean
+     */
+    @GetMapping("/kakao/msg/{userId}")
+    public ResponseEntity<Boolean> selectKakaoMsgYnByUserId(@PathVariable String userId) {
+        try {
+            System.out.println("KakaoController.selectKakaoMsgYnByUserId");
+            System.out.println("userId = " + userId);
+            return new ResponseEntity<>(kakaoService.selectKakaoMsgYnByUserId(userId), HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
 
+        }
+    }
+
+    /**
+     * 동의항목을 눌렀다.
+     * @param userId
+     * @return void
+     */
+    @PostMapping("/kakao/scope")
+    public void updateScopeCheck(@RequestBody String userId) {
+        try {
+            System.out.println("KakaoController.getService");
+            System.out.println("userId = " + userId);
+            kakaoService.updateScopeCheck(userId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 리프레시토큰 테스트

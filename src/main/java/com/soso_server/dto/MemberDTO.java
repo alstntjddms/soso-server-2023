@@ -1,7 +1,14 @@
 package com.soso_server.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.sql.Timestamp;
 
+@Getter
+@Setter
+@ToString
 public class MemberDTO {
     // 유저 아이디
     private String userId;
@@ -13,44 +20,4 @@ public class MemberDTO {
     private Timestamp userOpenDate;
     // 사용자 생성 날짜
     private Timestamp userDate;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUserNickName() {
-        return userNickName;
-    }
-
-    public void setUserNickName(String userNickName) {
-        this.userNickName = userNickName;
-    }
-
-    public Timestamp getUserOpenDate() {
-        return userOpenDate;
-    }
-
-    public void setUserOpenDate(Timestamp userOpenDate) {
-        this.userOpenDate = userOpenDate;
-    }
-
-    public Timestamp getUserDate() {
-        return userDate;
-    }
-
-    public void setUserDate(Timestamp userDate) {
-        this.userDate = userDate;
-    }
 }

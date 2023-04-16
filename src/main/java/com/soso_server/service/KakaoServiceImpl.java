@@ -1,6 +1,7 @@
 package com.soso_server.service;
 
 import com.google.gson.*;
+import com.soso_server.ra.itf.MemberRAO;
 import com.soso_server.utils.AES256;
 import com.soso_server.dto.KakaoDTO;
 import com.soso_server.ra.itf.KakaoRAO;
@@ -19,6 +20,10 @@ import java.util.List;
 public class KakaoServiceImpl implements KakaoService {
 
     KakaoRAO rao;
+
+    @Autowired
+    MemberRAO memberRAO;
+
     @Autowired
     AES256 aes256;
 
@@ -140,16 +145,19 @@ public class KakaoServiceImpl implements KakaoService {
             // 이미 등록됐는지 체크
             KakaoDTO checkkakaoDTO = rao.findOneKakao(kakaoDTO.getKakaoId());
 
-            //매번 동의항목 메세지 체크
-            kakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
 
             if (checkkakaoDTO != null) {
                 System.out.println("already register");
-                rao.refreshKakao(kakaoDTO);
+                // 동의항목 체크
+                if(checkkakaoDTO.isKakaoScopeCheck()){
+                    checkkakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
+                    checkkakaoDTO.setKakaoScopeCheck(false);
+                }
+                rao.refreshKakao(checkkakaoDTO);
                 return checkkakaoDTO;
             } else {
 //                // 카카오 동의항목 메세지 체크 확인
-//                kakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
+                kakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
                 rao.registerKakao(kakaoDTO);
             }
 
@@ -268,6 +276,23 @@ public class KakaoServiceImpl implements KakaoService {
         } else {
             System.out.println("withdraw failed");
         }
+    }
+
+    @Override
+    public void updateScopeCheck(String userId) throws Exception {
+        KakaoDTO kakaoDTO = rao.findOneKakaoById(
+                        memberRAO.findMemberByUserId(
+                        Integer.parseInt(aes256.replaceDecodeDecryt(userId))).getId());
+        kakaoDTO.setKakaoScopeCheck(true);
+        rao.refreshKakao(kakaoDTO);
+    }
+
+    @Override
+    public Boolean selectKakaoMsgYnByUserId(String userId) throws Exception {
+        KakaoDTO kakaoDTO = rao.findOneKakaoById(
+                memberRAO.findMemberByUserId(
+                        Integer.parseInt(aes256.replaceDecodeDecryt(userId))).getId());
+        return kakaoDTO.isKakaoMsgYn();
     }
 
     @Override

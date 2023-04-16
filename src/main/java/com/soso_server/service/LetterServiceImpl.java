@@ -1,6 +1,7 @@
 package com.soso_server.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.soso_server.service.itf.MessageService;
 import com.soso_server.utils.AES256;
 import com.soso_server.dto.LetterDTO;
 import com.soso_server.dto.StickerDTO;
@@ -21,6 +22,10 @@ import java.util.List;
 public class LetterServiceImpl implements LetterService {
 
     LetterRAO rao;
+
+    @Autowired
+    MessageService messageService;
+
     @Autowired
     AES256 aes256;
     @Autowired
@@ -55,7 +60,8 @@ public class LetterServiceImpl implements LetterService {
 //            Letter.replace("userId", aes256.decrypt(URLDecoder.decode(Letter.get("userId").toString().replaceAll("MSJSM", "%"), "UTF-8")));
 //            Letter.replace("userId", aes256.replaceDecodeDecryt(Letter.get("userId").toString()));
             LetterDTO letterDTO = mapper.convertValue(Letter, LetterDTO.class);
-            letterDTO.setUserId(externalAES256.replaceDecodeDecryt(letterDTO.getUserId()));
+            String userId = externalAES256.replaceDecodeDecryt(letterDTO.getUserId());
+            letterDTO.setUserId(userId);
             letterDTO.setLetterReadYn(false);
             letterDTO.setLetterDelYn(false);
             int registerLetterId = rao.registerLetter(letterDTO);
@@ -67,6 +73,9 @@ public class LetterServiceImpl implements LetterService {
                 rao.registerSticker(ss);
             }
             System.out.println("LetterServiceImpl.registerLetter end");
+            System.out.println("1");
+            messageService.sendMessageByLetterCount(Integer.parseInt(userId));
+            System.out.println("2");
             return externalAES256.encrypt(String.valueOf(registerLetterId));
         }catch (Exception e){
             e.printStackTrace();
