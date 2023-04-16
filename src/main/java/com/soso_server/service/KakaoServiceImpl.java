@@ -145,7 +145,6 @@ public class KakaoServiceImpl implements KakaoService {
             // 이미 등록됐는지 체크
             KakaoDTO checkkakaoDTO = rao.findOneKakao(kakaoDTO.getKakaoId());
 
-
             if (checkkakaoDTO != null) {
                 System.out.println("already register");
                 // 동의항목 체크
@@ -210,7 +209,6 @@ public class KakaoServiceImpl implements KakaoService {
 
     @Override
     public String refreshAccessToken(String refreshToken) throws IOException {
-        System.out.println("1111111111111111111111");
         String clientId = "a42a6c91f7b1bb0d3f8e3daef2b6f24b"; // 카카오 디벨로퍼스에서 발급받은 REST API 키
         String grantType = "refresh_token";
         String apiUrl = "https://kauth.kakao.com/oauth/token";

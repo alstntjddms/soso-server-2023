@@ -73,9 +73,7 @@ public class LetterServiceImpl implements LetterService {
                 rao.registerSticker(ss);
             }
             System.out.println("LetterServiceImpl.registerLetter end");
-            System.out.println("1");
             messageService.sendMessageByLetterCount(Integer.parseInt(userId));
-            System.out.println("2");
             return externalAES256.encrypt(String.valueOf(registerLetterId));
         }catch (Exception e){
             e.printStackTrace();
