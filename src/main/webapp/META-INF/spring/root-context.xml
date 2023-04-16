@@ -52,6 +52,9 @@
     <bean id="pageLogService" class="com.soso_server.service.LogService.PageLogServiceImpl">
         <property name="rao" ref="logRAO"></property>
     </bean>
+    <bean id="messageService" class="com.soso_server.service.MessageServiceImpl">
+        <property name="rao" ref="messageRAO"></property>
+    </bean>
 
     <bean id="kakaoRAO" class="com.soso_server.ra.KakaoRAOImpl">
         <property name="mapper" ref="kakaoMapper"/>
@@ -64,6 +67,9 @@
     </bean>
     <bean id="logRAO" class="com.soso_server.ra.LogRAO.PageLogRAOImpl">
         <property name="mapper" ref="logMapper"/>
+    </bean>
+    <bean id="messageRAO" class="com.soso_server.ra.MessageRAOImpl">
+        <property name="mapper" ref="messageMapper"/>
     </bean>
 
     <bean id="kakaoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
@@ -80,6 +86,10 @@
     </bean>
     <bean id="logMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="mapperInterface" value="com.soso_server.ra.LogRAO.itf.PageLogRAO" />
+        <property name="sqlSessionFactory" ref="postSqlSessionFactory"/>
+    </bean>
+    <bean id="messageMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.soso_server.ra.itf.MessageRAO" />
         <property name="sqlSessionFactory" ref="postSqlSessionFactory"/>
     </bean>
 

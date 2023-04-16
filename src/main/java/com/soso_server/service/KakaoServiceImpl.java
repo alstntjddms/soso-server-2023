@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -139,13 +140,16 @@ public class KakaoServiceImpl implements KakaoService {
             // 이미 등록됐는지 체크
             KakaoDTO checkkakaoDTO = rao.findOneKakao(kakaoDTO.getKakaoId());
 
+            //매번 동의항목 메세지 체크
+            kakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
+
             if (checkkakaoDTO != null) {
                 System.out.println("already register");
                 rao.refreshKakao(kakaoDTO);
                 return checkkakaoDTO;
             } else {
-                // 카카오 동의항목 메세지 체크 확인
-                kakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
+//                // 카카오 동의항목 메세지 체크 확인
+//                kakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
                 rao.registerKakao(kakaoDTO);
             }
 
@@ -198,6 +202,7 @@ public class KakaoServiceImpl implements KakaoService {
 
     @Override
     public String refreshAccessToken(String refreshToken) throws IOException {
+        System.out.println("1111111111111111111111");
         String clientId = "a42a6c91f7b1bb0d3f8e3daef2b6f24b"; // 카카오 디벨로퍼스에서 발급받은 REST API 키
         String grantType = "refresh_token";
         String apiUrl = "https://kauth.kakao.com/oauth/token";
@@ -244,7 +249,7 @@ public class KakaoServiceImpl implements KakaoService {
             return accessToken;
         } else {
             System.out.println("HTTP error code : " + responseCode);
-            return null;
+            return "";
         }
     }
 
@@ -269,5 +274,9 @@ public class KakaoServiceImpl implements KakaoService {
     public List<KakaoDTO> findKakaoAll() {
         return rao.findKakaoAll();
     }
+
+
+
+
 
 }

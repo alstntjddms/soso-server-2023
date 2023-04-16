@@ -19,5 +19,6 @@
         <mapper resource="/META-INF/config/mybatis/lettermapping.xml"/>
         <mapper resource="/META-INF/config/mybatis/membermapping.xml"/>
         <mapper resource="/META-INF/config/mybatis/logmapping.xml"/>
+        <mapper resource="/META-INF/config/mybatis/messagemapping.xml"/>
     </mappers>
 </configuration>
