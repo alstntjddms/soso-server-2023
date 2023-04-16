@@ -38,7 +38,7 @@ public class MessageServiceImpl implements MessageService {
             for(KakaoDTO kakaoDTO : kakaoDTOS){
                 if(kakaoDTO.isKakaoMsgYn() == true){
                     sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
-                            buttonTitle, message, kakaoDTO.getId());
+                            message, buttonTitle, kakaoDTO.getId());
                 }
             }
             return count;
