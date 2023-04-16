@@ -32,13 +32,13 @@ public class MessageServiceImpl implements MessageService {
         this.rao = rao;
     }
 
-    public int sendAllMessage(String message){
+    public int sendAllMessage(String message, String buttonTitle){
         try{
             List<KakaoDTO> kakaoDTOS = kakaoRAO.findKakaoAll();
             for(KakaoDTO kakaoDTO : kakaoDTOS){
                 if(kakaoDTO.isKakaoMsgYn() == true){
                     sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
-                            message, kakaoDTO.getId());
+                            buttonTitle, message, kakaoDTO.getId());
                 }
             }
             return count;
@@ -47,7 +47,7 @@ public class MessageServiceImpl implements MessageService {
         }
     }
 
-    public boolean sendMessage(String accessToken, String refreshToken, String message, int id) {
+    public boolean sendMessage(String accessToken, String refreshToken, String message, String buttonTitle, int id) {
         try {
             URL url = new URL("https://kapi.kakao.com/v2/api/talk/memo/default/send");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -60,7 +60,7 @@ public class MessageServiceImpl implements MessageService {
                             + "\"text\":\"" + message + "\","
                             + "\"link\":{\"web_url\":\"https://plater.kr\"},"
                             + "\"button_title\":\"Button\","
-                            + "\"buttons\":[{\"title\":\"편지 읽으러 가기\",\"link\":{\"web_url\":\"https://plater.kr\"}}]}",
+                            + "\"buttons\":[{\"title\":\"" + buttonTitle + "\",\"link\":{\"web_url\":\"https://plater.kr\"}}]}",
                     StandardCharsets.UTF_8);
 
             byte[] postData = parameters.getBytes(StandardCharsets.UTF_8);
@@ -79,10 +79,9 @@ public class MessageServiceImpl implements MessageService {
             // 무한 재귀 방지
             }else if(responseCode == HttpURLConnection.HTTP_UNAUTHORIZED && refreshTokenCheckId == id){
                 logger.info("second HTTP request failed: " + responseCode);
-
             }else if(responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 refreshTokenCheckId = id;
-                sendMessage(kakaoService.refreshAccessToken(refreshToken), refreshToken, message, id);
+                sendMessage(kakaoService.refreshAccessToken(refreshToken), refreshToken, message, buttonTitle, id);
                 logger.info("refreshAccessToken kakaoDTO.getId() = " + id);
             }else {
                 System.out.println("HTTP request failed: " + responseCode);
