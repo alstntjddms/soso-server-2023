@@ -8,12 +8,8 @@ import com.soso_server.service.itf.KakaoService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -24,8 +20,6 @@ public class KakaoServiceImpl implements KakaoService {
     KakaoRAO rao;
     @Autowired
     AES256 aes256;
-
-    private final String HTTP_REQUEST = "https://kapi.kakao.com/v2/user/me";
 
     public void setRao(KakaoRAO rao) {
         this.rao = rao;

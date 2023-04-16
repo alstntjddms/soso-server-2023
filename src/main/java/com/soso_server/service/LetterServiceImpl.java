@@ -69,6 +69,7 @@ public class LetterServiceImpl implements LetterService {
             System.out.println("LetterServiceImpl.registerLetter end");
             return externalAES256.encrypt(String.valueOf(registerLetterId));
         }catch (Exception e){
+            e.printStackTrace();
             new LetterException("알수없는 편지 등록오류", -999);
         }
         return "편지등록 실패";
