@@ -77,9 +77,12 @@ public class MessageServiceImpl implements MessageService {
                 return true;
             // access_Token 만료시 refresh_Token으로 access_Token 새로 가져옴
             // 무한 재귀 방지
-            } else if(responseCode == HttpURLConnection.HTTP_UNAUTHORIZED && refreshTokenCheckId != id) {
-                sendMessage(kakaoService.refreshAccessToken(refreshToken), refreshToken, message, id);
+            }else if(responseCode == HttpURLConnection.HTTP_UNAUTHORIZED && refreshTokenCheckId == id){
+                logger.info("second HTTP request failed: " + responseCode);
+
+            }else if(responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 refreshTokenCheckId = id;
+                sendMessage(kakaoService.refreshAccessToken(refreshToken), refreshToken, message, id);
                 logger.info("refreshAccessToken kakaoDTO.getId() = " + id);
             }else {
                 System.out.println("HTTP request failed: " + responseCode);
