@@ -33,6 +33,8 @@ public interface KakaoService {
 
     public void updateScopeCheck(String userId) throws Exception;
 
+    public void revokeByUserId(String userId);
+
     public Boolean selectKakaoMsgYnByUserId(String userId) throws Exception;
 
     public List<KakaoDTO> findKakaoAll();

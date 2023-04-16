@@ -208,6 +208,48 @@ public class KakaoServiceImpl implements KakaoService {
     }
 
     @Override
+    public void revokeByUserId(String userId) {
+        try {
+            KakaoDTO kakaoDTO = rao.findOneKakaoById(
+                    memberRAO.findMemberByUserId(
+                            Integer.parseInt(aes256.replaceDecodeDecryt(userId))).getId());
+
+            URL url = new URL("https://kapi.kakao.com/v2/user/revoke/scopes");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("content-type", "application/x-www-form-urlencoded");
+            connection.setRequestProperty("Authorization", "Bearer " + kakaoDTO.getKakaoAccessToken());
+            String body = "scopes=[\"talk_message\"]";
+            connection.setDoOutput(true);
+            OutputStream outputStream = connection.getOutputStream();
+            outputStream.write(body.getBytes(StandardCharsets.UTF_8));
+            outputStream.flush();
+            outputStream.close();
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                JsonObject json = new Gson().fromJson(response.toString(), JsonObject.class);
+                System.out.println(json);
+                System.out.println("동의 항목(메시지 보내기) 철회가 완료되었습니다.");
+            } else {
+                System.out.println("HTTP request failed: " + responseCode);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @Override
     public String refreshAccessToken(String refreshToken) throws IOException {
         String clientId = "a42a6c91f7b1bb0d3f8e3daef2b6f24b"; // 카카오 디벨로퍼스에서 발급받은 REST API 키
         String grantType = "refresh_token";
@@ -260,13 +302,17 @@ public class KakaoServiceImpl implements KakaoService {
     }
 
     @Override
-    public void withdraw(String accessToken) throws Exception {
+    public void withdraw(String userId) throws Exception {
+        KakaoDTO kakaoDTO = rao.findOneKakaoById(
+                memberRAO.findMemberByUserId(
+                        Integer.parseInt(aes256.replaceDecodeDecryt(userId))).getId());
+
         String apiUrl = "https://kapi.kakao.com/v1/user/unlink";
 
         URL url = new URL(apiUrl);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
-        con.setRequestProperty("Authorization", "Bearer " + accessToken);
+        con.setRequestProperty("Authorization", "Bearer " + kakaoDTO.getKakaoAccessToken());
 
         // Response Code를 확인합니다.
         if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {

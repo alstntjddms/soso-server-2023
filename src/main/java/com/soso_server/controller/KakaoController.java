@@ -70,6 +70,20 @@ public class KakaoController {
     }
 
     /**
+     * 동의항목 (talk_message)를 철회한다.
+     * @param userId
+     */
+    @PostMapping("kakao/revoke")
+    public void revokeByUserId(@RequestBody String userId){
+        try {
+            System.out.println("KakaoController.revokeByUserId");
+            System.out.println("userId = " + userId);
+            kakaoService.revokeByUserId(userId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    /**
      * 리프레시토큰 테스트
      * 추후 삭제 예정
      */
@@ -88,11 +102,11 @@ public class KakaoController {
      * 회원탈퇴 테스트
      */
     @PostMapping("/kakao/withdraw")
-    public void withdrawTest(@RequestBody String access_token) {
+    public void withdrawTest(@RequestBody String userId) {
         try {
             System.out.println("KakaoController.testService");
-            System.out.println("access_token = " + access_token);
-            kakaoService.withdraw(access_token);
+            System.out.println("access_token = " + userId);
+            kakaoService.withdraw(userId);
         }catch (Exception e){
 
         }
