@@ -45,7 +45,6 @@ public class MessageServiceImpl implements MessageService {
         }finally {
             count = 0;
         }
-
     }
 
     public boolean sendMessage(String accessToken, String refreshToken, String message, int id) {

@@ -275,8 +275,4 @@ public class KakaoServiceImpl implements KakaoService {
         return rao.findKakaoAll();
     }
 
-
-
-
-
 }
