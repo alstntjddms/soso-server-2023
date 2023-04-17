@@ -29,7 +29,7 @@ public interface KakaoService {
 
     public String refreshAccessToken(String refreshToken) throws IOException;
 
-    public void withdraw(String accessToken) throws Exception ;
+    public String withdraw(String accessToken) throws Exception ;
 
     public void updateScopeCheck(String userId) throws Exception;
 

@@ -149,10 +149,10 @@ public class KakaoServiceImpl implements KakaoService {
                 System.out.println("already register");
                 // 동의항목 체크
                 if(checkkakaoDTO.isKakaoScopeCheck()){
-                    checkkakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
-                    checkkakaoDTO.setKakaoScopeCheck(false);
+                    kakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
+                    kakaoDTO.setKakaoScopeCheck(false);
                 }
-                rao.refreshKakao(checkkakaoDTO);
+                rao.refreshKakao(kakaoDTO);
             } else {
 //                // 카카오 동의항목 메세지 체크 확인
                 kakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
@@ -301,7 +301,7 @@ public class KakaoServiceImpl implements KakaoService {
     }
 
     @Override
-    public void withdraw(String userId) throws Exception {
+    public String withdraw(String userId) throws Exception {
         KakaoDTO kakaoDTO = rao.findOneKakaoById(
                 memberRAO.findMemberByUserId(
                         Integer.parseInt(aes256.replaceDecodeDecryt(userId))).getId());
@@ -316,9 +316,11 @@ public class KakaoServiceImpl implements KakaoService {
         // Response Code를 확인합니다.
         if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
             System.out.println("withdraw success");
+            return "탈퇴성공";
         } else {
             System.out.println("withdraw failed");
         }
+        return "";
     }
 
     @Override

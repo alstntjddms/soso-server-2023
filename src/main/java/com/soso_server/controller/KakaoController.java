@@ -102,13 +102,13 @@ public class KakaoController {
      * 회원탈퇴 테스트
      */
     @PostMapping("/kakao/withdraw")
-    public void withdrawTest(@RequestBody String userId) {
+    public ResponseEntity<String> withdraw(@RequestBody String userId) {
         try {
             System.out.println("KakaoController.testService");
             System.out.println("access_token = " + userId);
-            kakaoService.withdraw(userId);
+            return new ResponseEntity<>(kakaoService.withdraw(userId), HttpStatus.OK);
         }catch (Exception e){
-
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
         }
     }
 
