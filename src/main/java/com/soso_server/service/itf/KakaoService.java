@@ -31,9 +31,9 @@ public interface KakaoService {
 
     public String withdraw(String accessToken) throws Exception ;
 
-    public void updateScopeCheck(String userId) throws Exception;
+    public String updateScopeCheck(String userId) throws Exception;
 
-    public void revokeByUserId(String userId);
+    public String revokeByUserId(String userId);
 
     public Boolean selectKakaoMsgYnByUserId(String userId) throws Exception;
 

@@ -59,13 +59,15 @@ public class KakaoController {
      * @return void
      */
     @PostMapping("/kakao/scope")
-    public void updateScopeCheck(@RequestBody String userId) {
+    public ResponseEntity<String> updateScopeCheck(@RequestBody String userId) {
         try {
             System.out.println("KakaoController.getService");
             System.out.println("userId = " + userId);
-            kakaoService.updateScopeCheck(userId);
+            return new ResponseEntity<>(kakaoService.updateScopeCheck(userId), HttpStatus.OK);
+
         }catch (Exception e){
             e.printStackTrace();
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -74,13 +76,15 @@ public class KakaoController {
      * @param userId
      */
     @PostMapping("kakao/revoke")
-    public void revokeByUserId(@RequestBody String userId){
+    public ResponseEntity<String> revokeByUserId(@RequestBody String userId){
         try {
             System.out.println("KakaoController.revokeByUserId");
             System.out.println("userId = " + userId);
-            kakaoService.revokeByUserId(userId);
+            return new ResponseEntity<>(kakaoService.revokeByUserId(userId), HttpStatus.OK);
+
         }catch (Exception e){
             e.printStackTrace();
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
         }
     }
     /**

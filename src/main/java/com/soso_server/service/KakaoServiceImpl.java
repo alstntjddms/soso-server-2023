@@ -207,7 +207,7 @@ public class KakaoServiceImpl implements KakaoService {
     }
 
     @Override
-    public void revokeByUserId(String userId) {
+    public String revokeByUserId(String userId) {
         try {
             KakaoDTO kakaoDTO = rao.findOneKakaoById(
                     memberRAO.findMemberByUserId(
@@ -237,14 +237,17 @@ public class KakaoServiceImpl implements KakaoService {
                 JsonObject json = new Gson().fromJson(response.toString(), JsonObject.class);
                 System.out.println(json);
                 System.out.println("동의 항목(메시지 보내기) 철회가 완료되었습니다.");
+                return "동의 항목(메시지 보내기) 철회가 완료되었습니다.";
             } else {
                 System.out.println("HTTP request failed: " + responseCode);
+                return "동의 항목(메시지 보내기) 철회가 실패";
             }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        return "";
     }
 
 
@@ -324,12 +327,13 @@ public class KakaoServiceImpl implements KakaoService {
     }
 
     @Override
-    public void updateScopeCheck(String userId) throws Exception {
+    public String updateScopeCheck(String userId) throws Exception {
         KakaoDTO kakaoDTO = rao.findOneKakaoById(
                         memberRAO.findMemberByUserId(
                         Integer.parseInt(aes256.replaceDecodeDecryt(userId))).getId());
         kakaoDTO.setKakaoScopeCheck(true);
         rao.refreshKakao(kakaoDTO);
+        return "동의항목 누름";
     }
 
     @Override
