@@ -153,7 +153,6 @@ public class KakaoServiceImpl implements KakaoService {
                     checkkakaoDTO.setKakaoScopeCheck(false);
                 }
                 rao.refreshKakao(checkkakaoDTO);
-                return checkkakaoDTO;
             } else {
 //                // 카카오 동의항목 메세지 체크 확인
                 kakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
