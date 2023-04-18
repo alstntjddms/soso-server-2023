@@ -121,6 +121,22 @@ public class MemberController {
     }
 
     /**
+     * 멤버의 행성을 개설한다.
+     * @param userId
+     * @return null
+     */
+    @PostMapping("/member/refreshOpenDate")
+    public ResponseEntity<Timestamp> refreshOpenDate(@RequestBody String userId){
+        try{
+            System.out.println("MemberController.registerOpenDate");
+            System.out.println("userId = " + userId);
+            return new ResponseEntity<>(memberService.refreshOpenDate(userId), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
      * 멤버의 행성 개성일을 가져온다.
      * @param userId
      * @return String

@@ -39,6 +39,10 @@
         UPDATE soso.MEMBER SET userOpenDate = CURRENT_TIMESTAMP WHERE userId = #{userId}
     </select>
 
+    <select id="refreshOpenDate" resultType="java.sql.Timestamp" parameterType="java.lang.Integer">
+        UPDATE soso.MEMBER SET userOpenDate = '1997-09-17 00:00:00' WHERE userId = #{userId}
+    </select>
+
     <select id="findMemberById" resultType="MemberDTO" parameterType="java.lang.Integer">
         SELECT * FROM soso.MEMBER WHERE id = #{id}
     </select>

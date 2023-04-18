@@ -62,4 +62,9 @@ public class MemberRAOImpl implements MemberRAO {
         mapper.modifyUserNickNameByUserId(memberDTO);
     }
 
+    @Override
+    public Timestamp refreshOpenDate(int userId) {
+        return mapper.refreshOpenDate(userId);
+    }
+
 }

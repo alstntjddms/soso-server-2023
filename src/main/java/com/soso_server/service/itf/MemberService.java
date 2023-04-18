@@ -36,6 +36,8 @@ public interface MemberService {
 
     public Timestamp registerOpenDate(String userId) throws Exception;
 
+    public Timestamp refreshOpenDate(String userId) throws MemberException;
+
     public Timestamp findOpenDate(String userId) throws Exception;
 
     /**

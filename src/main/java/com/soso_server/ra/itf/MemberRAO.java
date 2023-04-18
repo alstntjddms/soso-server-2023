@@ -66,4 +66,5 @@ public interface MemberRAO {
     public void modifyUserNickNameByUserId(MemberDTO memberDTO);
 
 
+    public Timestamp refreshOpenDate(int userId);
 }

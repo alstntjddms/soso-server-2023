@@ -134,6 +134,21 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Timestamp refreshOpenDate(String userId) throws MemberException {
+        try{
+            if(userId.length() < 20){
+                throw new MemberException();
+            }
+            return rao.refreshOpenDate(Integer.parseInt(aes256.replaceDecodeDecryt(userId)));
+        }catch(MemberException e){
+            throw new MemberException("잘못된 userId", -999);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public Timestamp findOpenDate(String userId) throws MemberException {
         try{
             if(userId.length() < 20){
