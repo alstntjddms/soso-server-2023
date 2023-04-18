@@ -125,7 +125,7 @@ public class MemberController {
      * @param userId
      * @return null
      */
-    @PostMapping("/member/refreshOpenDate")
+    @PatchMapping("/member/refresh/opendate")
     public ResponseEntity<Timestamp> refreshOpenDate(@RequestBody String userId){
         try{
             System.out.println("MemberController.registerOpenDate");
