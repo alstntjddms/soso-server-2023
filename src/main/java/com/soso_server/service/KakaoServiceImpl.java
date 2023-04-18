@@ -147,11 +147,14 @@ public class KakaoServiceImpl implements KakaoService {
 
             if (checkkakaoDTO != null) {
                 System.out.println("already register");
+
+                kakaoDTO.setKakaoMsgYn(checkkakaoDTO.isKakaoMsgYn());
                 // 동의항목 체크
                 if(checkkakaoDTO.isKakaoScopeCheck()){
                     kakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
                     kakaoDTO.setKakaoScopeCheck(false);
                 }
+
                 rao.refreshKakao(kakaoDTO);
             } else {
 //                // 카카오 동의항목 메세지 체크 확인
@@ -188,6 +191,7 @@ public class KakaoServiceImpl implements KakaoService {
                 JsonObject json = new Gson().fromJson(response.toString(), JsonObject.class);
                 JsonArray scopes = json.getAsJsonArray("scopes");
 
+                System.out.println("scopes = " + scopes);
                 for (JsonElement scope : scopes) {
                     JsonObject scopeObj = scope.getAsJsonObject();
                     String id = scopeObj.get("id").getAsString();
