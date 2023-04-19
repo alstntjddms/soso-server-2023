@@ -26,15 +26,15 @@ public class LetterController {
      * @return List<LetterDTO>
      */
     @GetMapping("/letterall")
-    public ResponseEntity<List<LetterDTO>> findAllLetter(HttpServletRequest request){
+    public ResponseEntity<?> findAllLetter(HttpServletRequest request){
         try {
             if(!request.getQueryString().equals("15688974896465156213")){
                 return null;
             }
             System.out.println("LetterController.findAllLetter");
-            return new ResponseEntity<>(letterService.findLetterAll(), HttpStatus.OK);
+            return new ResponseEntity<List<LetterDTO>>(letterService.findLetterAll(), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -44,13 +44,13 @@ public class LetterController {
      * @return LetterDTO
      */
     @GetMapping("/letter/userid/{userId}")
-    public ResponseEntity<List<LetterDTO>> findLetterByUserId(@PathVariable String userId){
+    public ResponseEntity<?> findLetterByUserId(@PathVariable String userId){
         try {
             System.out.println("LetterController.findLetterByUserId");
             System.out.println("userId = " + userId);
-            return new ResponseEntity<>(letterService.selectLetterIdByUserId(userId), HttpStatus.OK);
+            return new ResponseEntity<List<LetterDTO>>(letterService.selectLetterIdByUserId(userId), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -65,9 +65,9 @@ public class LetterController {
         try{
             System.out.println("LetterController.registerLetter");
             System.out.println("dto = " + dto);
-            return new ResponseEntity<>(letterService.registerLetter(dto), HttpStatus.OK);
+            return new ResponseEntity<String>(letterService.registerLetter(dto), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -77,13 +77,13 @@ public class LetterController {
      * @return LetterDTO
      */
     @GetMapping("/letter/{letterId}")
-    public ResponseEntity<LetterDTO> findLetterByLetterId(@PathVariable String letterId){
+    public ResponseEntity<?> findLetterByLetterId(@PathVariable String letterId){
         try {
             System.out.println("LetterController.findLetterByLetterId");
             System.out.println("letterId = " + letterId);
-            return new ResponseEntity<>(letterService.selectLetterByLetterId(letterId), HttpStatus.OK);
+            return new ResponseEntity<LetterDTO>(letterService.selectLetterByLetterId(letterId), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -93,13 +93,13 @@ public class LetterController {
      * @return List<StickerDTO>
      */
     @GetMapping("/sticker/letterid/{letterId}")
-    public ResponseEntity<List<StickerDTO>> findStickerByLetterId(@PathVariable String letterId){
+    public ResponseEntity<?> findStickerByLetterId(@PathVariable String letterId){
         try{
             System.out.println("LetterController.findStickerByLetterId");
             System.out.println("letterId = " + letterId);
-            return new ResponseEntity(letterService.findStickerByLetterId(letterId), HttpStatus.OK);
+            return new ResponseEntity<List<StickerDTO>>(letterService.findStickerByLetterId(letterId), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -113,9 +113,9 @@ public class LetterController {
         try{
             System.out.println("LetterController.blockByLetterId");
             System.out.println("letterId = " + letterId);
-            return new ResponseEntity(letterService.blockByLetterId(letterId), HttpStatus.OK);
+            return new ResponseEntity<String>(letterService.blockByLetterId(letterId), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }
     }
 }

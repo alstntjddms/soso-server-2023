@@ -6,18 +6,20 @@ import com.soso_server.utils.AES256;
 import com.soso_server.dto.KakaoDTO;
 import com.soso_server.ra.itf.KakaoRAO;
 import com.soso_server.service.itf.KakaoService;
+import org.jboss.logging.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Service
 public class KakaoServiceImpl implements KakaoService {
+
+    private static final Logger logger = Logger.getLogger(KakaoServiceImpl.class);
 
     KakaoRAO rao;
 

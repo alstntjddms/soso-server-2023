@@ -29,9 +29,9 @@ public class KakaoController {
         try {
             System.out.println("KakaoController.getService");
             System.out.println("authorize_code = " + authorize_code);
-            return new ResponseEntity<>(kakaoService.getService(authorize_code), HttpStatus.OK);
+            return new ResponseEntity<String>(kakaoService.getService(authorize_code), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -41,14 +41,14 @@ public class KakaoController {
      * @return boolean
      */
     @GetMapping("/kakao/msg/{userId}")
-    public ResponseEntity<Boolean> selectKakaoMsgYnByUserId(@PathVariable String userId) {
+    public ResponseEntity<?> selectKakaoMsgYnByUserId(@PathVariable String userId) {
         try {
             System.out.println("KakaoController.selectKakaoMsgYnByUserId");
             System.out.println("userId = " + userId);
-            return new ResponseEntity<>(kakaoService.selectKakaoMsgYnByUserId(userId), HttpStatus.OK);
+            return new ResponseEntity<Boolean>(kakaoService.selectKakaoMsgYnByUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
 
         }
     }
@@ -63,11 +63,11 @@ public class KakaoController {
         try {
             System.out.println("KakaoController.getService");
             System.out.println("userId = " + userId);
-            return new ResponseEntity<>(kakaoService.updateScopeCheck(userId), HttpStatus.OK);
+            return new ResponseEntity<String>(kakaoService.updateScopeCheck(userId), HttpStatus.OK);
 
         }catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -80,11 +80,11 @@ public class KakaoController {
         try {
             System.out.println("KakaoController.revokeByUserId");
             System.out.println("userId = " + userId);
-            return new ResponseEntity<>(kakaoService.revokeByUserId(userId), HttpStatus.OK);
+            return new ResponseEntity<String>(kakaoService.revokeByUserId(userId), HttpStatus.OK);
 
         }catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }
     }
     /**
@@ -96,39 +96,40 @@ public class KakaoController {
         try {
             System.out.println("KakaoController.testService");
             System.out.println("refresh_token = " + refresh_token);
-            return new ResponseEntity<>(kakaoService.refreshAccessToken(refresh_token), HttpStatus.OK);
+            return new ResponseEntity<String>(kakaoService.refreshAccessToken(refresh_token), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }
     }
 
     /**
-     * 회원탈퇴 테스트
+     * 회원탈퇴
      */
     @PostMapping("/kakao/withdraw")
     public ResponseEntity<String> withdraw(@RequestBody String userId) {
         try {
-            System.out.println("KakaoController.testService");
-            System.out.println("access_token = " + userId);
-            return new ResponseEntity<>(kakaoService.withdraw(userId), HttpStatus.OK);
+            System.out.println("KakaoController.withdraw");
+            System.out.println("userId = " + userId);
+            return new ResponseEntity<String>(kakaoService.withdraw(userId), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }
     }
 
     /**
+     * 관리용
      * 카카오 모든멤버 조회
      */
     @GetMapping("/kakaoall")
-    public ResponseEntity<List<KakaoDTO>> findKakaoAll(HttpServletRequest request){
+    public ResponseEntity<?> findKakaoAll(HttpServletRequest request){
         try {
             System.out.println("KakaoController.findKakaoAll");
             if(!request.getQueryString().equals("15688974896465156213")){
                 return null;
             }
-            return new ResponseEntity<>(kakaoService.findKakaoAll(), HttpStatus.OK);
+            return new ResponseEntity<List<KakaoDTO>>(kakaoService.findKakaoAll(), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }
     }
 

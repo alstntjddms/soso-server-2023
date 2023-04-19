@@ -1,11 +1,7 @@
 package com.soso_server.service.itf;
 
 import com.soso_server.dto.KakaoDTO;
-
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.HashMap;
 import java.util.List;
 
 public interface KakaoService {

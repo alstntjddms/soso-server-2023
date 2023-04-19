@@ -9,16 +9,21 @@ import com.soso_server.service.itf.MemberService;
 import com.soso_server.utils.ExternalAES256;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.jboss.logging.Logger;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Service
 public class MemberServiceImpl implements MemberService {
 
+    private static final Logger logger = Logger.getLogger(MemberServiceImpl.class);
+
+
     MemberRAO rao;
+
     @Autowired
     AES256 aes256;
+
     @Autowired
     ExternalAES256 externalAES256;
 
@@ -97,19 +102,18 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public int findMemberByLetterCount(String userId) throws MemberException {
+    public String findMemberByLetterCount(String userId) throws MemberException {
         try{
             if(userId.length() < 20){
                 throw new MemberException();
             }
 //            return rao.findMemberByLetterCount(Integer.parseInt(aes256.decrypt(URLDecoder.decode(userId.replaceAll("MSJSM", "%"), "UTF-8"))));
-            return rao.findMemberByLetterCount(Integer.parseInt(aes256.replaceDecodeDecryt(userId)));
+            return String.valueOf(rao.findMemberByLetterCount(Integer.parseInt(aes256.replaceDecodeDecryt(userId))));
         }catch (MemberException me){
-            throw new MemberException("잘못된 userId", -999);
+            throw new MemberException("너무 긴 userId", -999);
         }catch (Exception e){
-            e.printStackTrace();
+            return e.toString();
         }
-        return 0;
     }
 
     @Override

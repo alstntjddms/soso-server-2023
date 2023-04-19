@@ -6,7 +6,7 @@ public interface MessageService {
 
     public boolean sendMessage(String accessToken, String refreshToken, String message, String buttonTitle);
 
-    public String sendMessageByLetterCount(int userId);
+    public void sendMessageByLetterCount(int userId);
 
 }
 

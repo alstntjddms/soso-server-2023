@@ -32,7 +32,7 @@ public interface MemberService {
 
     public String modifyUserNickNameByUserId(String userId, String userNickName) throws MemberException;
 
-    public int findMemberByLetterCount(String userId) throws MemberException;
+    public String findMemberByLetterCount(String userId) throws MemberException;
 
     public Timestamp registerOpenDate(String userId) throws Exception;
 
