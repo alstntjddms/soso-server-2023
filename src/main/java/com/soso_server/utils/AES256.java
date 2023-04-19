@@ -1,5 +1,8 @@
 package com.soso_server.utils;
 
+import com.soso_server.service.KakaoServiceImpl;
+import org.jboss.logging.Logger;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -12,18 +15,20 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class AES256 {
+    private static final Logger logger = Logger.getLogger(AES256.class);
 
     public String alg = "AES/CBC/PKCS5Padding";
     private String key = "";
     private String iv = ""; // 16byte
 
     public AES256() throws IOException {
-        System.out.println("AES256 KEY Load...");
+        logger.info("[AES256] AES256 KEY Load...");
+
         BufferedReader bufferReader = new BufferedReader(new FileReader("C:\\key\\AES256.txt"));
         key = bufferReader.readLine();
         iv = key.substring(0, 16);
-        System.out.println("AES256 KEY Load Success");
 
+        logger.info("[AES256] AES256 KEY Load Success");
     }
 
     public String encrypt(String text) throws Exception {

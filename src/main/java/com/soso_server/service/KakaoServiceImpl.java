@@ -218,7 +218,7 @@ public class KakaoServiceImpl implements KakaoService {
                     }
                 }
             } else {
-                System.out.println("[checkScopes] HTTP request failed: " + responseCode);
+                logger.info("[checkScopes] HTTP request failed: " + responseCode);
             }
         } catch (IOException ie) {
             logger.info("[checkScopes] IOException = " + ie.getMessage());
