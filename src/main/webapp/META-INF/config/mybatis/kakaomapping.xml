@@ -6,10 +6,12 @@
     <insert id="registerKakao" parameterType="KakaoDTO">
         INSERT INTO soso.kakao( kakaoId, kakaoAccessToken, kakaoRefreshToken,
                                 kakaoEmail, kakaoNickName, kakaoGender,
-                                kakaoBirthday, kakaoRegisterDate, kakaoLoginDate, kakaoMsgYn, kakaoScopeCheck)
+                                kakaoBirthday, kakaoRegisterDate, kakaoLoginDate, kakaoMsgYn,
+                                kakaoScopeCheck, kakaoDefaultNickName)
         VALUES (#{kakaoId}, #{kakaoAccessToken}, #{kakaoRefreshToken},
                 #{kakaoEmail}, #{kakaoNickName}, #{kakaoGender},
-                #{kakaoBirthday}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{kakaoMsgYn}, #{kakaoScopeCheck})
+                #{kakaoBirthday}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{kakaoMsgYn},
+                #{kakaoScopeCheck}, #{kakaoDefaultNickName})
     </insert>
 
     <update id="refreshKakao" parameterType="KakaoDTO">

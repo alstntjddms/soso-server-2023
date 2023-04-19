@@ -159,6 +159,7 @@ public class KakaoServiceImpl implements KakaoService {
             } else {
 //                // 카카오 동의항목 메세지 체크 확인
                 kakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
+                kakaoDTO.setKakaoDefaultNickName(kakaoDTO.getKakaoNickName());
                 rao.registerKakao(kakaoDTO);
             }
 
