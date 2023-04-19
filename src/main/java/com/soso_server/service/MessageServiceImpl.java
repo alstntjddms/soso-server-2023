@@ -65,10 +65,10 @@ public class MessageServiceImpl implements MessageService {
         try {
             logger.info("[sendMessage] Start");
 
-            logger.info("accessToken = " + accessToken);
-            logger.info("refreshToken = " + refreshToken);
-            logger.info("message = " + message);
-            logger.info("buttonTitle = " + buttonTitle);
+            logger.info("[sendMessage] accessToken = " + accessToken);
+            logger.info("[sendMessage] refreshToken = " + refreshToken);
+            logger.info("[sendMessage] message = " + message);
+            logger.info("[sendMessage] buttonTitle = " + buttonTitle);
 
             URL url = new URL("https://kapi.kakao.com/v2/api/talk/memo/default/send");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -115,7 +115,7 @@ public class MessageServiceImpl implements MessageService {
             logger.info("[sendMessage] End");
             return false;
         } catch (IOException e) {
-            logger.info("[sendMessage] IOExceiption" +e.getMessage());
+            logger.info("[sendMessage] IOException" +e.getMessage());
         }
         return false;
     }
@@ -123,6 +123,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void sendMessageByLetterCount(int userId) {
         logger.info("[sendMessageByLetterCount] Start");
+
         logger.info("[sendMessageByLetterCount] userId = " + userId);
         int letterCount = memberRAO.findMemberByLetterCount(userId);
         if(letterCount == 1 || letterCount == 9 || letterCount == 18 || letterCount == 27 || letterCount == 36) {

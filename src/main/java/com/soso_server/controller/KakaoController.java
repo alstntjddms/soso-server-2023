@@ -1,8 +1,8 @@
 package com.soso_server.controller;
 
 import com.soso_server.dto.KakaoDTO;
-import com.soso_server.dto.MemberDTO;
 import com.soso_server.service.itf.KakaoService;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +16,8 @@ import java.util.List;
 @RestController
 public class KakaoController {
 
+    private static final Logger logger = Logger.getLogger(KakaoController.class);
+
     @Autowired
     KakaoService kakaoService;
 
@@ -27,8 +29,8 @@ public class KakaoController {
     @PostMapping("/kakao")
     public ResponseEntity<String> getService(@RequestBody String authorize_code) {
         try {
-            System.out.println("KakaoController.getService");
-            System.out.println("authorize_code = " + authorize_code);
+            logger.info("[getService] KakaoController.getService");
+            logger.info("[getService] authorize_code = " + authorize_code);
             return new ResponseEntity<String>(kakaoService.getService(authorize_code), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -43,8 +45,8 @@ public class KakaoController {
     @GetMapping("/kakao/msg/{userId}")
     public ResponseEntity<?> selectKakaoMsgYnByUserId(@PathVariable String userId) {
         try {
-            System.out.println("KakaoController.selectKakaoMsgYnByUserId");
-            System.out.println("userId = " + userId);
+            logger.info("[selectKakaoMsgYnByUserId] KakaoController.selectKakaoMsgYnByUserId");
+            logger.info("[selectKakaoMsgYnByUserId] userId = " + userId);
             return new ResponseEntity<Boolean>(kakaoService.selectKakaoMsgYnByUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
@@ -61,8 +63,8 @@ public class KakaoController {
     @PostMapping("/kakao/scope")
     public ResponseEntity<String> updateScopeCheck(@RequestBody String userId) {
         try {
-            System.out.println("KakaoController.getService");
-            System.out.println("userId = " + userId);
+            logger.info("[updateScopeCheck] KakaoController.getService");
+            logger.info("[updateScopeCheck] userId = " + userId);
             return new ResponseEntity<String>(kakaoService.updateScopeCheck(userId), HttpStatus.OK);
 
         }catch (Exception e){
@@ -78,26 +80,12 @@ public class KakaoController {
     @PostMapping("kakao/revoke")
     public ResponseEntity<String> revokeByUserId(@RequestBody String userId){
         try {
-            System.out.println("KakaoController.revokeByUserId");
-            System.out.println("userId = " + userId);
+            logger.info("[revokeByUserId] KakaoController.revokeByUserId");
+            logger.info("[revokeByUserId] userId = " + userId);
             return new ResponseEntity<String>(kakaoService.revokeByUserId(userId), HttpStatus.OK);
 
         }catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
-        }
-    }
-    /**
-     * 리프레시토큰 테스트
-     * 추후 삭제 예정
-     */
-    @PostMapping("/kakao/refresh")
-    public ResponseEntity<String> refreshTokenTest(@RequestBody String refresh_token) {
-        try {
-            System.out.println("KakaoController.testService");
-            System.out.println("refresh_token = " + refresh_token);
-            return new ResponseEntity<String>(kakaoService.refreshAccessToken(refresh_token), HttpStatus.OK);
-        }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }
     }
@@ -108,8 +96,8 @@ public class KakaoController {
     @PostMapping("/kakao/withdraw")
     public ResponseEntity<String> withdraw(@RequestBody String userId) {
         try {
-            System.out.println("KakaoController.withdraw");
-            System.out.println("userId = " + userId);
+            logger.info("[withdraw] KakaoController.withdraw");
+            logger.info("[withdraw] userId = " + userId);
             return new ResponseEntity<String>(kakaoService.withdraw(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -123,7 +111,7 @@ public class KakaoController {
     @GetMapping("/kakaoall")
     public ResponseEntity<?> findKakaoAll(HttpServletRequest request){
         try {
-            System.out.println("KakaoController.findKakaoAll");
+            logger.info("[findKakaoAll] KakaoController.findKakaoAll");
             if(!request.getQueryString().equals("15688974896465156213")){
                 return null;
             }

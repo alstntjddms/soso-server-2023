@@ -2,11 +2,11 @@ package com.soso_server.controller;
 
 import com.soso_server.dto.MemberDTO;
 import com.soso_server.service.itf.MemberService;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.List;
@@ -14,6 +14,8 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class MemberController {
+
+    private static final Logger logger = Logger.getLogger(MemberController.class);
 
     @Autowired
     MemberService memberService;
@@ -27,8 +29,8 @@ public class MemberController {
     @PostMapping("/member")
     public ResponseEntity<String> registerMember(@RequestBody String id){
         try {
-            System.out.println("MemberController.registerMember");
-            System.out.println("id = " + id);
+            logger.info("[registerMember] MemberController.registerMember");
+            logger.info("[registerMember] id = " + id);
             return new ResponseEntity<>(memberService.registerMember(id), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
@@ -44,8 +46,8 @@ public class MemberController {
     @GetMapping("/member/{userId}")
     public ResponseEntity<MemberDTO> findMemberByUserId(@PathVariable String userId){
         try {
-            System.out.println("MemberController.findMemberByUserId");
-            System.out.println("userId = " + userId);
+            logger.info("[findMemberByUserId] MemberController.findMemberByUserId");
+            logger.info("[findMemberByUserId] userId = " + userId);
             return new ResponseEntity<>(memberService.findMemberByUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
@@ -61,9 +63,9 @@ public class MemberController {
     @PatchMapping(value = "/member/{userId}")
     public ResponseEntity<String> modifyUserNickNameByUserId(@PathVariable String userId, @RequestBody String userNickName){
         try {
-            System.out.println("MemberController.modifyUserNickNameByUserId");
-            System.out.println("userId = " + userId);
-            System.out.println("userNickName = " + userNickName);
+            logger.info("[modifyUserNickNameByUserId] MemberController.modifyUserNickNameByUserId");
+            logger.info("[modifyUserNickNameByUserId] userId = " + userId);
+            logger.info("[modifyUserNickNameByUserId] userNickName = " + userNickName);
             return new ResponseEntity<>(memberService.modifyUserNickNameByUserId(userId, userNickName), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
@@ -77,13 +79,13 @@ public class MemberController {
      * @throws Exception
      */
     @GetMapping("/member/lettercount/{userId}")
-    public ResponseEntity<Integer> findLetterCountByUserId(@PathVariable String userId){
+    public ResponseEntity<String> findLetterCountByUserId(@PathVariable String userId){
         try{
-            System.out.println("MemberController.findMemberByLetterCount");
-            System.out.println("userId = " + userId);
-            return new ResponseEntity<>(memberService.findMemberByLetterCount(userId), HttpStatus.OK);
+            logger.info("[findMemberByLetterCount] MemberController.findMemberByLetterCount");
+            logger.info("[findMemberByLetterCount] userId = " + userId);
+            return new ResponseEntity<String>(memberService.findMemberByLetterCount(userId), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -96,8 +98,8 @@ public class MemberController {
     @GetMapping("/member/external/lettercount/{userId}")
     public ResponseEntity<Integer> findLetterCountByExternalUserId(@PathVariable String userId){
         try{
-            System.out.println("MemberController.findLetterCountByExternalUserId");
-            System.out.println("userId = " + userId);
+            logger.info("[findLetterCountByExternalUserId] MemberController.findLetterCountByExternalUserId");
+            logger.info("[findLetterCountByExternalUserId] userId = " + userId);
             return new ResponseEntity<>(memberService.findLetterCountByExternalUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
@@ -112,8 +114,8 @@ public class MemberController {
     @PostMapping("/member/opendate")
     public ResponseEntity<Timestamp> registerOpenDate(@RequestBody String userId){
         try{
-            System.out.println("MemberController.registerOpenDate");
-            System.out.println("userId = " + userId);
+            logger.info("[registerOpenDate] MemberController.registerOpenDate");
+            logger.info("[registerOpenDate] userId = " + userId);
             return new ResponseEntity<>(memberService.registerOpenDate(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
@@ -128,8 +130,8 @@ public class MemberController {
     @PatchMapping("/member/refresh/opendate")
     public ResponseEntity<Timestamp> refreshOpenDate(@RequestBody String userId){
         try{
-            System.out.println("MemberController.registerOpenDate");
-            System.out.println("userId = " + userId);
+            logger.info("[refreshOpenDate] MemberController.refreshOpenDate");
+            logger.info("[refreshOpenDate] userId = " + userId);
             return new ResponseEntity<>(memberService.refreshOpenDate(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
@@ -144,8 +146,8 @@ public class MemberController {
     @GetMapping("/member/opendate/{userId}")
     public ResponseEntity<Timestamp> findOpenDate(@PathVariable String userId){
         try{
-            System.out.println("MemberController.findOpenDate");
-            System.out.println("userId = " + userId);
+            logger.info("[findOpenDate] MemberController.findOpenDate");
+            logger.info("[findOpenDate] userId = " + userId);
             return new ResponseEntity<>(memberService.findOpenDate(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
@@ -161,8 +163,8 @@ public class MemberController {
     @GetMapping("/member/userid/{userId}")
     public ResponseEntity<String> changeExternalUserId(@PathVariable String userId){
         try{
-            System.out.println("MemberController.changeExternalUserId");
-            System.out.println("userId = " + userId);
+            logger.info("[changeExternalUserId] MemberController.changeExternalUserId");
+            logger.info("[changeExternalUserId] userId = " + userId);
             return new ResponseEntity<>(memberService.changeExternalUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
@@ -178,8 +180,8 @@ public class MemberController {
     @GetMapping("/member/external/userid/{userId}")
     public ResponseEntity<MemberDTO> infoByExternalUserId(@PathVariable String userId){
         try{
-            System.out.println("MemberController.decryptExternalUserId");
-            System.out.println("userId = " + userId);
+            logger.info("[decryptExternalUserId] MemberController.decryptExternalUserId");
+            logger.info("[decryptExternalUserId] userId = " + userId);
             return new ResponseEntity<>(memberService.infoByExternalUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
@@ -193,10 +195,10 @@ public class MemberController {
     @GetMapping("/memberall")
     public ResponseEntity<List<MemberDTO>> findMemberAll(HttpServletRequest request){
         try {
+            logger.info("[findMemberAll] MemberController.findMemberAll");
             if(!request.getQueryString().equals("15688974896465156213")){
                 return null;
             }
-            System.out.println("MemberController.findMemberAll");
             return new ResponseEntity<>(memberService.findMemberAll(), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
