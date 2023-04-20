@@ -9,7 +9,6 @@ import com.soso_server.service.itf.KakaoService;
 import org.jboss.logging.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect;
 import org.springframework.stereotype.Service;
 import java.io.*;
 import java.net.HttpURLConnection;

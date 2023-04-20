@@ -1,8 +1,7 @@
 package com.soso_server.ra;
 
-
-import com.soso_server.dto.KakaoDTO;
 import com.soso_server.ra.itf.MessageRAO;
+
 public class MessageRAOImpl implements MessageRAO {
 
     private MessageRAO mapper;

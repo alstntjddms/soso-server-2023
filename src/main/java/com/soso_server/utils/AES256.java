@@ -1,10 +1,7 @@
 package com.soso_server.utils;
 
-import com.soso_server.service.KakaoServiceImpl;
 import org.jboss.logging.Logger;
-
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -27,7 +24,8 @@ public class AES256 {
         BufferedReader bufferReader = new BufferedReader(new FileReader("C:\\key\\AES256.txt"));
         key = bufferReader.readLine();
         iv = key.substring(0, 16);
-
+        bufferReader.close();
+        
         logger.info("[AES256] AES256 KEY Load Success");
     }
 

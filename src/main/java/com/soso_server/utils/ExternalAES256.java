@@ -1,7 +1,6 @@
 package com.soso_server.utils;
 
 import org.jboss.logging.Logger;
-
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -23,6 +22,7 @@ public class ExternalAES256 {
         BufferedReader bufferReader = new BufferedReader(new FileReader("C:\\key\\ExternalAES256.txt"));
         key = bufferReader.readLine();
         iv = key.substring(0, 16);
+        bufferReader.close();
 
         logger.info("[ExternalAES256] ExternalAES256 KEY Load Success");
     }

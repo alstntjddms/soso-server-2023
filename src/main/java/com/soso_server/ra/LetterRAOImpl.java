@@ -3,7 +3,6 @@ package com.soso_server.ra;
 import com.soso_server.dto.LetterDTO;
 import com.soso_server.dto.StickerDTO;
 import com.soso_server.ra.itf.LetterRAO;
-
 import java.util.List;
 
 public class LetterRAOImpl implements LetterRAO {

@@ -2,10 +2,7 @@ package com.soso_server.ra;
 
 import com.soso_server.dto.KakaoDTO;
 import com.soso_server.dto.MemberDTO;
-import com.soso_server.ra.itf.KakaoRAO;
 import com.soso_server.ra.itf.MemberRAO;
-import org.apache.ibatis.annotations.Param;
-
 import java.sql.Timestamp;
 import java.util.List;
 

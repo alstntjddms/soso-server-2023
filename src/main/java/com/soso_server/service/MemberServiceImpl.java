@@ -1,6 +1,5 @@
 package com.soso_server.service;
 
-import com.soso_server.exception.LetterException;
 import com.soso_server.utils.AES256;
 import com.soso_server.dto.KakaoDTO;
 import com.soso_server.dto.MemberDTO;

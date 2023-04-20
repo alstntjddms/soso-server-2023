@@ -1,11 +1,8 @@
 package com.soso_server.controller.log;
 
-import com.soso_server.dto.log.PageLogDTO;
-import com.soso_server.service.LogService.PageLogServiceImpl;
 import com.soso_server.service.LogService.itf.PageLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 
 

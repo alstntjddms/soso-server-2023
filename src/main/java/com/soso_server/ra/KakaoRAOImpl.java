@@ -2,8 +2,6 @@ package com.soso_server.ra;
 
 import com.soso_server.dto.KakaoDTO;
 import com.soso_server.ra.itf.KakaoRAO;
-import com.soso_server.ra.itf.LetterRAO;
-
 import java.util.List;
 
 public class KakaoRAOImpl implements KakaoRAO {
