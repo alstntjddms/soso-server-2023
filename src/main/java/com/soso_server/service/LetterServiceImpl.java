@@ -1,5 +1,6 @@
 package com.soso_server.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soso_server.service.itf.MessageService;
 import com.soso_server.utils.AES256;
@@ -65,8 +66,10 @@ public class LetterServiceImpl implements LetterService {
             logger.info("[registerLetter] Start");
 
             ObjectMapper mapper = new ObjectMapper();
-            HashMap Letter = mapper.convertValue(dto.get("letter"), HashMap.class);
-            LetterDTO letterDTO = mapper.convertValue(Letter, LetterDTO.class);
+            // HashMap Letter = mapper.convertValue(dto.get("letter"), HashMap.class);
+            // LetterDTO letterDTO = mapper.convertValue(Letter, LetterDTO.class);
+
+            LetterDTO letterDTO = mapper.convertValue(dto.get("letter"), LetterDTO.class);
 
             String userId = externalAES256.replaceDecodeDecryt(letterDTO.getUserId());
             letterDTO.setUserId(userId);
@@ -74,12 +77,20 @@ public class LetterServiceImpl implements LetterService {
             letterDTO.setLetterDelYn(false);
             int registerLetterId = rao.registerLetter(letterDTO);
 
-            ArrayList<StickerDTO> stickerDTOs = mapper.convertValue(dto.get("sticker"), ArrayList.class);
+            ArrayList<StickerDTO> stickerDTOs = mapper.convertValue(dto.get("sticker"), new TypeReference<ArrayList<StickerDTO>>(){});
+
+            // 대체
             for(int i=0; i<stickerDTOs.size(); i++){
                 StickerDTO ss = mapper.convertValue(stickerDTOs.get(i), StickerDTO.class);
                 ss.setLetterId(registerLetterId);
                 rao.registerSticker(ss);
             }
+
+            // 코드정리
+            // for(StickerDTO a : stickerDTOs){
+            //     a.setLetterId(registerLetterId);
+            //     rao.registerSticker(a);
+            // }
 
             // 편지 개수 알림 함수 호출
             messageService.sendMessageByLetterCount(Integer.parseInt(userId));
