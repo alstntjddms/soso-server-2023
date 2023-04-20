@@ -27,7 +27,7 @@ public class KakaoController {
      * @return 암호화된 등록된 id
      */
     @PostMapping("/kakao")
-    public ResponseEntity<String> getService(@RequestBody String authorize_code) {
+    public synchronized ResponseEntity<String> getService(@RequestBody String authorize_code) {
         try {
             logger.info("[getService] KakaoController.getService");
             logger.info("[getService] authorize_code = " + authorize_code);

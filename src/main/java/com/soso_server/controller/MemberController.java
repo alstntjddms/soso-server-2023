@@ -27,7 +27,7 @@ public class MemberController {
      * @throws Exception
      */
     @PostMapping("/member")
-    public ResponseEntity<String> registerMember(@RequestBody String id){
+    public synchronized ResponseEntity<String> registerMember(@RequestBody String id){
         try {
             logger.info("[registerMember] MemberController.registerMember");
             logger.info("[registerMember] id = " + id);

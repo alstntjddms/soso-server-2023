@@ -39,7 +39,7 @@ public class KakaoServiceImpl implements KakaoService {
 
     @Override
     @Transactional
-    public synchronized String getService(String authorize_code) {
+    public String getService(String authorize_code) {
         String access_Token="";
         String refresh_Token ="";
         String reqURL = "https://kauth.kakao.com/oauth/token";

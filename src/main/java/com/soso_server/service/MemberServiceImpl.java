@@ -34,7 +34,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public synchronized String registerMember(String id){
+    public String registerMember(String id){
         try{
             logger.info("[registerMember] Start");
             if(id.length() < 20){

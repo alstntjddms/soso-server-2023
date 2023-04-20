@@ -64,7 +64,7 @@ public class LetterServiceImpl implements LetterService {
 
     @Override
     @Transactional
-    public synchronized String registerLetter(HashMap<String, Object> dto) {
+    public String registerLetter(HashMap<String, Object> dto) {
         try{
             logger.info("[registerLetter] Start");
 
