@@ -10,6 +10,8 @@ import com.soso_server.utils.ExternalAES256;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.jboss.logging.Logger;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -31,7 +33,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public String registerMember(String id){
+    @Transactional
+    public synchronized String registerMember(String id){
         try{
             logger.info("[registerMember] Start");
             if(id.length() < 20){

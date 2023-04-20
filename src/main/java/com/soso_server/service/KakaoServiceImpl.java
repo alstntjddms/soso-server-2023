@@ -36,6 +36,7 @@ public class KakaoServiceImpl implements KakaoService {
     }
 
     @Override
+    @Transactional
     public synchronized String getService(String authorize_code) {
         String access_Token="";
         String refresh_Token ="";
@@ -175,7 +176,6 @@ public class KakaoServiceImpl implements KakaoService {
             logger.info("[getUserData] IOException = " + ie.getMessage());
         }catch (Exception e){
             logger.info("[getUserData] Exception = " + e.getMessage());
-
         }
 
         logger.info("[getUserData] End");

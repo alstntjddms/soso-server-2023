@@ -7,7 +7,6 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:jee="http://www.springframework.org/schema/jee"
        xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd
@@ -26,8 +25,6 @@
         http://www.springframework.org/schema/util
         http://www.springframework.org/schema/util/spring-util.xsd"
        default-init-method="init" default-destroy-method="destory">
-
-
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
@@ -103,17 +100,17 @@
         </property>
     </bean>
 
+    <!-- sqlSession -->
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg index="0" ref="postSqlSessionFactory" />
     </bean>
 
+    <!-- transactionManager -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-<!--    jee jndi lookup-->
-    <!-- <jee:jndi-lookup id="dataSource" jndi-name="java:jboss/sosoDS" expected-type="javax.sql.DataSource"/> -->
-
+    <!-- jndi dataSource -->
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="java:jboss/sosoDS" />
         <property name="cache" value="true" />

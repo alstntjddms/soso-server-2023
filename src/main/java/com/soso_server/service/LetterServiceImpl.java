@@ -14,6 +14,8 @@ import com.soso_server.utils.ExternalAES256;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,16 +63,13 @@ public class LetterServiceImpl implements LetterService {
     }
 
     @Override
-    public String registerLetter(HashMap<String, Object> dto) {
+    @Transactional
+    public synchronized String registerLetter(HashMap<String, Object> dto) {
         try{
             logger.info("[registerLetter] Start");
 
             ObjectMapper mapper = new ObjectMapper();
-            // HashMap Letter = mapper.convertValue(dto.get("letter"), HashMap.class);
-            // LetterDTO letterDTO = mapper.convertValue(Letter, LetterDTO.class);
-
             LetterDTO letterDTO = mapper.convertValue(dto.get("letter"), LetterDTO.class);
-
             String userId = externalAES256.replaceDecodeDecryt(letterDTO.getUserId());
             letterDTO.setUserId(userId);
             letterDTO.setLetterReadYn(false);
@@ -78,19 +77,10 @@ public class LetterServiceImpl implements LetterService {
             int registerLetterId = rao.registerLetter(letterDTO);
 
             ArrayList<StickerDTO> stickerDTOs = mapper.convertValue(dto.get("sticker"), new TypeReference<ArrayList<StickerDTO>>(){});
-
-            // 대체
-            for(int i=0; i<stickerDTOs.size(); i++){
-                StickerDTO ss = mapper.convertValue(stickerDTOs.get(i), StickerDTO.class);
-                ss.setLetterId(registerLetterId);
-                rao.registerSticker(ss);
-            }
-
-            // 코드정리
-            // for(StickerDTO a : stickerDTOs){
-            //     a.setLetterId(registerLetterId);
-            //     rao.registerSticker(a);
-            // }
+             for(StickerDTO a : stickerDTOs){
+                 a.setLetterId(registerLetterId);
+                 rao.registerSticker(a);
+             }
 
             // 편지 개수 알림 함수 호출
             messageService.sendMessageByLetterCount(Integer.parseInt(userId));

@@ -1,43 +1,75 @@
-CREATE TABLE kakao(
-	kakaoId INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	kakaoToken VARCHAR(200) not null,
-	kakaoEmail VARCHAR(100),
-	kakaoNickName VARCHAR(30),
-	kakaoGender VARCHAR(10),
-	kakaoBirthday VARCHAR(20),
-	kakaoRegisterDate TIMESTAMP
-)
+-- 2023.04.20 날짜 기준
 
-CREATE TABLE member(
-	userId INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	kakaoId INT(10) not null,
-	userNickName VARCHAR(50),
-	userGetLetterCount VARCHAR(10),
-	userOpenDate TIMESTAMP,
-	userDate TIMESTAMP,
-	FOREIGN KEY (kakaoId) REFERENCES kakao(kakaoId)
-)
+-- soso.kakao definition
+CREATE TABLE `kakao` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `kakaoId` varchar(50) NOT NULL,
+  `kakaoAccessToken` varchar(200) NOT NULL,
+  `KakaoRefreshToken` varchar(200) NOT NULL,
+  `kakaoEmail` varchar(100) DEFAULT NULL,
+  `kakaoNickName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `kakaoGender` varchar(10) DEFAULT NULL,
+  `kakaoBirthday` varchar(20) DEFAULT NULL,
+  `kakaoRegisterDate` timestamp NULL DEFAULT NULL,
+  `kakaoLoginDate` timestamp NULL DEFAULT NULL,
+  `kakaoMsgYn` tinyint(1) DEFAULT NULL,
+  `kakaoScopeCheck` tinyint(1) DEFAULT NULL,
+  `kakaoDefaultNickName` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE letter(
-	letterId INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	userId INT(10) not null,
-	letterContent VARCHAR(1000),
-	letterFont VARCHAR(10),
-	letterFontColor VARCHAR(10),
-	letterPaper VARCHAR(10),
-	letterWriter VARCHAR(10),
-	letterIcon VARCHAR(10),
-	letterWriteDate TIMESTAMP,
-	letterReadYn VARCHAR(20),
-	letterDelYn boolean,
-	FOREIGN KEY (userId) REFERENCES member(userId)
-)
+-- soso.`member` definition
+CREATE TABLE `member` (
+  `userId` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL,
+  `userNickName` varchar(50) DEFAULT NULL,
+  `userOpenDate` timestamp NULL DEFAULT NULL,
+  `userDate` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE sticker(
-	stickerId INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	letterId INT(10) not null,
-	stickerIcon VARCHAR(10),
-	stickerX VARCHAR(10),
-	stickerY  VARCHAR(10),
-	FOREIGN key (letterId) REFERENCES letter(letterId)
-)
+-- soso.letter definition
+CREATE TABLE `letter` (
+  `letterId` int NOT NULL AUTO_INCREMENT,
+  `userId` int NOT NULL,
+  `letterContent` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `letterFont` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `letterFontColor` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `letterPaper` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `letterWriter` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `letterIcon` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `letterWriteDate` timestamp NULL DEFAULT NULL,
+  `letterReadYn` tinyint(1) DEFAULT NULL,
+  `letterDelYn` tinyint(1) DEFAULT NULL,
+  `letterFontSize` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `letterTextAlign` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  PRIMARY KEY (`letterId`)
+) ENGINE=InnoDB AUTO_INCREMENT=257 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- soso.sticker definition
+CREATE TABLE `sticker` (
+  `stickerId` int NOT NULL AUTO_INCREMENT,
+  `letterId` int NOT NULL,
+  `stickerIcon` varchar(10) DEFAULT NULL,
+  `stickerX` varchar(10) DEFAULT NULL,
+  `stickerY` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`stickerId`)
+) ENGINE=InnoDB AUTO_INCREMENT=475 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- soso.pagelog definition
+CREATE TABLE `pagelog` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ipAddress` varchar(45) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `regDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3813 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- soso.manager definition
+CREATE TABLE `manager` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `authKey` varchar(50) DEFAULT NULL,
+  `code` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
