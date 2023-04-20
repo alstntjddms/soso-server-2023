@@ -10,6 +10,8 @@ import org.jboss.logging.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -34,7 +36,7 @@ public class KakaoServiceImpl implements KakaoService {
     }
 
     @Override
-    public String getService(String authorize_code) {
+    public synchronized String getService(String authorize_code) {
         String access_Token="";
         String refresh_Token ="";
         String reqURL = "https://kauth.kakao.com/oauth/token";

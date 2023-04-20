@@ -25,21 +25,20 @@
         https://www.springframework.org/schema/jee/spring-jee.xsd
         http://www.springframework.org/schema/util
         http://www.springframework.org/schema/util/spring-util.xsd"
-
        default-init-method="init" default-destroy-method="destory">
 
 
     <mvc:annotation-driven>
         <mvc:message-converters>
-            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-            </bean>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
         </mvc:message-converters>
-
     </mvc:annotation-driven>
 
+    <!-- AES -->
     <bean id="AES256" class="com.soso_server.utils.AES256"></bean>
     <bean id="ExternalAES256" class="com.soso_server.utils.ExternalAES256"></bean>
 
+    <!-- Service -->
     <bean id="kakaoService" class="com.soso_server.service.KakaoServiceImpl">
         <property name="rao" ref="kakaoRAO"></property>
     </bean>
@@ -56,6 +55,7 @@
         <property name="rao" ref="messageRAO"></property>
     </bean>
 
+    <!-- RAO -->
     <bean id="kakaoRAO" class="com.soso_server.ra.KakaoRAOImpl">
         <property name="mapper" ref="kakaoMapper"/>
     </bean>
@@ -72,6 +72,7 @@
         <property name="mapper" ref="messageMapper"/>
     </bean>
 
+    <!-- Mapper -->
     <bean id="kakaoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="mapperInterface" value="com.soso_server.ra.itf.KakaoRAO" />
         <property name="sqlSessionFactory" ref="postSqlSessionFactory"/>
@@ -93,7 +94,7 @@
         <property name="sqlSessionFactory" ref="postSqlSessionFactory"/>
     </bean>
 
-
+    <!-- SessionFactory -->
     <bean id="postSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:/META-INF/config/configuration.xml"/>
@@ -106,16 +107,18 @@
         <constructor-arg index="0" ref="postSqlSessionFactory" />
     </bean>
 
-
-
-<!--    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">&ndash;&gt;-->
-<!--        <constructor-arg ref="dataSource" />-->
-<!--    </bean>-->
-
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
 
 <!--    jee jndi lookup-->
-    <jee:jndi-lookup id="dataSource" jndi-name="java:jboss/sosoDS" expected-type="javax.sql.DataSource"/>
+    <!-- <jee:jndi-lookup id="dataSource" jndi-name="java:jboss/sosoDS" expected-type="javax.sql.DataSource"/> -->
 
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:jboss/sosoDS" />
+        <property name="cache" value="true" />
+        <property name="proxyInterface" value="javax.sql.DataSource" />
+    </bean>
 
     <context:component-scan base-package="com.soso_server">
     </context:component-scan>
