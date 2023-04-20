@@ -79,9 +79,11 @@ public class MessageServiceImpl implements MessageService {
 
             String parameters = "template_object=" + URLEncoder.encode("{\"object_type\":\"text\","
                             + "\"text\":\"" + message + "\","
-                            + "\"link\":{\"web_url\":\"https://plater.kr\"},"
-                            + "\"button_title\":\"Button\","
-                            + "\"buttons\":[{\"title\":\"" + buttonTitle + "\",\"link\":{\"web_url\":\"https://plater.kr\"}}]}",
+                            + "\"link\":{\"web_url\":\"https://plater.kr\","
+                            + "\"mobile_web_url\":\"https://plater.kr\"},"
+                            + "\"button_title\":\"" + buttonTitle + "\"}",
+
+//                            + "\"buttons\":[{\"title\":\"" + buttonTitle + "\",\"link\":{\"web_url\":\"https://plater.kr\"}}]}",
                     StandardCharsets.UTF_8);
 
             byte[] postData = parameters.getBytes(StandardCharsets.UTF_8);
@@ -129,7 +131,7 @@ public class MessageServiceImpl implements MessageService {
         if(letterCount == 1 || letterCount == 9 || letterCount == 18 || letterCount == 27 || letterCount == 36) {
             KakaoDTO kakaoDTO = kakaoRAO.findOneKakaoById(memberRAO.findMemberByUserId(userId).getId());
             sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
-            letterCount + "번째의 편지가 도착했어요!", "더 공유하러 가기");
+            "PL@TER:" + letterCount + "번째 편지가 도착했어요!", "더 공유하러 가기");
         }
         logger.info("[sendMessageByLetterCount] userId = " + userId + "에게" + letterCount + "번재 편지가 도착했다고 알림.");
 
