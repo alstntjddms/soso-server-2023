@@ -54,9 +54,9 @@ public class LetterServiceImpl implements LetterService {
                 throw new LetterException("데이터 없음", 999);
             }
         }catch (LetterException le){
-            logger.info("[sendAllMessage] LetterException = " + le.getMessage());
+            logger.info("[findLetterAll] LetterException = " + le.getMessage());
         }catch (Exception e){
-            logger.info("[sendAllMessage] Exception = " + e.getMessage());
+            logger.info("[findLetterAll] Exception = " + e.getMessage());
         }
         logger.info("[findLetterAll] End");
         return null;

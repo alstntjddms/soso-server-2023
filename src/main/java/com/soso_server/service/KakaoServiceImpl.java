@@ -1,6 +1,8 @@
 package com.soso_server.service;
 
 import com.google.gson.*;
+import com.soso_server.dto.LetterDTO;
+import com.soso_server.exception.LetterException;
 import com.soso_server.ra.itf.MemberRAO;
 import com.soso_server.utils.AES256;
 import com.soso_server.dto.KakaoDTO;
@@ -395,10 +397,21 @@ public class KakaoServiceImpl implements KakaoService {
 
     @Override
     public List<KakaoDTO> findKakaoAll() {
-        logger.info("[findKakaoAll] Start");
+        try{
+            logger.info("[findKakaoAll] Start");
 
+            List<KakaoDTO> kakaoDTOS = rao.findKakaoAll();
+            if(kakaoDTOS.size() > 0){
+                logger.info("[findKakaoAll] End");
+                return kakaoDTOS;
+            }else{
+                throw new Exception("데이터 없음");
+            }
+        }catch (Exception e){
+            logger.info("[findKakaoAll] Exception = " + e.getMessage());
+        }
         logger.info("[findKakaoAll] End");
-        return rao.findKakaoAll();
+        return null;
     }
 
 }

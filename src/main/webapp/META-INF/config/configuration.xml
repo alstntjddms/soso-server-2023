@@ -10,7 +10,7 @@
         <typeAlias alias="MemberDTO" type="com.soso_server.dto.MemberDTO"/>
         <typeAlias alias="StickerDTO" type="com.soso_server.dto.StickerDTO"/>
         <typeAlias alias="PageLogDTO" type="com.soso_server.dto.log.PageLogDTO"/>
-
+        <typeAlias alias="AuthDTO" type="com.soso_server.dto.AuthDTO"/>
     </typeAliases>
 
     <!-- MapperFile(SQL쿼리 결과와 자바빈 제공) 위치 정보 -->
@@ -20,5 +20,7 @@
         <mapper resource="/META-INF/config/mybatis/membermapping.xml"/>
         <mapper resource="/META-INF/config/mybatis/logmapping.xml"/>
         <mapper resource="/META-INF/config/mybatis/messagemapping.xml"/>
+        <mapper resource="/META-INF/config/mybatis/authmapping.xml"/>
     </mappers>
+
 </configuration>

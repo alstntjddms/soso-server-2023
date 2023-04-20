@@ -51,6 +51,9 @@
     <bean id="messageService" class="com.soso_server.service.MessageServiceImpl">
         <property name="rao" ref="messageRAO"></property>
     </bean>
+    <bean id="authService" class="com.soso_server.service.AuthServiceImpl">
+        <property name="rao" ref="authRAO"></property>
+    </bean>
 
     <!-- RAO -->
     <bean id="kakaoRAO" class="com.soso_server.ra.KakaoRAOImpl">
@@ -67,6 +70,9 @@
     </bean>
     <bean id="messageRAO" class="com.soso_server.ra.MessageRAOImpl">
         <property name="mapper" ref="messageMapper"/>
+    </bean>
+    <bean id="authRAO" class="com.soso_server.ra.AuthRAOImpl">
+        <property name="mapper" ref="authMapper"/>
     </bean>
 
     <!-- Mapper -->
@@ -88,6 +94,10 @@
     </bean>
     <bean id="messageMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="mapperInterface" value="com.soso_server.ra.itf.MessageRAO" />
+        <property name="sqlSessionFactory" ref="postSqlSessionFactory"/>
+    </bean>
+    <bean id="authMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.soso_server.ra.itf.AuthRAO" />
         <property name="sqlSessionFactory" ref="postSqlSessionFactory"/>
     </bean>
 

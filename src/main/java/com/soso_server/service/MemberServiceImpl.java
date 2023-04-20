@@ -77,7 +77,7 @@ public class MemberServiceImpl implements MemberService {
 
             // 10일뒤로 변경해서 리턴
             if(memberDTO.getUserOpenDate() != null){
-                long newTimestampInMillis = memberDTO.getUserOpenDate().getTime() + 8640000000L;
+                long newTimestampInMillis = memberDTO.getUserOpenDate().getTime() + 864000000L;
                 Timestamp newTimestamp = new Timestamp(newTimestampInMillis);
                 memberDTO.setUserOpenDate(newTimestamp);
             }
@@ -240,7 +240,7 @@ public class MemberServiceImpl implements MemberService {
             memberDTO.setUserId("");
             memberDTO.setUserDate(null);
             // 10일뒤로 변경해서 리턴
-            long newTimestampInMillis = memberDTO.getUserOpenDate().getTime() + 8640000000L;
+            long newTimestampInMillis = memberDTO.getUserOpenDate().getTime() + 864000000L;
             Timestamp newTimestamp = new Timestamp(newTimestampInMillis);
             memberDTO.setUserOpenDate(newTimestamp);
 
