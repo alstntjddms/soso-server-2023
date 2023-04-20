@@ -74,7 +74,7 @@ public class MemberServiceImpl implements MemberService {
 
             // 10일뒤로 변경해서 리턴
             if(memberDTO.getUserOpenDate() != null){
-                long newTimestampInMillis = memberDTO.getUserOpenDate().getTime() + 864000000L;
+                long newTimestampInMillis = memberDTO.getUserOpenDate().getTime() + 8640000000L;
                 Timestamp newTimestamp = new Timestamp(newTimestampInMillis);
                 memberDTO.setUserOpenDate(newTimestamp);
             }
@@ -144,7 +144,7 @@ public class MemberServiceImpl implements MemberService {
             }
             Timestamp openDate = findOpenDate(userId);
             // 864000 = 1일
-            if(openDate != null && (new Timestamp(System.currentTimeMillis()-864000)).before(openDate)){
+            if(openDate != null && (new Timestamp(System.currentTimeMillis()-8640000)).before(openDate)){
                 logger.info("[refreshOpenDate] 이미 오픈데이트가 설정됨");
                 throw new MemberException("이미 오픈데이트가 설정됨.", -999);
             }
@@ -236,7 +236,8 @@ public class MemberServiceImpl implements MemberService {
             memberDTO.setId(0);
             memberDTO.setUserId("");
             memberDTO.setUserDate(null);
-            long newTimestampInMillis = memberDTO.getUserOpenDate().getTime() + 864000000L;
+            // 10일뒤로 변경해서 리턴
+            long newTimestampInMillis = memberDTO.getUserOpenDate().getTime() + 8640000000L;
             Timestamp newTimestamp = new Timestamp(newTimestampInMillis);
             memberDTO.setUserOpenDate(newTimestamp);
 
