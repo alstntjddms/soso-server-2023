@@ -39,28 +39,7 @@ public class MessageServiceImpl implements MessageService {
         this.rao = rao;
     }
 
-    public int sendAllMessage(String message, String buttonTitle){
-        try{
-            logger.info("[sendAllMessage] Start");
-
-            List<KakaoDTO> kakaoDTOS = kakaoRAO.findKakaoAll();
-            for(KakaoDTO kakaoDTO : kakaoDTOS){
-                if(kakaoDTO.isKakaoMsgYn() == true){
-                    sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(), message, buttonTitle);
-                }
-            }
-            
-            logger.info("[sendAllMessage] 총 " + count + "건의 메세지 전송이 성공.");
-            
-            count = 0;
-            logger.info("[sendAllMessage] End");
-            return count;
-        }catch(Exception e){
-            logger.info("[sendAllMessage] Exception = " + e.getMessage());
-        }
-        return 0;
-    }
-
+    @Override
     public boolean sendMessage(String accessToken, String refreshToken, String message, String buttonTitle) {
         try {
             logger.info("[sendMessage] Start");
@@ -82,8 +61,6 @@ public class MessageServiceImpl implements MessageService {
                             + "\"link\":{\"web_url\":\"https://plater.kr\","
                             + "\"mobile_web_url\":\"https://plater.kr\"},"
                             + "\"button_title\":\"" + buttonTitle + "\"}",
-
-//                            + "\"buttons\":[{\"title\":\"" + buttonTitle + "\",\"link\":{\"web_url\":\"https://plater.kr\"}}]}",
                     StandardCharsets.UTF_8);
 
             byte[] postData = parameters.getBytes(StandardCharsets.UTF_8);
@@ -120,6 +97,29 @@ public class MessageServiceImpl implements MessageService {
             logger.info("[sendMessage] IOException" +e.getMessage());
         }
         return false;
+    }
+
+    @Override
+    public int sendAllMessage(String message, String buttonTitle){
+        try{
+            logger.info("[sendAllMessage] Start");
+
+            List<KakaoDTO> kakaoDTOS = kakaoRAO.findKakaoAll();
+            for(KakaoDTO kakaoDTO : kakaoDTOS){
+                if(kakaoDTO.isKakaoMsgYn() == true){
+                    sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(), message, buttonTitle);
+                }
+            }
+            
+            logger.info("[sendAllMessage] 총 " + count + "건의 메세지 전송이 성공.");
+            
+            count = 0;
+            logger.info("[sendAllMessage] End");
+            return count;
+        }catch(Exception e){
+            logger.info("[sendAllMessage] Exception = " + e.getMessage());
+        }
+        return 0;
     }
 
     @Override
