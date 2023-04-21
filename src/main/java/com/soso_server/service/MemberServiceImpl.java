@@ -36,7 +36,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public String registerMember(String id){
         try{
-            logger.debug("[registerMember] Start");
+            logger.info("[registerMember] Start");
             if(id.length() < 20){
                 throw new MemberException();
             }
@@ -48,15 +48,15 @@ public class MemberServiceImpl implements MemberService {
                 MemberDTO memberDTO = new MemberDTO();
                 memberDTO.setUserNickName(kakaoDTO.getKakaoNickName());
                 memberDTO.setId(kakaoDTO.getId());
-                logger.info("[registerMember] 신규 멤버 생성");
+                logger.warn("[registerMember] 신규 멤버 생성");
                 rao.registerMember(memberDTO);
             }
-            logger.debug("[registerMember] End");
+            logger.info("[registerMember] End");
             return aes256.encryptEncodeReplace(String.valueOf(rao.findMemberById(kakaoDTO.getId()).getUserId()));
         }catch (MemberException me){
-            logger.info("[registerMember] MemberException = " + me.getMessage());
+            logger.warn("[registerMember] MemberException = " + me.getMessage());
         }catch (Exception e){
-            logger.info("[registerMember] Exception = " + e.getMessage());
+            logger.warn("[registerMember] Exception = " + e.getMessage());
         }
         return null;
     }
@@ -64,9 +64,9 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberDTO findMemberByUserId(String userId) throws MemberException {
         try{
-            logger.debug("[findMemberByUserId] Start");
+            logger.info("[findMemberByUserId] Start");
 
-            logger.debug("[findMemberByUserId] userId = " + userId);
+            logger.info("[findMemberByUserId] userId = " + userId);
             if(userId.length() < 20){
                 throw new MemberException();
             }
@@ -82,12 +82,12 @@ public class MemberServiceImpl implements MemberService {
                 memberDTO.setUserOpenDate(newTimestamp);
             }
 
-            logger.debug("[findMemberByUserId] End");
+            logger.info("[findMemberByUserId] End");
             return memberDTO;
         }catch (MemberException me){
-            logger.info("[findMemberByUserId] MemberException = " + me.getMessage());
+            logger.warn("[findMemberByUserId] MemberException = " + me.getMessage());
         }catch (Exception e){
-            logger.info("[findMemberByUserId] Exception = " + e.getMessage());
+            logger.warn("[findMemberByUserId] Exception = " + e.getMessage());
         }
         return null;
     }
@@ -95,9 +95,9 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public String modifyUserNickNameByUserId(String userId, String userNickName) throws MemberException {
         try{
-            logger.debug("[modifyUserNickNameByUserId] Start");
+            logger.info("[modifyUserNickNameByUserId] Start");
 
-            logger.debug("[modifyUserNickNameByUserId] userId = " + userId + "userNickName = " + userNickName);
+            logger.info("[modifyUserNickNameByUserId] userId = " + userId + "userNickName = " + userNickName);
 
             if(userNickName.length() > 30){
                 throw new MemberException();
@@ -107,10 +107,10 @@ public class MemberServiceImpl implements MemberService {
             memberDTO.setUserNickName(userNickName);
             rao.modifyUserNickNameByUserId(memberDTO);
 
-            logger.debug("[modifyUserNickNameByUserId] End");
+            logger.info("[modifyUserNickNameByUserId] End");
             return userNickName;
         }catch (Exception e){
-            logger.info("[modifyUserNickNameByUserId] Exception = " + e.getMessage());
+            logger.warn("[modifyUserNickNameByUserId] Exception = " + e.getMessage());
         }
         return "";
     }
@@ -118,20 +118,20 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public String findMemberByLetterCount(String userId) throws MemberException {
         try{
-            logger.debug("[findMemberByLetterCount] Start");
+            logger.info("[findMemberByLetterCount] Start");
 
-            logger.debug("[findMemberByLetterCount] userId = " + userId);
+            logger.info("[findMemberByLetterCount] userId = " + userId);
 
             if(userId.length() < 20){
                 throw new MemberException();
             }
 
-            logger.debug("[findMemberByLetterCount] End");
+            logger.info("[findMemberByLetterCount] End");
             return String.valueOf(rao.findMemberByLetterCount(Integer.parseInt(aes256.replaceDecodeDecryt(userId))));
         }catch (MemberException me){
-            logger.info("[findMemberByLetterCount] MemberException = " + me.getMessage());
+            logger.warn("[findMemberByLetterCount] MemberException = " + me.getMessage());
         }catch (Exception e){
-            logger.info("[findMemberByLetterCount] Exception = " + e.getMessage());
+            logger.warn("[findMemberByLetterCount] Exception = " + e.getMessage());
         }
         return "";
     }
@@ -139,25 +139,25 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Timestamp registerOpenDate(String userId) throws MemberException {
         try{
-            logger.debug("[registerOpenDate] Start");
+            logger.info("[registerOpenDate] Start");
 
-            logger.debug("[registerOpenDate] userId = " + userId);
+            logger.info("[registerOpenDate] userId = " + userId);
             if(userId.length() < 20){
                 throw new MemberException();
             }
             Timestamp openDate = findOpenDate(userId);
             // 864000 = 1일
             if(openDate != null && (new Timestamp(System.currentTimeMillis()-8640000)).before(openDate)){
-                logger.info("[refreshOpenDate] 이미 오픈데이트가 설정됨");
+                logger.warn("[refreshOpenDate] 이미 오픈데이트가 설정됨");
                 throw new MemberException("이미 오픈데이트가 설정됨.", -999);
             }
 
-            logger.debug("[registerOpenDate] End");
+            logger.info("[registerOpenDate] End");
             return rao.registerOpenDate(Integer.parseInt(aes256.replaceDecodeDecryt(userId))); 
         }catch(MemberException me){
-            logger.info("[registerOpenDate] MemberException = " + me.getMessage());
+            logger.warn("[registerOpenDate] MemberException = " + me.getMessage());
         } catch (Exception e) {
-            logger.info("[registerOpenDate] Exception = " + e.getMessage());
+            logger.warn("[registerOpenDate] Exception = " + e.getMessage());
         }
         return null;
     }
@@ -165,19 +165,19 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Timestamp refreshOpenDate(String userId) throws MemberException {
         try{
-            logger.debug("[refreshOpenDate] Start");
+            logger.info("[refreshOpenDate] Start");
 
-            logger.debug("[refreshOpenDate] userId = " + userId);
+            logger.info("[refreshOpenDate] userId = " + userId);
             if(userId.length() < 20){
                 throw new MemberException();
             }
 
-            logger.debug("[refreshOpenDate] End");
+            logger.info("[refreshOpenDate] End");
             return rao.refreshOpenDate(Integer.parseInt(aes256.replaceDecodeDecryt(userId)));
         }catch(MemberException me){
-            logger.info("[refreshOpenDate] MemberException = " + me.getMessage());
+            logger.warn("[refreshOpenDate] MemberException = " + me.getMessage());
         } catch (Exception e) {
-            logger.info("[refreshOpenDate] Exception = " + e.getMessage());
+            logger.warn("[refreshOpenDate] Exception = " + e.getMessage());
         }
         return null;
     }
@@ -185,19 +185,19 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Timestamp findOpenDate(String userId) throws MemberException {
         try{
-            logger.debug("[findOpenDate] Start");
+            logger.info("[findOpenDate] Start");
 
-            logger.debug("[findOpenDate] userId = " + userId);
+            logger.info("[findOpenDate] userId = " + userId);
             if(userId.length() < 20){
                 throw new MemberException();
             }
 
-            logger.debug("[findOpenDate] End");
+            logger.info("[findOpenDate] End");
             return rao.findOpenDate(Integer.parseInt(aes256.replaceDecodeDecryt(userId)));
         }catch(MemberException me){
-            logger.info("[findOpenDate] MemberException = " + me.getMessage());
+            logger.warn("[findOpenDate] MemberException = " + me.getMessage());
         } catch (Exception e) {
-            logger.info("[findOpenDate] Exception = " + e.getMessage());
+            logger.warn("[findOpenDate] Exception = " + e.getMessage());
         }
         return null;
     }
@@ -205,19 +205,19 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public String changeExternalUserId(String userId) throws Exception {
         try {
-            logger.debug("[changeExternalUserId] Start");
+            logger.info("[changeExternalUserId] Start");
 
-            logger.debug("[changeExternalUserId] userId = " + userId);
+            logger.info("[changeExternalUserId] userId = " + userId);
             if(userId.length() < 20){
                 throw new MemberException();
             }
 
-            logger.debug("[changeExternalUserId] End");
+            logger.info("[changeExternalUserId] End");
             return externalAES256.encryptEncodeReplace(aes256.replaceDecodeDecryt(userId));
         }catch (MemberException me){
-            logger.info("[changeExternalUserId] MemberException = " + me.getMessage());
+            logger.warn("[changeExternalUserId] MemberException = " + me.getMessage());
         }catch (Exception e){
-            logger.info("[changeExternalUserId] Exception = " + e.getMessage());
+            logger.warn("[changeExternalUserId] Exception = " + e.getMessage());
         }
         return null;
     }
@@ -225,9 +225,9 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberDTO infoByExternalUserId(String userId) throws MemberException {
         try {
-            logger.debug("[infoByExternalUserId] Start");
+            logger.info("[infoByExternalUserId] Start");
 
-            logger.debug("[infoByExternalUserId] userId = " + userId);
+            logger.info("[infoByExternalUserId] userId = " + userId);
             if(userId.length() < 20){
                 throw new MemberException();
             }
@@ -247,12 +247,12 @@ public class MemberServiceImpl implements MemberService {
             Timestamp newTimestamp = new Timestamp(newTimestampInMillis);
             memberDTO.setUserOpenDate(newTimestamp);
 
-            logger.debug("[infoByExternalUserId] End");
+            logger.info("[infoByExternalUserId] End");
             return memberDTO;
         }catch (MemberException me){
-            logger.info("[infoByExternalUserId] MemberException = " + me.getMessage());
+            logger.warn("[infoByExternalUserId] MemberException = " + me.getMessage());
         }catch (Exception e){
-            logger.info("[infoByExternalUserId] Exception = " + e.getMessage());
+            logger.warn("[infoByExternalUserId] Exception = " + e.getMessage());
         }
         return null;
     }
@@ -260,20 +260,20 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Integer findLetterCountByExternalUserId(String userId) {
         try{
-            logger.debug("[findLetterCountByExternalUserId] Start");
+            logger.info("[findLetterCountByExternalUserId] Start");
 
-            logger.debug("[findLetterCountByExternalUserId] userId = " + userId);
+            logger.info("[findLetterCountByExternalUserId] userId = " + userId);
 
             if(userId.length() < 20){
                 throw new MemberException();
             }
 
-            logger.debug("[findLetterCountByExternalUserId] End");
+            logger.info("[findLetterCountByExternalUserId] End");
             return rao.findMemberByLetterCount(Integer.parseInt(externalAES256.replaceDecodeDecryt(userId)));
         }catch (MemberException me){
-            logger.info("[findLetterCountByExternalUserId] MemberException = " + me.getMessage());
+            logger.warn("[findLetterCountByExternalUserId] MemberException = " + me.getMessage());
         }catch (Exception e){
-            logger.info("[findLetterCountByExternalUserId] Exception = " + e.getMessage());
+            logger.warn("[findLetterCountByExternalUserId] Exception = " + e.getMessage());
         }
         return null;
     }
@@ -281,21 +281,21 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<MemberDTO> findMemberAll() {
         try{
-            logger.debug("[findMemberAll] Start");
+            logger.info("[findMemberAll] Start");
 
             List<MemberDTO> memberDTOS = rao.findMemberAll();
             if(memberDTOS.size() > 0){
-                logger.debug("[findLetterAll] End");
+                logger.info("[findLetterAll] End");
                 return memberDTOS;
             }else{
                 throw new MemberException("데이터 없음", -999);
             }
         }catch (MemberException me){
-            logger.info("[findMemberAll] MemberException = " + me.getMessage());
+            logger.warn("[findMemberAll] MemberException = " + me.getMessage());
         }catch (Exception e){
-            logger.info("[findMemberAll] Exception = " + e.getMessage());
+            logger.warn("[findMemberAll] Exception = " + e.getMessage());
         }
-        logger.debug("[findMemberAll] End");
+        logger.info("[findMemberAll] End");
         return null;
     }
 

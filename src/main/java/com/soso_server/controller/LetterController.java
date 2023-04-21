@@ -28,8 +28,8 @@ public class LetterController {
     @GetMapping("/letter/userid/{userId}")
     public ResponseEntity<?> findLetterByUserId(@PathVariable String userId){
         try {
-            logger.debug("[findLetterByUserId] LetterController.findLetterByUserId");
-            logger.debug("[findLetterByUserId] userId = " + userId);
+            logger.info("[findLetterByUserId] LetterController.findLetterByUserId");
+            logger.info("[findLetterByUserId] userId = " + userId);
             return new ResponseEntity<List<LetterDTO>>(letterService.selectLetterIdByUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -45,8 +45,8 @@ public class LetterController {
     @PostMapping("/letter")
     public synchronized ResponseEntity<String> registerLetter(@RequestBody HashMap<String, Object> dto){
         try{
-            logger.debug("[registerLetter] LetterController.registerLetter");
-            logger.debug("[registerLetter] dto = " + dto);
+            logger.info("[registerLetter] LetterController.registerLetter");
+            logger.info("[registerLetter] dto = " + dto);
             return new ResponseEntity<String>(letterService.registerLetter(dto), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -61,8 +61,8 @@ public class LetterController {
     @GetMapping("/letter/{letterId}")
     public ResponseEntity<?> findLetterByLetterId(@PathVariable String letterId){
         try {
-            logger.debug("[findLetterByLetterId] LetterController.findLetterByLetterId");
-            logger.debug("[findLetterByLetterId] letterId = " + letterId);
+            logger.info("[findLetterByLetterId] LetterController.findLetterByLetterId");
+            logger.info("[findLetterByLetterId] letterId = " + letterId);
             return new ResponseEntity<LetterDTO>(letterService.selectLetterByLetterId(letterId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -77,8 +77,8 @@ public class LetterController {
     @GetMapping("/sticker/letterid/{letterId}")
     public ResponseEntity<?> findStickerByLetterId(@PathVariable String letterId){
         try{
-            logger.debug("[findStickerByLetterId] LetterController.findStickerByLetterId");
-            logger.debug("[findStickerByLetterId] letterId = " + letterId);
+            logger.info("[findStickerByLetterId] LetterController.findStickerByLetterId");
+            logger.info("[findStickerByLetterId] letterId = " + letterId);
             return new ResponseEntity<List<StickerDTO>>(letterService.findStickerByLetterId(letterId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -93,8 +93,8 @@ public class LetterController {
     @GetMapping("/letter/block/{letterId}")
     public ResponseEntity<String> blockByLetterId(@PathVariable String letterId){
         try{
-            logger.debug("[blockByLetterId] LetterController.blockByLetterId");
-            logger.debug("[blockByLetterId] letterId = " + letterId);
+            logger.info("[blockByLetterId] LetterController.blockByLetterId");
+            logger.info("[blockByLetterId] letterId = " + letterId);
             return new ResponseEntity<String>(letterService.blockByLetterId(letterId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);

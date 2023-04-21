@@ -44,9 +44,9 @@ public class AuthController {
     @PostMapping("/auth")
     public ResponseEntity<String> checkCode(@RequestBody String code){
         try {
-            logger.debug("[checkCode] AuthController.checkAuth");
+            logger.info("[checkCode] AuthController.checkAuth");
 
-            logger.debug("[checkCode] code = " + code);
+            logger.info("[checkCode] code = " + code);
             return new ResponseEntity<String>(authService.checkCode(code), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -59,14 +59,14 @@ public class AuthController {
     @GetMapping("/kakaoall")
     public ResponseEntity<?> findKakaoAll(HttpServletRequest request){
         try {
-            logger.debug("[findKakaoAll] KakaoController.findKakaoAll");
+            logger.info("[findKakaoAll] KakaoController.findKakaoAll");
 
-            logger.debug("[findKakaoAll] authKey = " + request.getQueryString());
+            logger.info("[findKakaoAll] authKey = " + request.getQueryString());
             String code = authService.checkAuthKey(request.getQueryString());
-            logger.debug("[findKakaoAll] 호출한 code = " + code);
+            logger.info("[findKakaoAll] 호출한 code = " + code);
 
             if(code == null){
-                logger.info("[findKakaoAll] code = " + code);
+                logger.warn("[findKakaoAll] code = " + code);
                 throw new Exception("code로 매니저를 찾을 수 없음");
             }
             return new ResponseEntity<List<KakaoDTO>>(kakaoService.findKakaoAll(), HttpStatus.OK);
@@ -82,14 +82,14 @@ public class AuthController {
     @GetMapping("/memberall")
     public ResponseEntity<?> findMemberAll(HttpServletRequest request){
         try {
-            logger.debug("[findMemberAll] MemberController.findMemberAll");
+            logger.info("[findMemberAll] MemberController.findMemberAll");
 
-            logger.debug("[findMemberAll] authKey = " + request.getQueryString());
+            logger.info("[findMemberAll] authKey = " + request.getQueryString());
             String code = authService.checkAuthKey(request.getQueryString());
-            logger.debug("[findKakaoAll] 호출한 code = " + code);
+            logger.info("[findKakaoAll] 호출한 code = " + code);
 
             if(code == null){
-                logger.info("[findMemberAll] code = " + code);
+                logger.warn("[findMemberAll] code = " + code);
                 throw new Exception("code로 매니저를 찾을 수 없음");
             }
             return new ResponseEntity<List<MemberDTO>>(memberService.findMemberAll(), HttpStatus.OK);
@@ -104,14 +104,14 @@ public class AuthController {
     @GetMapping("/letterall")
     public ResponseEntity<?> findLetterAll(HttpServletRequest request){
         try {
-            logger.debug("[findLetterAll] LetterController.findAllLetter");
+            logger.info("[findLetterAll] LetterController.findAllLetter");
 
-            logger.debug("[findLetterAll] authKey = " + request.getQueryString());
+            logger.info("[findLetterAll] authKey = " + request.getQueryString());
             String code = authService.checkAuthKey(request.getQueryString());
-            logger.debug("[findKakaoAll] 호출한 code = " + code);
+            logger.info("[findKakaoAll] 호출한 code = " + code);
 
             if(code == null){
-                logger.info("[findLetterAll] code = " + code);
+                logger.warn("[findLetterAll] code = " + code);
                 throw new Exception("code로 매니저를 찾을 수 없음");
             }
             return new ResponseEntity<List<LetterDTO>>(letterService.findLetterAll(), HttpStatus.OK);

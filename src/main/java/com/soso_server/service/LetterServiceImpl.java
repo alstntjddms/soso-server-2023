@@ -44,21 +44,21 @@ public class LetterServiceImpl implements LetterService {
     @Override
     public List<LetterDTO> findLetterAll() {
         try{
-            logger.debug("[findLetterAll] Start");
+            logger.info("[findLetterAll] Start");
 
             List<LetterDTO> letterDTOS = rao.findLetterAll();
             if(letterDTOS.size() > 0){
-                logger.debug("[findLetterAll] End");
+                logger.info("[findLetterAll] End");
                 return letterDTOS;
             }else{
                 throw new LetterException("데이터 없음", 999);
             }
         }catch (LetterException le){
-            logger.info("[findLetterAll] LetterException = " + le.getMessage());
+            logger.warn("[findLetterAll] LetterException = " + le.getMessage());
         }catch (Exception e){
-            logger.info("[findLetterAll] Exception = " + e.getMessage());
+            logger.warn("[findLetterAll] Exception = " + e.getMessage());
         }
-        logger.debug("[findLetterAll] End");
+        logger.info("[findLetterAll] End");
         return null;
     }
 
@@ -66,7 +66,7 @@ public class LetterServiceImpl implements LetterService {
     @Transactional
     public String registerLetter(HashMap<String, Object> dto) {
         try{
-            logger.debug("[registerLetter] Start");
+            logger.info("[registerLetter] Start");
 
             ObjectMapper mapper = new ObjectMapper();
             LetterDTO letterDTO = mapper.convertValue(dto.get("letter"), LetterDTO.class);
@@ -85,23 +85,23 @@ public class LetterServiceImpl implements LetterService {
             // 편지 개수 알림 함수 호출
             messageService.sendMessageByLetterCount(Integer.parseInt(userId));
 
-            logger.debug("[registerLetter] End");
+            logger.info("[registerLetter] End");
             return externalAES256.encrypt(String.valueOf(registerLetterId));
         }catch(LetterException le){
-            logger.info("[registerLetter] LetterException = " + le.getMessage());
+            logger.warn("[registerLetter] LetterException = " + le.getMessage());
         }catch (Exception e){
-            logger.info("[registerLetter] Exception = " + e.getMessage());
+            logger.warn("[registerLetter] Exception = " + e.getMessage());
         }
-        logger.debug("[registerLetter] End");
+        logger.info("[registerLetter] End");
         return "편지등록 실패";
     }
 
     @Override
     public List<LetterDTO> selectLetterIdByUserId(String userId){
         try{
-            logger.debug("[selectLetterIdByUserId] Start");
+            logger.info("[selectLetterIdByUserId] Start");
 
-            logger.debug("[selectLetterIdByUserId] userId = " + userId);
+            logger.info("[selectLetterIdByUserId] userId = " + userId);
 
             if(userId.length() < 20){
                 throw new MemberException();
@@ -124,25 +124,25 @@ public class LetterServiceImpl implements LetterService {
                 result.add(letterDTO);
             }
 
-            logger.debug("[selectLetterIdByUserId] End");
+            logger.info("[selectLetterIdByUserId] End");
             return result;
         }catch (MemberException me){
-            logger.info("[selectLetterIdByUserId] MemberException = " + me.getMessage());
+            logger.warn("[selectLetterIdByUserId] MemberException = " + me.getMessage());
         }catch (LetterException le) {
-            logger.info("[selectLetterIdByUserId] LetterException = " + le.getMessage());
+            logger.warn("[selectLetterIdByUserId] LetterException = " + le.getMessage());
         }catch(Exception e){
-            logger.info("[selectLetterIdByUserId] Exception = " + e.getMessage());
+            logger.warn("[selectLetterIdByUserId] Exception = " + e.getMessage());
         }
-        logger.debug("[selectLetterIdByUserId] End");
+        logger.info("[selectLetterIdByUserId] End");
         return null;
     }
 
     @Override
     public LetterDTO selectLetterByLetterId(String letterId) {
         try {
-            logger.debug("[selectLetterByLetterId] Start");
+            logger.info("[selectLetterByLetterId] Start");
 
-            logger.debug("[selectLetterByLetterId] letterId = " + letterId);
+            logger.info("[selectLetterByLetterId] letterId = " + letterId);
 
             if(letterId.length() < 20){
                 throw new LetterException();
@@ -152,57 +152,57 @@ public class LetterServiceImpl implements LetterService {
             LetterDTO letterDTO = rao.selectLetterByLetterId(decLetterId);
             letterDTO.setLetterId(aes256.encryptEncodeReplace(letterDTO.getLetterId()));
 
-            logger.debug("[selectLetterByLetterId] End");
+            logger.info("[selectLetterByLetterId] End");
             return letterDTO;
         }catch(LetterException le){
-            logger.info("[selectLetterByLetterId] LetterException = " + le.getMessage());
+            logger.warn("[selectLetterByLetterId] LetterException = " + le.getMessage());
         }catch (Exception e){
-            logger.info("[selectLetterByLetterId] Exception = " + e.getMessage());
+            logger.warn("[selectLetterByLetterId] Exception = " + e.getMessage());
         }
-        logger.debug("[selectLetterByLetterId] End");
+        logger.info("[selectLetterByLetterId] End");
         return null;
     }
 
     @Override
     public List<StickerDTO> findStickerByLetterId(String letterId) throws LetterException {
         try{
-            logger.debug("[findStickerByLetterId] Start");
+            logger.info("[findStickerByLetterId] Start");
 
-            logger.debug("[findStickerByLetterId] letterId = " + letterId);
+            logger.info("[findStickerByLetterId] letterId = " + letterId);
 
             if(letterId.length() < 20){
                 throw new LetterException();
             }
 
-            logger.debug("[findStickerByLetterId] End");
+            logger.info("[findStickerByLetterId] End");
             return rao.selectStickerByLetterId(Integer.valueOf(aes256.replaceDecodeDecryt(letterId)));
         }catch (LetterException le){
-            logger.info("[findStickerByLetterId] LetterException = " + le.getMessage());
+            logger.warn("[findStickerByLetterId] LetterException = " + le.getMessage());
         }catch (Exception e){
-            logger.info("[findStickerByLetterId] Exception = " + e.getMessage());
+            logger.warn("[findStickerByLetterId] Exception = " + e.getMessage());
         }
-        logger.debug("[findStickerByLetterId] End");
+        logger.info("[findStickerByLetterId] End");
         return null;
     }
 
     @Override
     public String blockByLetterId(String letterId) throws LetterException {
         try{
-            logger.debug("[blockByLetterId] Start");
+            logger.info("[blockByLetterId] Start");
 
-            logger.debug("[blockByLetterId] letterId = " + letterId);
+            logger.info("[blockByLetterId] letterId = " + letterId);
 
             if(letterId.length() < 20){
                 throw new LetterException();
             }
             rao.blockByLetterId(Integer.valueOf(aes256.replaceDecodeDecryt(letterId)));
 
-            logger.debug("[blockByLetterId] End");
+            logger.info("[blockByLetterId] End");
             return letterId;
         }catch (LetterException le){
-            logger.info("[blockByLetterId] LetterException = " + le.getMessage());
+            logger.warn("[blockByLetterId] LetterException = " + le.getMessage());
         }catch (Exception e){
-            logger.info("[blockByLetterId] Exception = " + e.getMessage());
+            logger.warn("[blockByLetterId] Exception = " + e.getMessage());
         }
         return null;
     }
