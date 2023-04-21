@@ -12,8 +12,8 @@ public class AuthRAOImpl implements AuthRAO {
         }
 
     @Override
-    public AuthDTO selectAuth(String code) {
-        return mapper.selectAuth(code);
+    public AuthDTO checkCode(String code) {
+        return mapper.checkCode(code);
     }
 
     @Override

@@ -3,7 +3,7 @@
 
 <mapper namespace="com.soso_server.ra.itf.AuthRAO">
 
-    <select id="selectAuth" resultType="AuthDTO" parameterType="java.lang.String">
+    <select id="checkCode" resultType="AuthDTO" parameterType="java.lang.String">
         SELECT * FROM soso.manager WHERE code = #{code}
     </select>
 

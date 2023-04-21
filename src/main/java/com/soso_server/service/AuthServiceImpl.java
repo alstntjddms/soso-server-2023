@@ -16,26 +16,39 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public AuthDTO selectAuth(String code) {
+    public String checkCode(String code) {
         try{
-            logger.info("[selectAuth] Start");
+            logger.debug("[checkCode] Start");
 
-            AuthDTO authDTO = rao.selectAuth(code);
-            return authDTO;
+            AuthDTO authDTO = rao.checkCode(code);
+            if(authDTO == null){
+                throw new Exception("잘못된 code");
+            }
+            
+            logger.debug("[checkCode] End");
+            return authDTO.getAuthKey();
         }catch (Exception e){
-            logger.info("[selectAuth] Exception = " + e.getMessage());
+            logger.info("[checkCode] Exception = " + e.getMessage());
         }
-        logger.info("[selectAuth] End");
+        logger.debug("[checkCode] End");
         return null;
     }
 
     @Override
-    public AuthDTO checkAuthKey(String authKey) {
+    public String checkAuthKey(String authKey) {
         try{
-            return rao.checkAuthKey(authKey);
+            logger.debug("[checkAuthKey] Start");
+            AuthDTO authDTO = rao.checkAuthKey(authKey);
+            if(authDTO == null){
+                throw new Exception("잘못된 code");
+            }
+
+            logger.debug("[checkAuthKey] End");
+            return authDTO.getCode();
         }catch (Exception e){
             logger.info("[checkAuthKey] Exception = " + e.getMessage());
         }
+        logger.debug("[checkAuthKey] End");
         return null;
     }
 

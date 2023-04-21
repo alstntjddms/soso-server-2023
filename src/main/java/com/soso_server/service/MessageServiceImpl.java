@@ -42,12 +42,12 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public boolean sendMessage(String accessToken, String refreshToken, String message, String buttonTitle) {
         try {
-            logger.info("[sendMessage] Start");
+            logger.debug("[sendMessage] Start");
 
-            logger.info("[sendMessage] accessToken = " + accessToken);
-            logger.info("[sendMessage] refreshToken = " + refreshToken);
-            logger.info("[sendMessage] message = " + message);
-            logger.info("[sendMessage] buttonTitle = " + buttonTitle);
+            logger.debug("[sendMessage] accessToken = " + accessToken);
+            logger.debug("[sendMessage] refreshToken = " + refreshToken);
+            logger.debug("[sendMessage] message = " + message);
+            logger.debug("[sendMessage] buttonTitle = " + buttonTitle);
 
             URL url = new URL("https://kapi.kakao.com/v2/api/talk/memo/default/send");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -77,7 +77,7 @@ public class MessageServiceImpl implements MessageService {
                 count++;
                 refreshTokenCheckId = "";
 
-                logger.info("[sendMessage] HttpURLConnection.HTTP_OK sendMessage 성공");
+                logger.debug("[sendMessage] HttpURLConnection.HTTP_OK sendMessage 성공");
                 return true;
             // access_Token 만료시 refresh_Token으로 access_Token 새로 가져옴
             // 무한 재귀 방지
@@ -86,13 +86,13 @@ public class MessageServiceImpl implements MessageService {
             }else if(responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 refreshTokenCheckId = refreshToken;
                 sendMessage(kakaoService.refreshAccessToken(refreshToken), refreshToken, message, buttonTitle);
-                logger.info("[sendMessage] refreshAccessToken refreshToken = " + refreshToken);
+                logger.debug("[sendMessage] refreshAccessToken refreshToken = " + refreshToken);
             }else {
                 logger.info("[sendMessage] HTTP request failed: " + responseCode);
             }
             refreshTokenCheckId = "";
 
-            logger.info("[sendMessage] End");
+            logger.debug("[sendMessage] End");
             return false;
         } catch (IOException e) {
             logger.info("[sendMessage] IOException" +e.getMessage());
@@ -103,7 +103,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public int sendAllMessage(String message, String buttonTitle){
         try{
-            logger.info("[sendAllMessage] Start");
+            logger.debug("[sendAllMessage] Start");
 
             List<KakaoDTO> kakaoDTOS = kakaoRAO.findKakaoAll();
             for(KakaoDTO kakaoDTO : kakaoDTOS){
@@ -112,10 +112,10 @@ public class MessageServiceImpl implements MessageService {
                 }
             }
             
-            logger.info("[sendAllMessage] 총 " + count + "건의 메세지 전송이 성공.");
+            logger.debug("[sendAllMessage] 총 " + count + "건의 메세지 전송이 성공.");
             
             count = 0;
-            logger.info("[sendAllMessage] End");
+            logger.debug("[sendAllMessage] End");
             return count;
         }catch(Exception e){
             logger.info("[sendAllMessage] Exception = " + e.getMessage());
@@ -125,18 +125,18 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void sendMessageByLetterCount(int userId) {
-        logger.info("[sendMessageByLetterCount] Start");
+        logger.debug("[sendMessageByLetterCount] Start");
 
-        logger.info("[sendMessageByLetterCount] userId = " + userId);
+        logger.debug("[sendMessageByLetterCount] userId = " + userId);
         int letterCount = memberRAO.findMemberByLetterCount(userId);
         if(letterCount == 1 || letterCount == 9 || letterCount == 18 || letterCount == 27 || letterCount == 36) {
             KakaoDTO kakaoDTO = kakaoRAO.findOneKakaoById(memberRAO.findMemberByUserId(userId).getId());
             sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
             "PL@TER:" + letterCount + "번째 편지가 도착했어요!", "더 공유하러 가기");
         }
-        logger.info("[sendMessageByLetterCount] userId = " + userId + "에게" + letterCount + "번재 편지가 도착했다고 알림.");
+        logger.debug("[sendMessageByLetterCount] userId = " + userId + "에게" + letterCount + "번재 편지가 도착했다고 알림.");
 
-        logger.info("[sendMessageByLetterCount] End");
+        logger.debug("[sendMessageByLetterCount] End");
     }
 
 

@@ -44,9 +44,9 @@ public class KakaoServiceImpl implements KakaoService {
         String refresh_Token ="";
         String reqURL = "https://kauth.kakao.com/oauth/token";
         try {
-            logger.info("[getService] Start");
+            logger.debug("[getService] Start");
 
-            logger.info("[getService] authorize_code = " + authorize_code);
+            logger.debug("[getService] authorize_code = " + authorize_code);
 
             URL url = new URL(reqURL);
 
@@ -67,7 +67,7 @@ public class KakaoServiceImpl implements KakaoService {
             bw.flush();
             // 결과 코드가 200이라면 성공
             int responseCode = conn.getResponseCode();
-            logger.info("[getService] ResponseCode = " + responseCode);
+            logger.debug("[getService] ResponseCode = " + responseCode);
 
             // 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -80,7 +80,7 @@ public class KakaoServiceImpl implements KakaoService {
             br.close();
             bw.close();
 
-            logger.info("[getService] Response = " + result);
+            logger.debug("[getService] Response = " + result);
 
             // Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
             JsonParser parser = new JsonParser();
@@ -89,11 +89,11 @@ public class KakaoServiceImpl implements KakaoService {
             access_Token = element.getAsJsonObject().get("access_token").getAsString();
             refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
 
-            logger.info("[getService] access_token = " + access_Token);
+            logger.debug("[getService] access_token = " + access_Token);
 
             KakaoDTO kakaoDTO = getUserData(access_Token, refresh_Token);
 
-            logger.info("[getService] End");
+            logger.debug("[getService] End");
             return aes256.encrypt(String.valueOf(kakaoDTO.getId()));
         } catch (Exception e) {
             logger.info("[getService] Exception = " + e.getMessage());
@@ -109,9 +109,9 @@ public class KakaoServiceImpl implements KakaoService {
         String reqURL = "https://kapi.kakao.com/v2/user/me";
 
         try {
-            logger.info("[getUserData] Start");
+            logger.debug("[getUserData] Start");
 
-            logger.info("[getUserData] accessToken = " + access_Token + "refresh_Token" + refresh_Token);
+            logger.debug("[getUserData] accessToken = " + access_Token + "refresh_Token" + refresh_Token);
 
             URL url = new URL(reqURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -121,7 +121,7 @@ public class KakaoServiceImpl implements KakaoService {
             conn.setRequestProperty("Authorization", "Bearer " + access_Token);
 
             int responseCode = conn.getResponseCode();
-            logger.info("[getUserData] responseCode = " + responseCode);
+            logger.debug("[getUserData] responseCode = " + responseCode);
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -159,7 +159,7 @@ public class KakaoServiceImpl implements KakaoService {
             KakaoDTO checkkakaoDTO = rao.findOneKakao(kakaoDTO.getKakaoId());
 
             if (checkkakaoDTO != null) {
-                logger.info("[getUserData] 데이터 베이스에 저장된 카카오 아이디 데이터");
+                logger.debug("[getUserData] 데이터 베이스에 저장된 카카오 아이디 데이터");
                 kakaoDTO.setKakaoMsgYn(checkkakaoDTO.isKakaoMsgYn());
                 // 동의항목 체크
                 if(checkkakaoDTO.isKakaoScopeCheck()){
@@ -180,16 +180,16 @@ public class KakaoServiceImpl implements KakaoService {
             logger.info("[getUserData] Exception = " + e.getMessage());
         }
 
-        logger.info("[getUserData] End");
+        logger.debug("[getUserData] End");
         return rao.findOneKakao(kakaoDTO.getKakaoId());
     }
 
     @Override
     public boolean checkScopes(String accessToken) {
         try {
-            logger.info("[checkScopes] Start");
+            logger.debug("[checkScopes] Start");
 
-            logger.info("[checkScopes] accessToken = " + accessToken);
+            logger.debug("[checkScopes] accessToken = " + accessToken);
             URL url = new URL("https://kapi.kakao.com/v2/user/scopes");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -210,13 +210,13 @@ public class KakaoServiceImpl implements KakaoService {
                 JsonObject json = new Gson().fromJson(response.toString(), JsonObject.class);
                 JsonArray scopes = json.getAsJsonArray("scopes");
 
-                logger.info("[checkScopes] scopes = " + scopes);
+                logger.debug("[checkScopes] scopes = " + scopes);
                 for (JsonElement scope : scopes) {
                     JsonObject scopeObj = scope.getAsJsonObject();
                     String id = scopeObj.get("id").getAsString();
                     boolean agreed = scopeObj.get("agreed").getAsBoolean();
                     if ("talk_message".equals(id)) {
-                        logger.info("[checkScopes] End");
+                        logger.debug("[checkScopes] End");
                         return agreed;
                     }
                 }
@@ -229,15 +229,15 @@ public class KakaoServiceImpl implements KakaoService {
             logger.info("[checkScopes] Exception = " + e.getMessage());
         }
 
-        logger.info("[checkScopes] End");
+        logger.debug("[checkScopes] End");
         return false;
     }
 
     @Override
     public String revokeByUserId(String userId) {
         try {
-            logger.info("[revokeByUserId] Start");
-            logger.info("[revokeByUserId] userId = " + userId);
+            logger.debug("[revokeByUserId] Start");
+            logger.debug("[revokeByUserId] userId = " + userId);
 
             KakaoDTO kakaoDTO = rao.findOneKakaoById(
                     memberRAO.findMemberByUserId(
@@ -257,14 +257,14 @@ public class KakaoServiceImpl implements KakaoService {
 
             int responseCode = connection.getResponseCode();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                logger.info("[revokeByUserId] 동의 항목(메시지 보내기) 철회 성공");
+                logger.debug("[revokeByUserId] 동의 항목(메시지 보내기) 철회 성공");
 
-                logger.info("[revokeByUserId] End");
+                logger.debug("[revokeByUserId] End");
                 return "동의 항목(메시지 보내기) 철회가 성공";
             } else {
                 logger.info("[revokeByUserId] HTTP request failed ResponseCode = " + responseCode);
 
-                logger.info("[revokeByUserId] End");
+                logger.debug("[revokeByUserId] End");
                 return "동의 항목(메시지 보내기) 철회가 실패";
             }
         } catch (IOException ie) {
@@ -273,16 +273,16 @@ public class KakaoServiceImpl implements KakaoService {
             logger.info("[revokeByUserId] Exception = " + e.getMessage());
         }
 
-        logger.info("[revokeByUserId] End");
+        logger.debug("[revokeByUserId] End");
         return "";
     }
 
 
     @Override
     public String refreshAccessToken(String refreshToken) throws IOException {
-        logger.info("[refreshAccessToken] Start");
+        logger.debug("[refreshAccessToken] Start");
 
-        logger.info("[refreshAccessToken] refreshToken = " + refreshToken);
+        logger.debug("[refreshAccessToken] refreshToken = " + refreshToken);
         String clientId = "a42a6c91f7b1bb0d3f8e3daef2b6f24b"; // 카카오 디벨로퍼스에서 발급받은 REST API 키
         String grantType = "refresh_token";
         String apiUrl = "https://kauth.kakao.com/oauth/token";
@@ -326,21 +326,21 @@ public class KakaoServiceImpl implements KakaoService {
                 getUserData(accessToken, refreshToken);
             }
 
-            logger.info("[refreshAccessToken] End");
+            logger.debug("[refreshAccessToken] End");
             return accessToken;
         } else {
             logger.info("[refreshAccessToken] HTTP request failed ResponseCode = " + responseCode);
         }
 
-        logger.info("[refreshAccessToken] End");
+        logger.debug("[refreshAccessToken] End");
         return "";
     }
 
     @Override
     public String withdraw(String userId) throws Exception {
-        logger.info("[withdraw] Start");
+        logger.debug("[withdraw] Start");
 
-        logger.info("[withdraw] userId = " + userId);
+        logger.debug("[withdraw] userId = " + userId);
         KakaoDTO kakaoDTO = rao.findOneKakaoById(
                 memberRAO.findMemberByUserId(
                         Integer.parseInt(aes256.replaceDecodeDecryt(userId))).getId());
@@ -355,54 +355,54 @@ public class KakaoServiceImpl implements KakaoService {
         int responseCode = con.getResponseCode();
         // Response Code를 확인합니다.
         if (responseCode == HttpURLConnection.HTTP_OK) {
-            logger.info("[withdraw] 탈퇴 성공");
+            logger.debug("[withdraw] 탈퇴 성공");
 
-            logger.info("[withdraw] End");
+            logger.debug("[withdraw] End");
             return "탈퇴성공";
         } else {
             logger.info("[withdraw] HTTP request failed ResponseCode = " + responseCode);
         }
 
-        logger.info("[withdraw] End");
+        logger.debug("[withdraw] End");
         return "";
     }
 
     @Override
     public String updateScopeCheck(String userId) throws Exception {
-        logger.info("[updateScopeCheck] Start");
+        logger.debug("[updateScopeCheck] Start");
 
-        logger.info("[updateScopeCheck] userId = " + userId);
+        logger.debug("[updateScopeCheck] userId = " + userId);
         KakaoDTO kakaoDTO = rao.findOneKakaoById(
                         memberRAO.findMemberByUserId(
                         Integer.parseInt(aes256.replaceDecodeDecryt(userId))).getId());
         kakaoDTO.setKakaoScopeCheck(true);
         rao.refreshKakao(kakaoDTO);
 
-        logger.info("[updateScopeCheck] End");
+        logger.debug("[updateScopeCheck] End");
         return "동의항목 누름";
     }
 
     @Override
     public Boolean selectKakaoMsgYnByUserId(String userId) throws Exception {
-        logger.info("[selectKakaoMsgYnByUserId] Start");
+        logger.debug("[selectKakaoMsgYnByUserId] Start");
 
-        logger.info("[selectKakaoMsgYnByUserId] userId = " + userId);
+        logger.debug("[selectKakaoMsgYnByUserId] userId = " + userId);
         KakaoDTO kakaoDTO = rao.findOneKakaoById(
                 memberRAO.findMemberByUserId(
                         Integer.parseInt(aes256.replaceDecodeDecryt(userId))).getId());
 
-        logger.info("[selectKakaoMsgYnByUserId] End");
+        logger.debug("[selectKakaoMsgYnByUserId] End");
         return kakaoDTO.isKakaoMsgYn();
     }
 
     @Override
     public List<KakaoDTO> findKakaoAll() {
         try{
-            logger.info("[findKakaoAll] Start");
+            logger.debug("[findKakaoAll] Start");
 
             List<KakaoDTO> kakaoDTOS = rao.findKakaoAll();
             if(kakaoDTOS.size() > 0){
-                logger.info("[findKakaoAll] End");
+                logger.debug("[findKakaoAll] End");
                 return kakaoDTOS;
             }else{
                 throw new Exception("데이터 없음");
@@ -410,7 +410,7 @@ public class KakaoServiceImpl implements KakaoService {
         }catch (Exception e){
             logger.info("[findKakaoAll] Exception = " + e.getMessage());
         }
-        logger.info("[findKakaoAll] End");
+        logger.debug("[findKakaoAll] End");
         return null;
     }
 

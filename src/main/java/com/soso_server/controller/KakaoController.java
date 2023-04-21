@@ -25,8 +25,8 @@ public class KakaoController {
     @PostMapping("/kakao")
     public synchronized ResponseEntity<String> getService(@RequestBody String authorize_code) {
         try {
-            logger.info("[getService] KakaoController.getService");
-            logger.info("[getService] authorize_code = " + authorize_code);
+            logger.debug("[getService] KakaoController.getService");
+            logger.debug("[getService] authorize_code = " + authorize_code);
             return new ResponseEntity<String>(kakaoService.getService(authorize_code), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -41,8 +41,8 @@ public class KakaoController {
     @GetMapping("/kakao/msg/{userId}")
     public ResponseEntity<?> selectKakaoMsgYnByUserId(@PathVariable String userId) {
         try {
-            logger.info("[selectKakaoMsgYnByUserId] KakaoController.selectKakaoMsgYnByUserId");
-            logger.info("[selectKakaoMsgYnByUserId] userId = " + userId);
+            logger.debug("[selectKakaoMsgYnByUserId] KakaoController.selectKakaoMsgYnByUserId");
+            logger.debug("[selectKakaoMsgYnByUserId] userId = " + userId);
             return new ResponseEntity<Boolean>(kakaoService.selectKakaoMsgYnByUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
@@ -58,8 +58,8 @@ public class KakaoController {
     @PostMapping("/kakao/scope")
     public ResponseEntity<String> updateScopeCheck(@RequestBody String userId) {
         try {
-            logger.info("[updateScopeCheck] KakaoController.getService");
-            logger.info("[updateScopeCheck] userId = " + userId);
+            logger.debug("[updateScopeCheck] KakaoController.getService");
+            logger.debug("[updateScopeCheck] userId = " + userId);
             return new ResponseEntity<String>(kakaoService.updateScopeCheck(userId), HttpStatus.OK);
 
         }catch (Exception e){
@@ -75,8 +75,8 @@ public class KakaoController {
     @PostMapping("kakao/revoke")
     public ResponseEntity<String> revokeByUserId(@RequestBody String userId){
         try {
-            logger.info("[revokeByUserId] KakaoController.revokeByUserId");
-            logger.info("[revokeByUserId] userId = " + userId);
+            logger.debug("[revokeByUserId] KakaoController.revokeByUserId");
+            logger.debug("[revokeByUserId] userId = " + userId);
             return new ResponseEntity<String>(kakaoService.revokeByUserId(userId), HttpStatus.OK);
 
         }catch (Exception e){
@@ -91,8 +91,8 @@ public class KakaoController {
     @PostMapping("/kakao/withdraw")
     public ResponseEntity<String> withdraw(@RequestBody String userId) {
         try {
-            logger.info("[withdraw] KakaoController.withdraw");
-            logger.info("[withdraw] userId = " + userId);
+            logger.debug("[withdraw] KakaoController.withdraw");
+            logger.debug("[withdraw] userId = " + userId);
             return new ResponseEntity<String>(kakaoService.withdraw(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);

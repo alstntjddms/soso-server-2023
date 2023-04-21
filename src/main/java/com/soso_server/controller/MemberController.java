@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
-import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -29,8 +27,8 @@ public class MemberController {
     @PostMapping("/member")
     public synchronized ResponseEntity<String> registerMember(@RequestBody String id){
         try {
-            logger.info("[registerMember] MemberController.registerMember");
-            logger.info("[registerMember] id = " + id);
+            logger.debug("[registerMember] MemberController.registerMember");
+            logger.debug("[registerMember] id = " + id);
             return new ResponseEntity<String>(memberService.registerMember(id), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -46,8 +44,8 @@ public class MemberController {
     @GetMapping("/member/{userId}")
     public ResponseEntity<?> findMemberByUserId(@PathVariable String userId){
         try {
-            logger.info("[findMemberByUserId] MemberController.findMemberByUserId");
-            logger.info("[findMemberByUserId] userId = " + userId);
+            logger.debug("[findMemberByUserId] MemberController.findMemberByUserId");
+            logger.debug("[findMemberByUserId] userId = " + userId);
             return new ResponseEntity<MemberDTO>(memberService.findMemberByUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -63,9 +61,9 @@ public class MemberController {
     @PatchMapping(value = "/member/{userId}")
     public ResponseEntity<String> modifyUserNickNameByUserId(@PathVariable String userId, @RequestBody String userNickName){
         try {
-            logger.info("[modifyUserNickNameByUserId] MemberController.modifyUserNickNameByUserId");
-            logger.info("[modifyUserNickNameByUserId] userId = " + userId);
-            logger.info("[modifyUserNickNameByUserId] userNickName = " + userNickName);
+            logger.debug("[modifyUserNickNameByUserId] MemberController.modifyUserNickNameByUserId");
+            logger.debug("[modifyUserNickNameByUserId] userId = " + userId);
+            logger.debug("[modifyUserNickNameByUserId] userNickName = " + userNickName);
             return new ResponseEntity<String>(memberService.modifyUserNickNameByUserId(userId, userNickName), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -81,8 +79,8 @@ public class MemberController {
     @GetMapping("/member/lettercount/{userId}")
     public ResponseEntity<String> findLetterCountByUserId(@PathVariable String userId){
         try{
-            logger.info("[findMemberByLetterCount] MemberController.findMemberByLetterCount");
-            logger.info("[findMemberByLetterCount] userId = " + userId);
+            logger.debug("[findMemberByLetterCount] MemberController.findMemberByLetterCount");
+            logger.debug("[findMemberByLetterCount] userId = " + userId);
             return new ResponseEntity<String>(memberService.findMemberByLetterCount(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -98,8 +96,8 @@ public class MemberController {
     @GetMapping("/member/external/lettercount/{userId}")
     public ResponseEntity<?> findLetterCountByExternalUserId(@PathVariable String userId){
         try{
-            logger.info("[findLetterCountByExternalUserId] MemberController.findLetterCountByExternalUserId");
-            logger.info("[findLetterCountByExternalUserId] userId = " + userId);
+            logger.debug("[findLetterCountByExternalUserId] MemberController.findLetterCountByExternalUserId");
+            logger.debug("[findLetterCountByExternalUserId] userId = " + userId);
             return new ResponseEntity<Integer>(memberService.findLetterCountByExternalUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -114,8 +112,8 @@ public class MemberController {
     @PostMapping("/member/opendate")
     public ResponseEntity<?> registerOpenDate(@RequestBody String userId){
         try{
-            logger.info("[registerOpenDate] MemberController.registerOpenDate");
-            logger.info("[registerOpenDate] userId = " + userId);
+            logger.debug("[registerOpenDate] MemberController.registerOpenDate");
+            logger.debug("[registerOpenDate] userId = " + userId);
             return new ResponseEntity<Timestamp>(memberService.registerOpenDate(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -130,8 +128,8 @@ public class MemberController {
     @PatchMapping("/member/refresh/opendate")
     public ResponseEntity<?> refreshOpenDate(@RequestBody String userId){
         try{
-            logger.info("[refreshOpenDate] MemberController.refreshOpenDate");
-            logger.info("[refreshOpenDate] userId = " + userId);
+            logger.debug("[refreshOpenDate] MemberController.refreshOpenDate");
+            logger.debug("[refreshOpenDate] userId = " + userId);
             return new ResponseEntity<Timestamp>(memberService.refreshOpenDate(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -146,8 +144,8 @@ public class MemberController {
     @GetMapping("/member/opendate/{userId}")
     public ResponseEntity<?> findOpenDate(@PathVariable String userId){
         try{
-            logger.info("[findOpenDate] MemberController.findOpenDate");
-            logger.info("[findOpenDate] userId = " + userId);
+            logger.debug("[findOpenDate] MemberController.findOpenDate");
+            logger.debug("[findOpenDate] userId = " + userId);
             return new ResponseEntity<Timestamp>(memberService.findOpenDate(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -163,8 +161,8 @@ public class MemberController {
     @GetMapping("/member/userid/{userId}")
     public ResponseEntity<String> changeExternalUserId(@PathVariable String userId){
         try{
-            logger.info("[changeExternalUserId] MemberController.changeExternalUserId");
-            logger.info("[changeExternalUserId] userId = " + userId);
+            logger.debug("[changeExternalUserId] MemberController.changeExternalUserId");
+            logger.debug("[changeExternalUserId] userId = " + userId);
             return new ResponseEntity<String>(memberService.changeExternalUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -180,8 +178,8 @@ public class MemberController {
     @GetMapping("/member/external/userid/{userId}")
     public ResponseEntity<?> infoByExternalUserId(@PathVariable String userId){
         try{
-            logger.info("[decryptExternalUserId] MemberController.decryptExternalUserId");
-            logger.info("[decryptExternalUserId] userId = " + userId);
+            logger.debug("[decryptExternalUserId] MemberController.decryptExternalUserId");
+            logger.debug("[decryptExternalUserId] userId = " + userId);
             return new ResponseEntity<MemberDTO>(memberService.infoByExternalUserId(userId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);

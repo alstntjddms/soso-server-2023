@@ -25,9 +25,9 @@ public class MessageController {
     @GetMapping("/message")
     public ResponseEntity<?> sendMessage(@RequestParam("message") String message,@RequestParam("buttonTitle") String buttonTitle) {
         try {
-            logger.info("[sendMessage] MessageController.sendMessage");
-            logger.info("[sendMessage] message = " + message);
-            logger.info("[sendMessage] buttonTitle = " + buttonTitle);
+            logger.debug("[sendMessage] MessageController.sendMessage");
+            logger.debug("[sendMessage] message = " + message);
+            logger.debug("[sendMessage] buttonTitle = " + buttonTitle);
             return new ResponseEntity<Integer>(messageService.sendAllMessage(message, buttonTitle), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
