@@ -56,12 +56,13 @@ public class MessageServiceImpl implements MessageService {
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
             connection.setDoOutput(true);
 
-            String parameters = "template_object=" + URLEncoder.encode("{\"object_type\":\"text\","
-                            + "\"text\":\"" + message + "\","
-                            + "\"link\":{\"web_url\":\"https://plater.kr\","
-                            + "\"mobile_web_url\":\"https://plater.kr\"},"
-                            + "\"button_title\":\"" + buttonTitle + "\"}",
-                    StandardCharsets.UTF_8);
+            String templateObject = "{\"object_type\":\"text\","
+                    + "\"text\":\"" + message + "\","
+                    + "\"link\":{\"web_url\":\"https://plater.kr\","
+                    + "\"mobile_web_url\":\"https://plater.kr\"},"
+                    + "\"button_title\":\"" + buttonTitle + "\"}";
+                    
+            String parameters = "template_object=" + URLEncoder.encode(templateObject, StandardCharsets.UTF_8);
 
             byte[] postData = parameters.getBytes(StandardCharsets.UTF_8);
             int postDataLength = postData.length;
