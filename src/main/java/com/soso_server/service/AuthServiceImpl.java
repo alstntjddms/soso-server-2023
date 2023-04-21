@@ -1,13 +1,9 @@
 package com.soso_server.service;
 
 import com.soso_server.dto.AuthDTO;
-import com.soso_server.dto.KakaoDTO;
 import com.soso_server.ra.itf.AuthRAO;
 import com.soso_server.service.itf.AuthService;
-import com.soso_server.service.itf.MessageService;
 import org.jboss.logging.Logger;
-
-import java.util.List;
 
 public class AuthServiceImpl implements AuthService {
 
@@ -20,21 +16,26 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public List<AuthDTO> selectAuthAll(String code) {
+    public AuthDTO selectAuth(String code) {
         try{
-            logger.info("[selectAuthAll] Start");
+            logger.info("[selectAuth] Start");
 
-            List<AuthDTO> authDTOS = rao.selectAuthAll(code);
-            if(authDTOS.size() > 0){
-                logger.info("[selectAuthAll] End");
-                return authDTOS;
-            }else{
-                throw new Exception("데이터 없음");
-            }
+            AuthDTO authDTO = rao.selectAuth(code);
+            return authDTO;
         }catch (Exception e){
-            logger.info("[selectAuthAll] Exception = " + e.getMessage());
+            logger.info("[selectAuth] Exception = " + e.getMessage());
         }
-        logger.info("[selectAuthAll] End");
+        logger.info("[selectAuth] End");
+        return null;
+    }
+
+    @Override
+    public AuthDTO checkAuthKey(String authKey) {
+        try{
+            return rao.checkAuthKey(authKey);
+        }catch (Exception e){
+            logger.info("[checkAuthKey] Exception = " + e.getMessage());
+        }
         return null;
     }
 

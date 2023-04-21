@@ -2,7 +2,12 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.soso_server.ra.itf.AuthRAO">
-    <select id="selectAuthAll" resultType="AuthDTO" parameterType="java.lang.String">
+
+    <select id="selectAuth" resultType="AuthDTO" parameterType="java.lang.String">
         SELECT * FROM soso.manager WHERE code = #{code}
+    </select>
+
+    <select id="checkAuthKey" resultType="AuthDTO" parameterType="java.lang.String">
+        SELECT * FROM soso.manager WHERE authKey = #{authKey}
     </select>
 </mapper>

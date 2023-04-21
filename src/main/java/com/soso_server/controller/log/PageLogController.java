@@ -1,6 +1,8 @@
 package com.soso_server.controller.log;
 
 import com.soso_server.service.LogService.itf.PageLogService;
+
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class PageLogController {
+
+    private static final Logger logger = Logger.getLogger(PageLogController.class);
 
     @Autowired
     PageLogService pageLogService;
@@ -23,7 +27,7 @@ public class PageLogController {
         try {
             pageLogService.registerPageLog(request);
         }catch (Exception e){
-            e.printStackTrace();
+            logger.info("[registerPageLog] Exception = " + e.getMessage());
         }
     }
 

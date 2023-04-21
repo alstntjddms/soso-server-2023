@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
@@ -21,24 +20,6 @@ public class LetterController {
 
     @Autowired
     LetterService letterService;
-
-    /**
-     * !!!!!관리용!!!!!
-     * 전체 Letter를 조회한다.
-     * @return List<LetterDTO>
-     */
-    @GetMapping("/letterall")
-    public ResponseEntity<?> findAllLetter(HttpServletRequest request){
-        try {
-            logger.info("[findAllLetter] LetterController.findAllLetter");
-            if(!request.getQueryString().equals("15688974896465156213")){
-                return null;
-            }
-            return new ResponseEntity<List<LetterDTO>>(letterService.findLetterAll(), HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
-        }
-    }
 
     /**
      * userId로 받은 전체 LetterId를 조회한다.

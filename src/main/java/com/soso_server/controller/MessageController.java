@@ -23,14 +23,14 @@ public class MessageController {
      * 카카오 메세지 테스트
      */
     @GetMapping("/message")
-    public ResponseEntity<Integer> sendMessage(@RequestParam("message") String message,@RequestParam("buttonTitle") String buttonTitle) {
+    public ResponseEntity<?> sendMessage(@RequestParam("message") String message,@RequestParam("buttonTitle") String buttonTitle) {
         try {
             logger.info("[sendMessage] MessageController.sendMessage");
             logger.info("[sendMessage] message = " + message);
             logger.info("[sendMessage] buttonTitle = " + buttonTitle);
-            return new ResponseEntity<>(messageService.sendAllMessage(message, buttonTitle), HttpStatus.OK);
+            return new ResponseEntity<Integer>(messageService.sendAllMessage(message, buttonTitle), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity(-999, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }
     }
 }

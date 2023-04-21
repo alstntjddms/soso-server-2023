@@ -1,15 +1,11 @@
 package com.soso_server.controller;
 
-import com.soso_server.dto.KakaoDTO;
 import com.soso_server.service.itf.KakaoService;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -51,7 +47,6 @@ public class KakaoController {
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
-
         }
     }
 
@@ -99,23 +94,6 @@ public class KakaoController {
             logger.info("[withdraw] KakaoController.withdraw");
             logger.info("[withdraw] userId = " + userId);
             return new ResponseEntity<String>(kakaoService.withdraw(userId), HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    /**
-     * 관리용
-     * 카카오 모든멤버 조회
-     */
-    @GetMapping("/kakaoall")
-    public ResponseEntity<?> findKakaoAll(HttpServletRequest request){
-        try {
-            logger.info("[findKakaoAll] KakaoController.findKakaoAll");
-            if(!request.getQueryString().equals("15688974896465156213")){
-                return null;
-            }
-            return new ResponseEntity<List<KakaoDTO>>(kakaoService.findKakaoAll(), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }

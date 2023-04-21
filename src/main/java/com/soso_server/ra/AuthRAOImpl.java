@@ -2,18 +2,22 @@ package com.soso_server.ra;
 
 import com.soso_server.dto.AuthDTO;
 import com.soso_server.ra.itf.AuthRAO;
-import com.soso_server.ra.itf.MessageRAO;
-
-import java.util.List;
 
 public class AuthRAOImpl implements AuthRAO {
+
     private AuthRAO mapper;
+
     public void setMapper(AuthRAO mapper) {
             this.mapper = mapper;
         }
 
     @Override
-    public List<AuthDTO> selectAuthAll(String code) {
-        return mapper.selectAuthAll(code);
+    public AuthDTO selectAuth(String code) {
+        return mapper.selectAuth(code);
+    }
+
+    @Override
+    public AuthDTO checkAuthKey(String authKey) {
+        return mapper.checkAuthKey(authKey);
     }
 }
