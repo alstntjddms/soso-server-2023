@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -42,12 +44,12 @@ public class AuthController {
      * authCheck구현
      */
     @PostMapping("/auth")
-    public ResponseEntity<String> checkCode(@RequestBody String code){
+    public ResponseEntity<?> createCookie(@RequestBody String code, HttpServletResponse response){
         try {
             logger.info("[checkCode] AuthController.checkAuth");
 
             logger.info("[checkCode] code = " + code);
-            return new ResponseEntity<String>(authService.checkCode(code), HttpStatus.OK);
+            return new ResponseEntity<Boolean>(authService.createCookie(code, response), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }
@@ -61,14 +63,10 @@ public class AuthController {
         try {
             logger.info("[findKakaoAll] KakaoController.findKakaoAll");
 
-            logger.info("[findKakaoAll] authKey = " + request.getQueryString());
-            String code = authService.checkAuthKey(request.getQueryString());
-            logger.info("[findKakaoAll] 호출한 code = " + code);
-
-            if(code == null){
-                logger.warn("[findKakaoAll] code = " + code);
-                throw new Exception("code로 매니저를 찾을 수 없음");
+            if(!authService.checkJwtToken(request)){
+                throw new Exception("토큰이 잘못됨");
             }
+
             return new ResponseEntity<List<KakaoDTO>>(kakaoService.findKakaoAll(), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -84,14 +82,10 @@ public class AuthController {
         try {
             logger.info("[findMemberAll] MemberController.findMemberAll");
 
-            logger.info("[findMemberAll] authKey = " + request.getQueryString());
-            String code = authService.checkAuthKey(request.getQueryString());
-            logger.info("[findKakaoAll] 호출한 code = " + code);
-
-            if(code == null){
-                logger.warn("[findMemberAll] code = " + code);
-                throw new Exception("code로 매니저를 찾을 수 없음");
+            if(!authService.checkJwtToken(request)){
+                throw new Exception("토큰이 잘못됨");
             }
+
             return new ResponseEntity<List<MemberDTO>>(memberService.findMemberAll(), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
@@ -106,14 +100,10 @@ public class AuthController {
         try {
             logger.info("[findLetterAll] LetterController.findAllLetter");
 
-            logger.info("[findLetterAll] authKey = " + request.getQueryString());
-            String code = authService.checkAuthKey(request.getQueryString());
-            logger.info("[findKakaoAll] 호출한 code = " + code);
-
-            if(code == null){
-                logger.warn("[findLetterAll] code = " + code);
-                throw new Exception("code로 매니저를 찾을 수 없음");
+            if(!authService.checkJwtToken(request)){
+                throw new Exception("토큰이 잘못됨");
             }
+
             return new ResponseEntity<List<LetterDTO>>(letterService.findLetterAll(), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);

@@ -1,10 +1,19 @@
 package com.soso_server.service.itf;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 public interface AuthService {
 
-    public String checkCode(String code);
+    public Boolean createCookie(String code, HttpServletResponse response);
 
-    public String checkAuthKey(String authKey);
+    /**
+     * JwtToken 검증 로직
+     * @param request
+     * @return
+     */
+    public Boolean checkJwtToken(HttpServletRequest request);
     
 }
 
