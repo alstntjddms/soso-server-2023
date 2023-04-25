@@ -16,11 +16,10 @@ public class JwtUtils {
     private static final long EXPIRATION_TIME = 3600000; // 토큰 만료 시간 (1시간)
 
     // JWT 생성
-    public static String generateJwtToken(String name, String code, String authkey) {
+    public static String generateJwtToken(String code, String name) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("name", name);
-        claims.put("code", code);
-        claims.put("authkey", authkey);
+        claims.put("sub", code);
+        claims.put("aud", name);
         claims.put("iss", "soso_server");
         claims.put("roles", "admin");
 
@@ -65,7 +64,7 @@ public class JwtUtils {
 
     // 무작위 문자열로 SECRET_KEY 생성
     private static String generateSecretKey() {
-        byte[] randomBytes = new byte[32];
+        byte[] randomBytes = new byte[SECRET_KEY_LENGTH];
         new SecureRandom().nextBytes(randomBytes);
         return Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
     }

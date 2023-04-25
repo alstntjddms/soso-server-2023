@@ -31,11 +31,7 @@ public class AuthServiceImpl implements AuthService {
                 throw new Exception("잘못된 code");
             }
             // JWT 생성
-            String jwtToken = JwtUtils.generateJwtToken(authDTO.getName(), authDTO.getCode(), authDTO.getAuthKey());
-
-            System.out.println("jwtToken = " + jwtToken);
-            System.out.println("jwtToken = " + JwtUtils.validateJwtToken(jwtToken));
-            System.out.println("jwtToken = " + JwtUtils.getUsernameFromJwtToken(jwtToken));
+            String jwtToken = JwtUtils.generateJwtToken(authDTO.getCode(), authDTO.getName());
 
             Cookie cookie = new Cookie("sosoJwtToken", jwtToken);
             cookie.setMaxAge(3600); // 쿠키 만료 시간 (1시간)
@@ -70,9 +66,9 @@ public class AuthServiceImpl implements AuthService {
             }
 
             Claims claims = JwtUtils.getJwtTokenInfo(token);
-            String name = (String) claims.get("name");
-            String code = (String) claims.get("code");
-            String authkey = (String) claims.get("authkey");
+            String code = (String) claims.get("sub");
+            String name = (String) claims.get("aud");
+            String roles = (String) claims.get("roles");
 
             System.out.println("claims = " + claims);
             AuthDTO authDTO = rao.checkCode(code);
@@ -80,7 +76,7 @@ public class AuthServiceImpl implements AuthService {
                 throw new Exception("잘못된 code");
             }
 
-            if(!name.equals(authDTO.getName()) && !code.equals(authDTO.getCode()) && !authkey.equals(authDTO.getAuthKey())){
+            if(!name.equals(authDTO.getName()) && !code.equals(authDTO.getCode()) && !roles.equals("admin")){
                 throw new Exception("유효하지 않은 토큰 정보");
             }
 
