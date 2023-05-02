@@ -10,6 +10,7 @@ import org.jboss.logging.Logger;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 public class AuthServiceImpl implements AuthService {
 
@@ -76,7 +77,7 @@ public class AuthServiceImpl implements AuthService {
                 throw new Exception("잘못된 code");
             }
 
-            if(!name.equals(authDTO.getName()) && !code.equals(authDTO.getCode()) && !roles.equals("admin")){
+            if(!name.equals(authDTO.getName()) || !code.equals(authDTO.getCode()) || !roles.equals("admin")){
                 throw new Exception("유효하지 않은 토큰 정보");
             }
 
@@ -87,6 +88,41 @@ public class AuthServiceImpl implements AuthService {
         }
         logger.info("[checkJwtToken] End");
         return false;
+    }
+
+    @Override
+    public String register(AuthDTO authDTO) {
+        try{
+            logger.info("[register] Start");
+
+            rao.register(authDTO);
+            return authDTO.getName();
+        }catch (Exception e){
+            logger.warn("[register] Exception = " + e.getMessage());
+        }
+
+        logger.info("[register] End");
+        return "등록 실패";
+    }
+
+    @Override
+    public String update(AuthDTO authDTO) {
+        try{
+            logger.info("[update] Start");
+
+            rao.update(authDTO);
+            return authDTO.getName();
+        }catch (Exception e){
+            logger.warn("[update] Exception = " + e.getMessage());
+        }
+
+        logger.info("[register] End");
+        return "등록 실패";
+    }
+
+    @Override
+    public List<AuthDTO> findManagerAll() {
+        return rao.findManagerAll();
     }
 
 }

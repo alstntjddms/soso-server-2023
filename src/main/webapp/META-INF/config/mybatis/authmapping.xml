@@ -10,4 +10,19 @@
     <select id="checkAuthKey" resultType="AuthDTO" parameterType="java.lang.String">
         SELECT * FROM soso.manager WHERE authKey = #{authKey}
     </select>
+
+    <insert id="register" parameterType="AuthDTO">
+        INSERT INTO soso.manager( name, authKey, code)
+        VALUES (#{name}, #{authKey}, #{code})
+    </insert>
+
+    <update id="update" parameterType="AuthDTO">
+        UPDATE soso.manager
+        SET authKey = #{authKey} , code = #{code}
+        WHERE name = #{name}
+    </update>
+
+    <select id="findManagerAll" resultType="AuthDTO">
+        SELECT * FROM soso.manager
+    </select>
 </mapper>

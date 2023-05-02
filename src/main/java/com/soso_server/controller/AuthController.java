@@ -110,5 +110,45 @@ public class AuthController {
         }
     }
 
+    /**
+     * 관리자를 등록한다. gpt 테스트용
+     */
+    @PostMapping("/manager")
+    public ResponseEntity<String> registerAuth(@RequestBody AuthDTO authDTO){
+        try {
+            logger.info("[registerAuth] AuthController.registerAuth");
+            logger.info(authDTO);
+            return new ResponseEntity<String>(authService.register(authDTO), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * 관리자를 수정한다. gpt 테스트용
+     */
+    @PatchMapping("/manager")
+    public ResponseEntity<String> updateAuth(@RequestBody AuthDTO authDTO){
+        try {
+            logger.info("[registerAuth] AuthController.updateAuth");
+            return new ResponseEntity<String>(authService.update(authDTO), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * 모든 관리자를 조회한다.
+     */
+    @GetMapping("/managerall")
+    public ResponseEntity<?> findManagerAll(){
+        try {
+            logger.info("[findManagerAll] AuthController.findManagerAll");
+            return new ResponseEntity<List<AuthDTO>>(authService.findManagerAll(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }

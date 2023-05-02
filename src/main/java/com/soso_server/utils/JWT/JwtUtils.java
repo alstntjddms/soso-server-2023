@@ -21,7 +21,12 @@ public class JwtUtils {
         claims.put("sub", code);
         claims.put("aud", name);
         claims.put("iss", "soso_server");
-        claims.put("roles", "admin");
+        if(name.equals("전민수") || name.equals("이승욱")){
+            claims.put("roles", "admin");
+        }else{
+            claims.put("roles", "user");
+        }
+
 
         Date now = new Date();
         Date expirationDate = new Date(now.getTime() + EXPIRATION_TIME);
