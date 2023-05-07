@@ -17,18 +17,19 @@
     </select>
 
     <select id="findMemberByLetterCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
-                SELECT COUNT(*)
-        from soso.letter l
-        LEFT JOIN soso.member m
-        ON l.userId = m.userId
-        WHERE m.userId = #{userId}
-        AND
-        <!--        오픈데이트 이후에 받은 편지만 조회-->
-        l.letterWriteDate >  m.userOpenDate
-        AND
-        <!--        오픈데이트의 1일동안 받을 기간 설정-->
-        <!--   864000 = 1일-->
-        (m.userOpenDate + 8640000) > l.letterWriteDate
+        SELECT COUNT(*)
+        FROM soso.letter l
+        WHERE l.userId = #{userId}
+        AND l.letterWriteDate > (
+        SELECT userOpenDate
+        FROM soso.member
+        WHERE userId = #{userId}
+        )
+        AND (
+        SELECT DATE_ADD(userOpenDate, INTERVAL 1 DAY)
+        FROM soso.member
+        WHERE userId = #{userId}
+        ) > l.letterWriteDate
     </select>
 
     <select id="findOpenDate" resultType="java.sql.Timestamp" parameterType="java.lang.Integer">

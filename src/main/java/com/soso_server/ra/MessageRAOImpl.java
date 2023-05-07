@@ -1,6 +1,9 @@
 package com.soso_server.ra;
 
+import com.soso_server.dto.KakaoDTO;
 import com.soso_server.ra.itf.MessageRAO;
+
+import java.util.List;
 
 public class MessageRAOImpl implements MessageRAO {
 
@@ -10,4 +13,8 @@ public class MessageRAOImpl implements MessageRAO {
         this.mapper = mapper;
     }
 
+    @Override
+    public List<KakaoDTO> findKakaoByDateExpired() {
+        return mapper.findKakaoByDateExpired();
+    }
 }

@@ -2,5 +2,12 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.soso_server.ra.itf.MessageRAO">
+    <select id="findKakaoByDateExpired" resultType="KakaoDTO">
+        SELECT * FROM soso.kakao k WHERE id IN (
+            SELECT id
+            FROM soso.member m
+            WHERE DATE_ADD(m.userOpenDate, INTERVAL 10 DAY) + INTERVAL 5 MINUTE > CURRENT_TIMESTAMP
+            AND CURRENT_TIMESTAMP > DATE_ADD(m.userOpenDate, INTERVAL 10 DAY))
+    </select>
 
 </mapper>

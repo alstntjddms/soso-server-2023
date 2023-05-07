@@ -35,21 +35,37 @@
     </select>
 
     <select id="selectLetterIdByUserId" resultType="LetterDTO" parameterType="java.lang.Integer">
-<!--        SELECT * FROM soso.letter WHERE userId = #{userId}-->
+<!--&lt;!&ndash;        SELECT * FROM soso.letter WHERE userId = #{userId}&ndash;&gt;-->
+<!--        SELECT l.letterId, l.userId, l.letterContent, l.letterFont, l.letterFontColor, l.letterPaper,-->
+<!--            l.letterWriter, letterFontSize, letterTextAlign,-->
+<!--            l.letterIcon, l.letterWriteDate, l.letterReadYn, l.letterDelYn-->
+<!--        from soso.letter l-->
+<!--        LEFT JOIN soso.member m-->
+<!--        ON l.userId = m.userId-->
+<!--        WHERE m.userId = #{userId}-->
+<!--        AND-->
+<!--&lt;!&ndash;        오픈데이트 이후에 받은 편지만 조회&ndash;&gt;-->
+<!--        l.letterWriteDate >  m.userOpenDate-->
+<!--        AND-->
+<!--&lt;!&ndash;        오픈데이트의 10일동안 받을 기간 설정&ndash;&gt;-->
+<!--        &lt;!&ndash;   864000 = 1일&ndash;&gt;-->
+<!--        (m.userOpenDate + 8640000) > l.letterWriteDate-->
         SELECT l.letterId, l.userId, l.letterContent, l.letterFont, l.letterFontColor, l.letterPaper,
-            l.letterWriter, letterFontSize, letterTextAlign,
-            l.letterIcon, l.letterWriteDate, l.letterReadYn, l.letterDelYn
-        from soso.letter l
-        LEFT JOIN soso.member m
-        ON l.userId = m.userId
-        WHERE m.userId = #{userId}
-        AND
-<!--        오픈데이트 이후에 받은 편지만 조회-->
-        l.letterWriteDate >  m.userOpenDate
-        AND
-<!--        오픈데이트의 10일동안 받을 기간 설정-->
-        <!--   864000 = 1일-->
-        (m.userOpenDate + 8640000) > l.letterWriteDate
+        l.letterWriter, letterFontSize, letterTextAlign,
+        l.letterIcon, l.letterWriteDate, l.letterReadYn, l.letterDelYn
+        FROM soso.letter l
+        WHERE l.userId = #{userId}
+        AND l.letterWriteDate > (
+        SELECT userOpenDate
+        FROM soso.member
+        WHERE userId = #{userId}
+        )
+        AND (
+        SELECT DATE_ADD(userOpenDate, INTERVAL 10 DAY)
+        FROM soso.member
+        WHERE userId = #{userId}
+        ) > l.letterWriteDate
+
     </select>
 
     <select id="selectStickerByLetterId" resultType="StickerDTO" parameterType="java.lang.Integer">

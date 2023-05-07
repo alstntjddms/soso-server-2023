@@ -8,6 +8,8 @@ import com.soso_server.service.itf.KakaoService;
 import com.soso_server.service.itf.MessageService;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -132,11 +134,32 @@ public class MessageServiceImpl implements MessageService {
         if(letterCount == 1 || letterCount == 9 || letterCount == 18 || letterCount == 27 || letterCount == 36) {
             KakaoDTO kakaoDTO = kakaoRAO.findOneKakaoById(memberRAO.findMemberByUserId(userId).getId());
             sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
-            "PL@TER:" + letterCount + "번째 편지가 도착했어요!", "더 공유하러 가기");
+            "[PL@TER]" + kakaoDTO.getKakaoNickName() + "님! " +  letterCount + "번째 편지가 도착했어요!", "더 공유하러 가기");
         }
         logger.info("[sendMessageByLetterCount] userId = " + userId + "에게" + letterCount + "번재 편지가 도착했다고 알림.");
 
         logger.info("[sendMessageByLetterCount] End");
+    }
+
+    @Override
+    @Scheduled(cron = "0 */5 * * * *")
+    public void sendMessageByDateExpired() {
+        try{
+            logger.info("[sendMessageByDateExpired] Start");
+
+            // 만료된 사용자의 목록을 가져옴
+            List<KakaoDTO> kakaoDTOS = rao.findKakaoByDateExpired();
+
+            // 만료된 사용자
+            for(KakaoDTO kakaoDTO : kakaoDTOS){
+                sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
+                        "[PL@TER] " + kakaoDTO.getKakaoNickName() + "님! 모든 편지가 도착했어요!", "지금 확인하러 가기");
+            }
+
+            logger.info("[sendMessageByDateExpired] End");
+        }catch (Exception e){
+            logger.warn("[sendMessageByDateExpired] Exception = " + e.getMessage());
+        }
     }
 
 
