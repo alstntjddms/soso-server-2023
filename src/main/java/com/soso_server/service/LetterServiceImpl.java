@@ -2,6 +2,7 @@ package com.soso_server.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.soso_server.ra.itf.MemberRAO;
 import com.soso_server.service.itf.MessageService;
 import com.soso_server.utils.AES256;
 import com.soso_server.dto.LetterDTO;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +29,9 @@ public class LetterServiceImpl implements LetterService {
 
 
     LetterRAO rao;
+
+    @Autowired
+    MemberRAO memberRAO;
 
     @Autowired
     MessageService messageService;
@@ -147,9 +152,21 @@ public class LetterServiceImpl implements LetterService {
             if(letterId.length() < 20){
                 throw new LetterException();
             }
+
             Integer decLetterId = Integer.valueOf(aes256.replaceDecodeDecryt(letterId));
-            rao.updateToReadLetter(decLetterId);
+
+            // 오픈데이트 검증 로직 시작
             LetterDTO letterDTO = rao.selectLetterByLetterId(decLetterId);
+            Timestamp openDate = memberRAO.findOpenDate(Integer.parseInt(letterDTO.getUserId()));
+            // 864000000L = 10일
+//            if(openDate != null && (new Timestamp(System.currentTimeMillis()-864000000L)).before(openDate)){
+            if(openDate != null && (new Timestamp(System.currentTimeMillis()-600000L)).before(openDate)){
+                logger.warn("[selectLetterByLetterId] 행성 만료 전임.");
+                throw new MemberException("행성 만료 전임.", -999);
+            }
+            // 오픈데이트 검증 로직 끝
+
+            rao.updateToReadLetter(decLetterId);
             letterDTO.setLetterId(aes256.encryptEncodeReplace(letterDTO.getLetterId()));
 
             logger.info("[selectLetterByLetterId] End");
