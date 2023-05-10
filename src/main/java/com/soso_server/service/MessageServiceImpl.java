@@ -1,6 +1,7 @@
 package com.soso_server.service;
 
 import com.soso_server.dto.KakaoDTO;
+import com.soso_server.dto.MemberDTO;
 import com.soso_server.ra.itf.KakaoRAO;
 import com.soso_server.ra.itf.MemberRAO;
 import com.soso_server.ra.itf.MessageRAO;
@@ -136,10 +137,11 @@ public class MessageServiceImpl implements MessageService {
             KakaoDTO kakaoDTO = kakaoRAO.findOneKakaoById(memberDTO.getId());
             sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
             "[PL@TER]" + memberDTO.getUserNickName() + "님! " +  letterCount + "번째 편지가 도착했어요!", "더 공유하러 가기");
-        }
-        logger.info("[sendMessageByLetterCount] userId = " + memberDTO.getUserNickName() 
-                        + "에게" + letterCount + "번재 편지가 도착했다고 알림.");
 
+            logger.info("[sendMessageByLetterCount] userId = " + memberDTO.getUserNickName() 
+                        + "에게" + letterCount + "번재 편지가 도착했다고 알림.");
+        }
+        
         logger.info("[sendMessageByLetterCount] End");
     }
 
