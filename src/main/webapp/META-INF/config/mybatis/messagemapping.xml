@@ -3,16 +3,49 @@
 
 <mapper namespace="com.soso_server.ra.itf.MessageRAO">
     <select id="findKakaoByDateExpired" resultType="KakaoDTO">
+<!--        행성이 만료 된 사람들에게-->
 <!--        SELECT * FROM soso.kakao k WHERE id IN (-->
 <!--            SELECT id-->
 <!--            FROM soso.member m-->
-<!--            WHERE DATE_ADD(m.userOpenDate, INTERVAL 10 DAY) + INTERVAL 5 MINUTE > CURRENT_TIMESTAMP-->
-<!--            AND CURRENT_TIMESTAMP > DATE_ADD(m.userOpenDate, INTERVAL 10 DAY))-->
+<!--            WHERE DATE_ADD(m.userOpenDate, INTERVAL 10 DAY) + INTERVAL 1 HOUR > CURRENT_TIMESTAMP-->
+<!--            AND CURRENT_TIMESTAMP > DATE_ADD(m.userOpenDate, INTERVAL 10 DAY)-->
+<!--        )-->
+<!--        AND k.kakaoMsgYn = TRUE;-->
+
+<!--        테스트용 쿼리-->
         SELECT * FROM soso.kakao k WHERE id IN (
-        SELECT id
-        FROM soso.member m
-        WHERE DATE_ADD(m.userOpenDate, INTERVAL 10 MINUTE) + INTERVAL 5 MINUTE > CURRENT_TIMESTAMP
-        AND CURRENT_TIMESTAMP > DATE_ADD(m.userOpenDate, INTERVAL 10 MINUTE))
+            SELECT id
+            FROM soso.member m
+            WHERE DATE_ADD(m.userOpenDate, INTERVAL 10 MINUTE) + INTERVAL 1 HOUR > CURRENT_TIMESTAMP
+            AND CURRENT_TIMESTAMP > DATE_ADD(m.userOpenDate, INTERVAL 10 MINUTE)
+        )
+        AND k.kakaoMsgYn = TRUE;
     </select>
+
+    <select id="findKakaoToDateExpiredByNotNewOpenDate" resultType="KakaoDTO">
+<!--        행성을 만료한 후 접속하지 않은지 3일이 자난 사람들에게 -->
+        SELECT k.*
+        FROM soso.kakao k
+        INNER JOIN soso.member m ON k.id = m.id
+        WHERE k.kakaoLoginDate
+        BETWEEN DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 3 DAY) - INTERVAL 1 HOUR
+        AND DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 3 DAY)
+        AND m.userOpenDate = '1997-09-17 00:00:00'
+        AND k.kakaoMsgYn = TRUE;
+    </select>
+
+    <select id="findKakaoToAfterRegisterByNotNewOpenDate" resultType="KakaoDTO">
+<!--        회원가입 후 행성을 개설하지 않은지 3일이 지난 사람들에게 -->
+        SELECT k.*
+        FROM soso.kakao k
+        INNER JOIN soso.member m ON k.id = m.id
+        WHERE m.userOpenDate IS NULL
+        AND m.userDate BETWEEN DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 3 DAY) - INTERVAL 1 HOUR
+        AND DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 3 DAY)
+        AND k.kakaoMsgYn = TRUE;
+
+    </select>
+
+
 
 </mapper>

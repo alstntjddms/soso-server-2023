@@ -169,7 +169,6 @@ public class KakaoServiceImpl implements KakaoService {
             } else {
 //                // 카카오 동의항목 메세지 체크 확인
                 kakaoDTO.setKakaoMsgYn(checkScopes(access_Token));
-                kakaoDTO.setKakaoDefaultNickName(kakaoDTO.getKakaoNickName());
                 rao.registerKakao(kakaoDTO);
             }
         }catch (IOException ie) {
@@ -275,7 +274,6 @@ public class KakaoServiceImpl implements KakaoService {
         return "";
     }
 
-
     @Override
     public String refreshAccessToken(String refreshToken) throws IOException {
         logger.info("[refreshAccessToken] Start");
@@ -353,6 +351,7 @@ public class KakaoServiceImpl implements KakaoService {
         int responseCode = con.getResponseCode();
         // Response Code를 확인합니다.
         if (responseCode == HttpURLConnection.HTTP_OK) {
+            rao.deleteKakaoByUserId(aes256.replaceDecodeDecryt(userId));
             logger.info("[withdraw] 탈퇴 성공");
 
             logger.info("[withdraw] End");

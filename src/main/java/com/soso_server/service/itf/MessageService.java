@@ -27,9 +27,9 @@ public interface MessageService {
     public void sendMessageByLetterCount(int userId);
 
     /**
-     * 5분마다 배치를 돌며 행성이 만료되었는지 확인해 메세지 전송
+     * 1시간마다 배치를 돌며 알림 전송
      */
-    public void sendMessageByDateExpired();
+    public void sendMessageEveryHour();
 
 }
 

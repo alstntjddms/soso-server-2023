@@ -7,11 +7,11 @@
         INSERT INTO soso.kakao( kakaoId, kakaoAccessToken, kakaoRefreshToken,
                                 kakaoEmail, kakaoNickName, kakaoGender,
                                 kakaoBirthday, kakaoRegisterDate, kakaoLoginDate, kakaoMsgYn,
-                                kakaoScopeCheck, kakaoDefaultNickName)
+                                kakaoScopeCheck)
         VALUES (#{kakaoId}, #{kakaoAccessToken}, #{kakaoRefreshToken},
                 #{kakaoEmail}, #{kakaoNickName}, #{kakaoGender},
                 #{kakaoBirthday}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{kakaoMsgYn},
-                #{kakaoScopeCheck}, #{kakaoDefaultNickName})
+                #{kakaoScopeCheck})
     </insert>
 
     <update id="refreshKakao" parameterType="KakaoDTO">
@@ -30,6 +30,11 @@
     <select id="findOneKakaoById" resultType="KakaoDTO" parameterType="java.lang.Integer">
         SELECT * FROM soso.kakao WHERE Id = #{Id}
     </select>
+
+    <delete id="deleteKakaoByUserId" parameterType="java.lang.String">
+        DELETE FROM soso.kakao k
+        WHERE k.id = (SELECT m.id FROM soso.member m WHERE m.userId = #{userId})
+    </delete>
 
     <select id="findKakaoAll" resultType="KakaoDTO" parameterType="java.lang.String">
         SELECT * FROM soso.kakao order by id desc

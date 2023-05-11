@@ -146,27 +146,56 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    @Scheduled(cron = "0 */5 * * * *")
-    public void sendMessageByDateExpired() {
+    @Scheduled(cron = "0 0 */1 * * *")
+    public void sendMessageEveryHour() {
         try{
-            // 만료된 사용자의 목록을 가져옴
+            // 행성 만료 메세지 전송
             List<KakaoDTO> kakaoDTOS = rao.findKakaoByDateExpired();
-
             if(kakaoDTOS.size() > 0){
-                logger.info("[sendMessageByDateExpired] Start");
+                logger.info("[sendMessageEveryHour] 행성 만료 메세지 Start");
                 // 만료된 사용자
                 for(KakaoDTO kakaoDTO : kakaoDTOS){
                     String nickName = memberRAO.findMemberById(kakaoDTO.getId()).getUserNickName();
                     sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
                             "[PL@TER] " + nickName + "님! 모든 편지가 도착했어요!", "지금 확인하러 가기");
 
-                    logger.info("[sendMessageByDateExpired] nickName = " + nickName + "에게 모든 편지가 도착했다고 알림.");
+                    logger.info("[sendMessageEveryHour] nickName = " + nickName + "에게 모든 편지가 도착했다고 알림.");
                 }
-                logger.info("[sendMessageByDateExpired] End");
+                logger.info("[sendMessageEveryHour] 행성 만료 메세지 End");
             }
-            
+
+            // 회원가입 후 행성을 개설하지 않은지 3일 후
+            kakaoDTOS = rao.findKakaoToAfterRegisterByNotNewOpenDate();
+            if(kakaoDTOS.size() > 0){
+                logger.info("[sendMessageEveryHour] 회원가입 후 행성을 개설하지 않은지 3일 후 Start");
+                // 만료된 사용자
+                for(KakaoDTO kakaoDTO : kakaoDTOS){
+                    String nickName = memberRAO.findMemberById(kakaoDTO.getId()).getUserNickName();
+                    sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
+                            "[PL@TER] " + nickName + "님 반가워요! 행성을 개설해야 메세지를 받을 수 있어요!", "행성 개설 하기");
+
+                    logger.info("[sendMessageEveryHour] nickName = " + nickName + "에게 회원가입 후 행성을 개설하지 않은지 3일이 지났다고 알림.");
+                }
+                logger.info("[sendMessageEveryHour] 회원가입 후 행성을 개설하지 않은지 3일 후 End");
+            }
+
+            // 행성을 만료한 후 새로 개설하지 않은지 3일 후
+            kakaoDTOS = rao.findKakaoToDateExpiredByNotNewOpenDate();
+            if(kakaoDTOS.size() > 0){
+                logger.info("[sendMessageEveryHour] 행성을 만료한 후 접속하지 않은지 3일 후 Start");
+                // 만료된 사용자
+                for(KakaoDTO kakaoDTO : kakaoDTOS){
+                    String nickName = memberRAO.findMemberById(kakaoDTO.getId()).getUserNickName();
+                    sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
+                            "[PL@TER] " + nickName + "님 편지는 잘 받으셨나요? 다시 편지를 받으려면 행성을 개설해야해요!", "행성 개설하기");
+
+                    logger.info("[sendMessageEveryHour] nickName = " + nickName + "에게 행성 만료 후 개설하지 않은지 3일이 자났다고 알림.");
+                }
+                logger.info("[sendMessageEveryHour] 행성을 만료한 후 접속하지 않은지 3일 후 End");
+            }
+
         }catch (Exception e){
-            logger.warn("[sendMessageByDateExpired] Exception = " + e.getMessage());
+            logger.warn("[sendMessageEveryHour] Exception = " + e.getMessage());
         }
     }
 

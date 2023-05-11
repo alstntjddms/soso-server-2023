@@ -16,4 +16,6 @@ public interface KakaoRAO {
 
     public KakaoDTO findOneKakaoById(int Id);
 
+    public void deleteKakaoByUserId(String userId);
+
 }

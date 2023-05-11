@@ -14,7 +14,6 @@ CREATE TABLE `kakao` (
   `kakaoLoginDate` timestamp NULL DEFAULT NULL,
   `kakaoMsgYn` tinyint(1) DEFAULT NULL,
   `kakaoScopeCheck` tinyint(1) DEFAULT NULL,
-  `kakaoDefaultNickName` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

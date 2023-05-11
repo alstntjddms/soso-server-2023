@@ -33,6 +33,4 @@ public class KakaoDTO {
     private boolean kakaoMsgYn;
     // 동의항목 눌름 여부
     private boolean kakaoScopeCheck;
-    // 변경전 기본 닉네임
-    private String KakaoDefaultNickName;
 }

@@ -17,4 +17,13 @@ public class MessageRAOImpl implements MessageRAO {
     public List<KakaoDTO> findKakaoByDateExpired() {
         return mapper.findKakaoByDateExpired();
     }
+
+    @Override
+    public List<KakaoDTO> findKakaoToDateExpiredByNotNewOpenDate() {
+        return mapper.findKakaoToDateExpiredByNotNewOpenDate();    }
+
+    @Override
+    public List<KakaoDTO> findKakaoToAfterRegisterByNotNewOpenDate() {
+        return mapper.findKakaoToAfterRegisterByNotNewOpenDate();
+    }
 }

@@ -37,5 +37,10 @@ public class KakaoRAOImpl implements KakaoRAO {
         return mapper.findOneKakaoById(Id);
     }
 
+    @Override
+    public void deleteKakaoByUserId(String userId) {
+        mapper.deleteKakaoByUserId(userId);
+    }
+
 
 }
