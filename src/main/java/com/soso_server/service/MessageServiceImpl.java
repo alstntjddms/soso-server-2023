@@ -138,8 +138,8 @@ public class MessageServiceImpl implements MessageService {
             sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
             "[PL@TER]" + memberDTO.getUserNickName() + "님! " +  letterCount + "번째 편지가 도착했어요!", "더 공유하러 가기");
 
-            logger.info("[sendMessageByLetterCount] userId = " + memberDTO.getUserNickName() 
-                        + "에게" + letterCount + "번재 편지가 도착했다고 알림.");
+            logger.info("[sendMessageByLetterCount] memberDTO.getUserNickName() = " + memberDTO.getUserNickName() 
+                        + "에게" + letterCount + "번째 편지가 도착했다고 알림.");
         }
         
         logger.info("[sendMessageByLetterCount] End");
@@ -149,19 +149,22 @@ public class MessageServiceImpl implements MessageService {
     @Scheduled(cron = "0 */5 * * * *")
     public void sendMessageByDateExpired() {
         try{
-            logger.info("[sendMessageByDateExpired] Start");
-
             // 만료된 사용자의 목록을 가져옴
             List<KakaoDTO> kakaoDTOS = rao.findKakaoByDateExpired();
 
-            // 만료된 사용자
-            for(KakaoDTO kakaoDTO : kakaoDTOS){
-                sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
-                        "[PL@TER] " + memberRAO.findMemberById(kakaoDTO.getId()).getUserNickName()
-                         + "님! 모든 편지가 도착했어요!", "지금 확인하러 가기");
-            }
+            if(kakaoDTOS.size() > 0){
+                logger.info("[sendMessageByDateExpired] Start");
+                // 만료된 사용자
+                for(KakaoDTO kakaoDTO : kakaoDTOS){
+                    String nickName = memberRAO.findMemberById(kakaoDTO.getId()).getUserNickName();
+                    sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
+                            "[PL@TER] " + nickName + "님! 모든 편지가 도착했어요!", "지금 확인하러 가기");
 
-            logger.info("[sendMessageByDateExpired] End");
+                    logger.info("[sendMessageByDateExpired] nickName = " + nickName + "에게 모든 편지가 도착했다고 알림.");
+                }
+                logger.info("[sendMessageByDateExpired] End");
+            }
+            
         }catch (Exception e){
             logger.warn("[sendMessageByDateExpired] Exception = " + e.getMessage());
         }
