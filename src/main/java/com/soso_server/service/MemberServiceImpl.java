@@ -78,8 +78,7 @@ public class MemberServiceImpl implements MemberService {
             // 10일뒤로 변경해서 리턴
             if(memberDTO.getUserOpenDate() != null){
                 long newTimestampInMillis = memberDTO.getUserOpenDate().getTime() + 864000000L;
-                Timestamp newTimestamp = new Timestamp(newTimestampInMillis);
-                memberDTO.setUserOpenDate(newTimestamp);
+                memberDTO.setUserOpenDate(new Timestamp(newTimestampInMillis));
             }
 
             logger.info("[findMemberByUserId] End");
