@@ -4,20 +4,11 @@
 <mapper namespace="com.soso_server.ra.itf.MessageRAO">
     <select id="findKakaoByDateExpired" resultType="KakaoDTO">
 <!--        행성이 만료 된 사람들에게-->
-<!--        SELECT * FROM soso.kakao k WHERE id IN (-->
-<!--            SELECT id-->
-<!--            FROM soso.member m-->
-<!--            WHERE DATE_ADD(m.userOpenDate, INTERVAL 10 DAY) + INTERVAL 1 HOUR > CURRENT_TIMESTAMP-->
-<!--            AND CURRENT_TIMESTAMP > DATE_ADD(m.userOpenDate, INTERVAL 10 DAY)-->
-<!--        )-->
-<!--        AND k.kakaoMsgYn = TRUE;-->
-
-<!--        테스트용 쿼리-->
         SELECT * FROM soso.kakao k WHERE id IN (
             SELECT id
             FROM soso.member m
-            WHERE DATE_ADD(m.userOpenDate, INTERVAL 10 MINUTE) + INTERVAL 1 HOUR > CURRENT_TIMESTAMP
-            AND CURRENT_TIMESTAMP > DATE_ADD(m.userOpenDate, INTERVAL 10 MINUTE)
+            WHERE DATE_ADD(m.userOpenDate, INTERVAL 10 DAY) + INTERVAL 1 HOUR > CURRENT_TIMESTAMP
+            AND CURRENT_TIMESTAMP > DATE_ADD(m.userOpenDate, INTERVAL 10 DAY)
         )
         AND k.kakaoMsgYn = TRUE;
     </select>

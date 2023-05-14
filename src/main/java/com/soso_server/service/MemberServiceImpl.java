@@ -146,8 +146,7 @@ public class MemberServiceImpl implements MemberService {
             }
             Timestamp openDate = findOpenDate(userId);
             // 864000000L = 10일
-//            if(openDate != null && (new Timestamp(System.currentTimeMillis()-864000000L)).before(openDate)){
-            if(openDate != null && (new Timestamp(System.currentTimeMillis()-600000L)).before(openDate)){
+            if(openDate != null && (new Timestamp(System.currentTimeMillis()-864000000L)).before(openDate)){
                 logger.warn("[refreshOpenDate] 이미 오픈데이트가 설정됨");
                 throw new MemberException("이미 오픈데이트가 설정됨.", -999);
             }

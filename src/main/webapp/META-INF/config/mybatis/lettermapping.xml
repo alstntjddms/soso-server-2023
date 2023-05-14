@@ -61,8 +61,7 @@
         WHERE userId = #{userId}
         )
         AND (
-<!--        SELECT DATE_ADD(userOpenDate, INTERVAL 10 DAY)-->
-        SELECT DATE_ADD(userOpenDate, INTERVAL 10 MINUTE)
+        SELECT DATE_ADD(userOpenDate, INTERVAL 10 DAY)
         FROM soso.member
         WHERE userId = #{userId}
         ) > l.letterWriteDate
