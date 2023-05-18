@@ -5,10 +5,7 @@ import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class MessageController {
@@ -28,6 +25,18 @@ public class MessageController {
             logger.info("[sendMessage] message = " + message);
             logger.info("[sendMessage] buttonTitle = " + buttonTitle);
             return new ResponseEntity<Integer>(messageService.sendAllMessage(message, buttonTitle), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/message/feedback/{userId}")
+    public ResponseEntity<String> feedBackMessage(@PathVariable String userId, @RequestBody String feedBack) {
+        try {
+            logger.info("[feedBackMessage] MessageController.sendMessage");
+            logger.info("[feedBackMessage] userId = " + userId);
+            logger.info("[feedBackMessage] feedBack = " + feedBack);
+            return new ResponseEntity<String>(messageService.feedBackMessage(userId, feedBack), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>("-999", HttpStatus.BAD_REQUEST);
         }

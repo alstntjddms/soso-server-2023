@@ -1,5 +1,6 @@
 package com.soso_server.ra;
 
+import com.soso_server.dto.FeedBackDTO;
 import com.soso_server.dto.KakaoDTO;
 import com.soso_server.ra.itf.MessageRAO;
 
@@ -25,5 +26,10 @@ public class MessageRAOImpl implements MessageRAO {
     @Override
     public List<KakaoDTO> findKakaoToAfterRegisterByNotNewOpenDate() {
         return mapper.findKakaoToAfterRegisterByNotNewOpenDate();
+    }
+
+    @Override
+    public void feedBackMessage(FeedBackDTO feedBackDTO) {
+        mapper.feedBackMessage(feedBackDTO);
     }
 }

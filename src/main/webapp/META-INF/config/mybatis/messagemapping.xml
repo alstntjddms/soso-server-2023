@@ -34,9 +34,11 @@
         AND m.userDate BETWEEN DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 3 DAY) - INTERVAL 1 HOUR
         AND DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 3 DAY)
         AND k.kakaoMsgYn = TRUE;
-
     </select>
 
-
+    <insert id="feedBackMessage" parameterType="FeedBackDTO">
+        INSERT INTO soso.feedback(userId, feedBack, regDate)
+        VALUES (#{userId}, #{feedBack}, CURRENT_TIMESTAMP)
+    </insert>
 
 </mapper>

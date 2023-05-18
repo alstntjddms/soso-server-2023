@@ -1,5 +1,6 @@
 package com.soso_server.service;
 
+import com.soso_server.dto.FeedBackDTO;
 import com.soso_server.dto.KakaoDTO;
 import com.soso_server.dto.MemberDTO;
 import com.soso_server.ra.itf.KakaoRAO;
@@ -7,6 +8,7 @@ import com.soso_server.ra.itf.MemberRAO;
 import com.soso_server.ra.itf.MessageRAO;
 import com.soso_server.service.itf.KakaoService;
 import com.soso_server.service.itf.MessageService;
+import com.soso_server.utils.AES256;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -33,6 +35,9 @@ public class MessageServiceImpl implements MessageService {
 
     @Autowired
     KakaoService kakaoService;
+
+    @Autowired
+    AES256 aes256;
 
     private String refreshTokenCheckId = "";
 
@@ -199,5 +204,22 @@ public class MessageServiceImpl implements MessageService {
         }
     }
 
+    @Override
+    public String feedBackMessage(String userId, String feedBack) {
+        try{
+            logger.info("[feedBackMessage] 베타테스터 피드백 Start");
+            if(userId.equals("베타테스터")){
+                rao.feedBackMessage(new FeedBackDTO(userId, feedBack));
+            }else{
+                rao.feedBackMessage(new FeedBackDTO(aes256.replaceDecodeDecryt(userId), feedBack));
+            }
+
+            logger.info("[feedBackMessage] 베타테스터 피드백 End");
+            return userId;
+        }catch (Exception e){
+            logger.warn("[feedBackMessage] Exception = " + e.getMessage());
+        }
+        return "피드백 저장 실패";
+    }
 
 }

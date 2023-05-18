@@ -1,5 +1,6 @@
 package com.soso_server.ra.itf;
 
+import com.soso_server.dto.FeedBackDTO;
 import com.soso_server.dto.KakaoDTO;
 
 import java.util.List;
@@ -23,4 +24,9 @@ public interface MessageRAO {
      * @return List<KakaoDTO>
      */
     public List<KakaoDTO> findKakaoToAfterRegisterByNotNewOpenDate();
+
+    /**
+     * 테스트용 피드백 메세지 수신
+     */
+    public void feedBackMessage(FeedBackDTO feedBackDTO);
 }

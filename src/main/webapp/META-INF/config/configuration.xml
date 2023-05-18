@@ -11,6 +11,7 @@
         <typeAlias alias="StickerDTO" type="com.soso_server.dto.StickerDTO"/>
         <typeAlias alias="PageLogDTO" type="com.soso_server.dto.log.PageLogDTO"/>
         <typeAlias alias="AuthDTO" type="com.soso_server.dto.AuthDTO"/>
+        <typeAlias alias="FeedBackDTO" type="com.soso_server.dto.FeedBackDTO"/>
     </typeAliases>
 
     <!-- MapperFile(SQL쿼리 결과와 자바빈 제공) 위치 정보 -->

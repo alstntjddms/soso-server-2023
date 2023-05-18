@@ -1,5 +1,7 @@
 package com.soso_server.service.itf;
 
+import org.springframework.web.bind.annotation.RequestBody;
+
 public interface MessageService {
 
     /**
@@ -30,6 +32,11 @@ public interface MessageService {
      * 1시간마다 배치를 돌며 알림 전송
      */
     public void sendMessageEveryHour();
+
+    /**
+     * 테스트용 피드백 메세지 수신
+     */
+    public String feedBackMessage(String userId, String feedBack);
 
 }
 
