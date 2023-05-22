@@ -159,10 +159,10 @@ public class LetterServiceImpl implements LetterService {
             LetterDTO letterDTO = rao.selectLetterByLetterId(decLetterId);
             Timestamp openDate = memberRAO.findOpenDate(Integer.parseInt(letterDTO.getUserId()));
             // 864000000L = 10일
-//            if(openDate != null && (new Timestamp(System.currentTimeMillis()-864000000L)).before(openDate)){
-//                logger.warn("[selectLetterByLetterId] 행성 만료 전임.");
-//                throw new MemberException("행성 만료 전임.", -999);
-//            }
+            if(openDate != null && (new Timestamp(System.currentTimeMillis()-864000000L)).before(openDate)){
+                logger.warn("[selectLetterByLetterId] 행성 만료 전임.");
+                throw new MemberException("행성 만료 전임.", -999);
+            }
             // 오픈데이트 검증 로직 끝
 
             rao.updateToReadLetter(decLetterId);
