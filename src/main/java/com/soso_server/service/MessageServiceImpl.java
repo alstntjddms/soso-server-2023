@@ -141,7 +141,7 @@ public class MessageServiceImpl implements MessageService {
             MemberDTO memberDTO = memberRAO.findMemberByUserId(userId);
             KakaoDTO kakaoDTO = kakaoRAO.findOneKakaoById(memberDTO.getId());
             sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
-            "[PL@TER]" + memberDTO.getUserNickName() + "님!\\n" +  letterCount + "번째 편지가 도착했어요!", "더 공유하러 가기");
+            "[PL@TER]" + memberDTO.getUserNickName() + "님!\\n" +  letterCount + "번째 편지가 도착했어요!", "공유하러 가기");
 
             logger.info("[sendMessageByLetterCount] memberDTO.getUserNickName() = " + memberDTO.getUserNickName() 
                         + "에게" + letterCount + "번째 편지가 도착했다고 알림.");
@@ -162,7 +162,7 @@ public class MessageServiceImpl implements MessageService {
                 for(KakaoDTO kakaoDTO : kakaoDTOS){
                     String nickName = memberRAO.findMemberById(kakaoDTO.getId()).getUserNickName();
                     sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
-                            "[PL@TER] " + nickName + "님!\\n 모든 편지가 도착했어요!", "지금 확인하러 가기");
+                            "[PL@TER] " + nickName + "님!\\n드디어 편지가 도착했어요! 어서 읽어보세요.", "지금 읽기");
 
                     logger.info("[sendMessageEveryHour] nickName = " + nickName + "에게 모든 편지가 도착했다고 알림.");
                 }
@@ -177,7 +177,7 @@ public class MessageServiceImpl implements MessageService {
                 for(KakaoDTO kakaoDTO : kakaoDTOS){
                     String nickName = memberRAO.findMemberById(kakaoDTO.getId()).getUserNickName();
                     sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
-                            "[PL@TER] " + nickName + "님 반가워요\\n행성을 개설해야 메세지를 받을 수 있어요!", "행성 개설 하기");
+                            "[PL@TER] " + nickName + "님 반가워요\\n멋진 편지를 받아보는 건 어떠세요?", "행성 개설하기");
 
                     logger.info("[sendMessageEveryHour] nickName = " + nickName + "에게 회원가입 후 행성을 개설하지 않은지 3일이 지났다고 알림.");
                 }
@@ -192,7 +192,7 @@ public class MessageServiceImpl implements MessageService {
                 for(KakaoDTO kakaoDTO : kakaoDTOS){
                     String nickName = memberRAO.findMemberById(kakaoDTO.getId()).getUserNickName();
                     sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(),
-                            "[PL@TER] " + nickName + "님 편지는 잘 받으셨나요?\\n다시 편지를 받으려면 행성을 개설해야해요!", "행성 개설하기");
+                            "[PL@TER] " + nickName + "님 편지는 잘 받으셨나요?\\n새로운 행성을 개설해 편지를 받아보세요!", "행성 개설하기");
 
                     logger.info("[sendMessageEveryHour] nickName = " + nickName + "에게 행성 만료 후 개설하지 않은지 3일이 자났다고 알림.");
                 }
