@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class MessageController {
 
-    private static final Logger logger = Logger.getLogger(MemberController.class);
+    private static final Logger logger = Logger.getLogger(MessageController.class);
 
     @Autowired
     MessageService messageService;
