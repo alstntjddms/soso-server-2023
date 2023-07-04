@@ -112,19 +112,19 @@ public class MessageServiceImpl implements MessageService {
     public int sendAllMessage(String message, String buttonTitle){
         try{
             logger.info("[sendAllMessage] Start");
-
+            int sendCount = 0;
             List<KakaoDTO> kakaoDTOS = kakaoRAO.findKakaoAll();
             for(KakaoDTO kakaoDTO : kakaoDTOS){
                 if(kakaoDTO.isKakaoMsgYn() == true){
                     sendMessage(kakaoDTO.getKakaoAccessToken(), kakaoDTO.getKakaoRefreshToken(), message, buttonTitle);
+                    sendCount++;
                 }
             }
             
-            logger.info("[sendAllMessage] 총 " + count + "건의 메세지 전송이 성공.");
-            
-            count = 0;
+            logger.info("[sendAllMessage] 총 " + sendCount + "건의 메세지 전송이 성공.");
+
             logger.info("[sendAllMessage] End");
-            return count;
+            return sendCount;
         }catch(Exception e){
             logger.warn("[sendAllMessage] Exception = " + e.getMessage());
         }

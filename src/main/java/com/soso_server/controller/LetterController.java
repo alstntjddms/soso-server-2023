@@ -42,7 +42,7 @@ public class LetterController {
      * @return 등록된 letterId
      */
     @PostMapping("/letter")
-    public synchronized ResponseEntity<String> registerLetter(@RequestBody HashMap<String, Object> dto){
+    public ResponseEntity<String> registerLetter(@RequestBody HashMap<String, Object> dto){
         try{
             logger.info("[registerLetter] LetterController.registerLetter");
             logger.info("[registerLetter] dto = " + dto);
