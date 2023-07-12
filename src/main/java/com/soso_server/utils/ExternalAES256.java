@@ -19,10 +19,10 @@ public class ExternalAES256 {
     public ExternalAES256() throws IOException {
         logger.info("[ExternalAES256] ExternalAES256 KEY Load...");
 
-        BufferedReader bufferReader = new BufferedReader(new FileReader("C:\\key\\ExternalAES256.txt"));
-        key = bufferReader.readLine();
+//        BufferedReader bufferReader = new BufferedReader(new FileReader("C:\\key\\ExternalAES256.txt"));
+        key = "70890874578974573986234987792344";
         iv = key.substring(0, 16);
-        bufferReader.close();
+//        bufferReader.close();
 
         logger.info("[ExternalAES256] ExternalAES256 KEY Load Success");
     }

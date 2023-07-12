@@ -21,10 +21,10 @@ public class AES256 {
     public AES256() throws IOException {
         logger.info("[AES256] AES256 KEY Load...");
 
-        BufferedReader bufferReader = new BufferedReader(new FileReader("C:\\key\\AES256.txt"));
-        key = bufferReader.readLine();
+//        BufferedReader bufferReader = new BufferedReader(new FileReader("C:\\key\\AES256.txt"));
+        key = "35123254568713456789012545687997";
         iv = key.substring(0, 16);
-        bufferReader.close();
+//        bufferReader.close();
         
         logger.info("[AES256] AES256 KEY Load Success");
     }

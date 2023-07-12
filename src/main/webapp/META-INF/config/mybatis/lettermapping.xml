@@ -22,7 +22,7 @@
     </insert>
 
     <insert id="registerSticker" parameterType="StickerDTO">
-        INSERT INTO soso.STICKER(letterId, stickerIcon, stickerX, stickerY)
+        INSERT INTO soso.sticker(letterId, stickerIcon, stickerX, stickerY)
         VALUES (#{letterId}, #{stickerIcon}, #{stickerX}, #{stickerY})
     </insert>
 
@@ -69,7 +69,7 @@
     </select>
 
     <select id="selectStickerByLetterId" resultType="StickerDTO" parameterType="java.lang.Integer">
-        SELECT * FROM soso.STICKER WHERE letterId = #{letterId}
+        SELECT * FROM soso.sticker WHERE letterId = #{letterId}
     </select>
 
     <update id="updateToReadLetter" parameterType="java.lang.Integer">
