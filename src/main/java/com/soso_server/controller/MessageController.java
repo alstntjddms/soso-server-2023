@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @RestController
-@CrossOrigin(origins = "https://plater.kr:8888") // 허용할 오리진을 지정
+@CrossOrigin(origins = "*") // 허용할 오리진을 지정
 public class MessageController {
 
     private static final Logger logger = Logger.getLogger(MessageController.class);
